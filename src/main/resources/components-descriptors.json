@@ -1,0 +1,90 @@
+{
+  "componentDescriptors": [
+    {
+      "hidden": false,
+      "displayName": "SQL Insert",
+      "fullyQualifiedName": "com.reedelk.mysql.Insert",
+      "componentType": "PROCESSOR",
+      "componentPropertyDescriptors": [
+        {
+          "displayName": "SQL Query",
+          "propertyName": "query",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+            "instance": {
+              "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "Connection Configuration",
+          "propertyName": "connectionConfiguration",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
+            "instance": {
+              "shared": "YES",
+              "collapsible": "NO",
+              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "objectProperties": [
+                {
+                  "displayName": "Connection URL",
+                  "propertyName": "connectionURL",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Username",
+                  "propertyName": "username",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Password",
+                  "propertyName": "password",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Driver",
+                  "propertyName": "driverClass",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                }
+              ],
+              "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
+            }
+          },
+          "whenDescriptors": []
+        }
+      ]
+    }
+  ],
+  "autocompleteContributorDescriptors": []
+}
