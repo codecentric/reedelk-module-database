@@ -2,7 +2,6 @@ package com.reedelk.mysql;
 
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Property;
-import com.reedelk.runtime.api.commons.ConfigurationPreconditions;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.message.FlowContext;
@@ -15,6 +14,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 
 @ESBComponent("SQL Insert")
 @Component(service = Insert.class, scope = ServiceScope.PROTOTYPE)
@@ -31,7 +32,7 @@ public class Insert implements ProcessorSync {
 
     @Override
     public void initialize() {
-        ConfigurationPreconditions.requireNotBlank(query, "Query must not be null");
+        requireNotBlank(Insert.class, query, "Query must not be null");
     }
 
     @Override
