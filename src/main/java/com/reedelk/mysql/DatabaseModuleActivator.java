@@ -1,8 +1,6 @@
 package com.reedelk.mysql;
 
-import com.reedelk.rest.RestModuleActivator;
-import com.reedelk.rest.client.DefaultHttpClientFactory;
-import com.reedelk.rest.client.HttpClientFactory;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.service.component.annotations.Activate;

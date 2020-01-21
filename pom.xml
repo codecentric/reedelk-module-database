@@ -16,6 +16,7 @@
 
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -23,12 +24,6 @@
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.5.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.reedelk</groupId>
-            <artifactId>module-rest</artifactId>
-            <version>0.7.0</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
