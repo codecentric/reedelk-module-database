@@ -20,14 +20,14 @@
       }
     },
     {
-      "implementor": "com.reedelk.mysql.component.Select",
+      "implementor": "com.reedelk.database.component.Select",
       "description": "SQL Select",
       "connectionConfiguration": {"ref": "14f51fc8-04c7-4686-9d9f-ee2a21d78b5d"},
-      "query": "SELECT * FROM orders WHERE name = 'item1';"
+      "query": "SELECT * FROM orders;"
     },
     {
-      "implementor": "com.reedelk.mysql.component.ResultSetAsJson",
-      "description": "Result Set as JSON"
+      "implementor": "com.reedelk.database.component.ResultSetAsJson",
+      "description": "Result Set As JSON"
     }
   ]
 }

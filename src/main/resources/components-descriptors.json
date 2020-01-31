@@ -3,7 +3,7 @@
     {
       "hidden": false,
       "displayName": "SQL Delete",
-      "fullyQualifiedName": "com.reedelk.mysql.component.Delete",
+      "fullyQualifiedName": "com.reedelk.database.component.Delete",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
@@ -15,7 +15,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
@@ -89,7 +89,7 @@
     {
       "hidden": false,
       "displayName": "SQL Insert",
-      "fullyQualifiedName": "com.reedelk.mysql.component.Insert",
+      "fullyQualifiedName": "com.reedelk.database.component.Insert",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
@@ -101,7 +101,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
@@ -175,14 +175,14 @@
     {
       "hidden": false,
       "displayName": "Result Set As JSON",
-      "fullyQualifiedName": "com.reedelk.mysql.component.ResultSetAsJson",
+      "fullyQualifiedName": "com.reedelk.database.component.ResultSetAsJson",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": []
     },
     {
       "hidden": false,
       "displayName": "SQL Select",
-      "fullyQualifiedName": "com.reedelk.mysql.component.Select",
+      "fullyQualifiedName": "com.reedelk.database.component.Select",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
@@ -194,7 +194,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
@@ -281,7 +281,7 @@
     {
       "hidden": false,
       "displayName": "SQL Update",
-      "fullyQualifiedName": "com.reedelk.mysql.component.Update",
+      "fullyQualifiedName": "com.reedelk.database.component.Update",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
@@ -293,7 +293,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
