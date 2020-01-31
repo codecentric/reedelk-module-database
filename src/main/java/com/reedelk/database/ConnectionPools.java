@@ -36,9 +36,8 @@ public class ConnectionPools {
                 CONFIG_ID_CONNECTION_POOL_MAP.put(connectionConfiguration.getId(), cpds);
 
                 return cpds.getConnection();
-            } catch (Throwable e) {
-                throw new ESBException(e);
-                // TODO: handle the exceptionthrow new ESBException(e);
+            } catch (Throwable exception) {
+                throw new ESBException(exception);
             }
         }
     }
@@ -46,20 +45,13 @@ public class ConnectionPools {
     private Connection getConnectionInternal(ConnectionConfiguration connectionConfiguration) {
         try {
             return CONFIG_ID_CONNECTION_POOL_MAP.get(connectionConfiguration.getId()).getConnection();
-        } catch (SQLException e) {
-            // TODO: Throw proper exception
-            e.printStackTrace();
-            throw new ESBException(e);
+        } catch (SQLException exception) {
+            throw new ESBException(exception);
         }
     }
 
     public void dispose() {
-        CONFIG_ID_CONNECTION_POOL_MAP.forEach(new BiConsumer<String, ComboPooledDataSource>() {
-            @Override
-            public void accept(String s, ComboPooledDataSource comboPooledDataSource) {
-                comboPooledDataSource.close();
-            }
-        });
+        CONFIG_ID_CONNECTION_POOL_MAP.forEach((configurationId, comboPooledDataSource) -> comboPooledDataSource.close());
         CONFIG_ID_CONNECTION_POOL_MAP.clear();
     }
 }

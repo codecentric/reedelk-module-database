@@ -4,7 +4,8 @@ import com.reedelk.database.ConnectionConfiguration;
 import com.reedelk.database.ConnectionPools;
 import com.reedelk.database.DatabaseUtils;
 import com.reedelk.database.DisposableResultSet;
-import com.reedelk.database.utils.QueryReplacer;
+import com.reedelk.database.utils.IsDriverAvailable;
+import com.reedelk.database.utils.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Property;
 import com.reedelk.runtime.api.annotation.TabPlacementTop;
@@ -15,7 +16,6 @@ import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
-import com.reedelk.runtime.api.script.dynamicmap.DynamicStringMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -25,7 +25,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
+import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.*;
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
+import static java.lang.String.*;
 
 @ESBComponent("SQL Select")
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
@@ -44,12 +46,17 @@ public class Select implements ProcessorSync {
     @Reference
     private ScriptEngineService scriptEngine;
 
-    private QueryReplacer queryStatement;
+    private QueryStatementTemplate queryStatement;
 
     @Override
     public void initialize() {
-        requireNotBlank(Select.class, query, "Query must not be null");
-        queryStatement = new QueryReplacer(query);
+        requireNotBlank(Select.class, query, "Select query is not defined");
+        requireNotNull(Select.class, connectionConfiguration, "Connection configuration must be available");
+        String driverClass = connectionConfiguration.getDriverClass();
+        requireTrue(Select.class,
+                IsDriverAvailable.of(driverClass),
+                format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", driverClass));
+        queryStatement = new QueryStatementTemplate(query);
     }
 
     @Override
@@ -74,15 +81,6 @@ public class Select implements ProcessorSync {
             DatabaseUtils.closeSilently(resultSet, statement, connection);
             throw new ESBException(exception);
         }
-    }
-
-    @Override
-    public void dispose() {
-        // TODO: This is wrong.
-        // Every configuration is a datasource. If there are no more components
-        // using that configuration, then we can safely close it otherwise not.
-        // So it is: components -> Datasource
-        pools.dispose();
     }
 
     public void setQuery(String query) {

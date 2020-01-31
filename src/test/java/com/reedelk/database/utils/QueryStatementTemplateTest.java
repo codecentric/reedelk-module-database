@@ -7,12 +7,12 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class QueryReplacerTest {
+class QueryStatementTemplateTest {
 
     @Test
     void shouldCorrectlyReplaceVariables() {
         // Given
-        QueryReplacer replacer = new QueryReplacer("SELECT * FROM Orders WHERE name = :name AND surname = :surname;");
+        QueryStatementTemplate replacer = new QueryStatementTemplate("SELECT * FROM Orders WHERE name = :name AND surname = :surname;");
 
         // When
         Map<String,Object> replacements = ImmutableMap.of("name","Mark", "surname", "Anton");
@@ -26,7 +26,7 @@ class QueryReplacerTest {
     @Test
     void shouldReplaceWhenMissingParameter() {
         // Given
-        QueryReplacer replacer = new QueryReplacer("SELECT * FROM Orders WHERE name = :name AND surname = :surname;");
+        QueryStatementTemplate replacer = new QueryStatementTemplate("SELECT * FROM Orders WHERE name = :name AND surname = :surname;");
 
         // When
         Map<String,Object> replacements = ImmutableMap.of( "surname", "Anton");
@@ -39,7 +39,7 @@ class QueryReplacerTest {
     @Test
     void shouldReplaceIntegerObjectVariable() {
         // Given
-        QueryReplacer replacer = new QueryReplacer("SELECT * FROM Orders WHERE id = :orderId;");
+        QueryStatementTemplate replacer = new QueryStatementTemplate("SELECT * FROM Orders WHERE id = :orderId;");
 
         // When
         Map<String,Object> replacements = ImmutableMap.of( "orderId", 1238498234);

@@ -4,12 +4,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class QueryReplacer {
+public class QueryStatementTemplate {
 
     private static final Pattern REGEXP = Pattern.compile("(:\\w+)");
     private final String query;
 
-    public QueryReplacer(String query) {
+    public QueryStatementTemplate(String query) {
         this.query = query;
     }
 
