@@ -1,4 +1,4 @@
-package com.reedelk.mysql;
+package com.reedelk.database;
 
 public class DatabaseUtils {
 

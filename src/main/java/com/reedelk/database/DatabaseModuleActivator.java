@@ -1,4 +1,4 @@
-package com.reedelk.mysql;
+package com.reedelk.database;
 
 
 import org.osgi.framework.BundleContext;

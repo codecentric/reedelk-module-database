@@ -1,4 +1,4 @@
-package com.reedelk.mysql;
+package com.reedelk.database;
 
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.Implementor;

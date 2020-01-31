@@ -1,4 +1,4 @@
-package com.reedelk.mysql.utils;
+package com.reedelk.database.utils;
 
 import java.util.Map;
 import java.util.regex.Matcher;

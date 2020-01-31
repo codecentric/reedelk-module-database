@@ -1,4 +1,4 @@
-package com.reedelk.mysql.utils;
+package com.reedelk.database.utils;
 
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import org.junit.jupiter.api.Test;

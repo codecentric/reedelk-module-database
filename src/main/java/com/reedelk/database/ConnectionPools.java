@@ -1,4 +1,4 @@
-package com.reedelk.mysql;
+package com.reedelk.database;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.runtime.api.exception.ESBException;

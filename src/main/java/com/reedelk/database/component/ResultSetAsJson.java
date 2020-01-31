@@ -1,6 +1,6 @@
-package com.reedelk.mysql.component;
+package com.reedelk.database.component;
 
-import com.reedelk.mysql.ResultSetConverter;
+import com.reedelk.database.ResultSetConverter;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;

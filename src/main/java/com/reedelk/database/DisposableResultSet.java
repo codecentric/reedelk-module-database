@@ -1,4 +1,4 @@
-package com.reedelk.mysql;
+package com.reedelk.database;
 
 import com.reedelk.runtime.api.flow.Disposable;
 
@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.Map;
 
-import static com.reedelk.mysql.DatabaseUtils.closeSilently;
+import static com.reedelk.database.DatabaseUtils.closeSilently;
 
 public class DisposableResultSet implements ResultSet, Disposable {
 
