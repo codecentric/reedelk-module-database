@@ -6,11 +6,13 @@ import com.reedelk.mysql.DatabaseUtils;
 import com.reedelk.mysql.DisposableResultSet;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Property;
+import com.reedelk.runtime.api.annotation.TabPlacementTop;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
+import com.reedelk.runtime.api.script.dynamicmap.DynamicStringMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -29,6 +31,9 @@ public class Select implements ProcessorSync {
     private ConnectionConfiguration connectionConfiguration;
     @Property("SQL Query")
     private String query;
+    @Property("Query Parameters")
+    @TabPlacementTop
+    private DynamicStringMap parametersMapping;
 
     @Reference
     private ConnectionPools pools;
@@ -75,5 +80,9 @@ public class Select implements ProcessorSync {
 
     public void setConnectionConfiguration(ConnectionConfiguration connectionConfiguration) {
         this.connectionConfiguration = connectionConfiguration;
+    }
+
+    public void setParametersMapping(DynamicStringMap parametersMapping) {
+        this.parametersMapping = parametersMapping;
     }
 }

@@ -23,7 +23,7 @@
       "implementor": "com.reedelk.mysql.component.Select",
       "description": "SQL Select",
       "connectionConfiguration": {"ref": "14f51fc8-04c7-4686-9d9f-ee2a21d78b5d"},
-      "query": "SELECT * FROM orders;"
+      "query": "SELECT * FROM orders WHERE name = 'item1';"
     },
     {
       "implementor": "com.reedelk.mysql.component.ResultSetAsJson",

@@ -262,6 +262,19 @@
             }
           },
           "whenDescriptors": []
+        },
+        {
+          "displayName": "Query Parameters",
+          "propertyName": "parametersMapping",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
+            "instance": {
+              "tabPlacement": "TOP",
+              "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicStringMap"
+            }
+          },
+          "whenDescriptors": []
         }
       ]
     },
