@@ -62,9 +62,9 @@ public class Select implements ProcessorSync {
             statement = connection.createStatement();
 
             Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
-            queryStatement.replace(evaluatedMap);
+            String realQuery = queryStatement.replace(evaluatedMap);
 
-            resultSet = statement.executeQuery(query);
+            resultSet = statement.executeQuery(realQuery);
 
             DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
             flowContext.register(wrappedResultSet);

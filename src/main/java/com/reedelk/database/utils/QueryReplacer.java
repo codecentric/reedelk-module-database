@@ -8,17 +8,17 @@ public class QueryReplacer {
 
     private static final Pattern REGEXP = Pattern.compile("(:\\w+)");
     private final String query;
-    private final Matcher matcher;
 
     public QueryReplacer(String query) {
         this.query = query;
-        matcher = REGEXP.matcher(query);
     }
 
     public String replace(Map<String,Object> replacements) {
         if (replacements.isEmpty()) {
             return query;
         }
+
+        Matcher matcher = REGEXP.matcher(query);
 
         StringBuilder builder = new StringBuilder();
         int i  = 0;
