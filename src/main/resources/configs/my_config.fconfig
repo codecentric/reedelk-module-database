@@ -1,9 +1,0 @@
-{
-  "id": "7d806cfd-0007-4382-9b7a-98bfdde42c48",
-  "title": "My configuration",
-  "implementor": "com.reedelk.rest.configuration.listener.ListenerConfiguration",
-  "host": "localhost",
-  "port": 8282,
-  "protocol": "HTTP",
-  "keepAlive": true
-}

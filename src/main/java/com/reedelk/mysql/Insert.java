@@ -4,6 +4,7 @@ import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Property;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
+import com.reedelk.runtime.api.flow.Disposable;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -13,6 +14,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
@@ -37,17 +39,22 @@ public class Insert implements ProcessorSync {
 
     @Override
     public Message apply(FlowContext flowContext, Message message) {
-        try (Connection connection = pools.getConnection(connectionConfiguration);
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                System.out.println(id + " name: " + name);
-            }
-            return MessageBuilder.get().build();
-        } catch (Throwable e) {
-            throw new ESBException(e);
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = pools.getConnection(connectionConfiguration);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+
+            DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
+            flowContext.register(wrappedResultSet);
+            return MessageBuilder.get().withJavaObject(wrappedResultSet).build();
+        } catch (Throwable exception) {
+            DatabaseUtils.closeSilently(resultSet);
+            DatabaseUtils.closeSilently(statement);
+            DatabaseUtils.closeSilently(connection);
+            throw new ESBException(exception);
         }
     }
 

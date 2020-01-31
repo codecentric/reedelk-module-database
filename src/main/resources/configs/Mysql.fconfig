@@ -1,8 +1,0 @@
-{
-  "id": "73f80f62-a7bf-4054-a4dc-38d7fb890134",
-  "title": "My configuration",
-  "implementor": "com.reedelk.mysql.ConnectionConfiguration",
-  "connectionURL": "jdbc:mysql://localhost:3306/reedelk_test",
-  "username": "root",
-  "driverClass": "com.mysql.cj.jdbc.Driver"
-}

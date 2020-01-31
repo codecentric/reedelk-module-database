@@ -1,0 +1,33 @@
+{
+  "id": "83410113-0dad-4640-8e0f-652f012b2fbb",
+  "title": "Test Database",
+  "description": "Test Database Flow",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RestListener",
+      "description": "REST Listener",
+      "configuration": {"ref": "c238c6be-1122-4c79-bcd8-c0fabc891897"},
+      "path": "/database",
+      "method": "GET",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.mysql.Insert",
+      "description": "SQL Insert",
+      "query": "SELECT * FROM orders;",
+      "connectionConfiguration": {"ref": "14f51fc8-04c7-4686-9d9f-ee2a21d78b5d"}
+    },
+    {
+      "implementor": "com.reedelk.mysql.ResultSetAsJson",
+      "description": "Result Set as JSON123"
+    }
+  ]
+}

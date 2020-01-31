@@ -84,6 +84,13 @@
           "whenDescriptors": []
         }
       ]
+    },
+    {
+      "hidden": false,
+      "displayName": "Result Set as JSON",
+      "fullyQualifiedName": "com.reedelk.mysql.ResultSetAsJson",
+      "componentType": "PROCESSOR",
+      "componentPropertyDescriptors": []
     }
   ],
   "autocompleteContributorDescriptors": []

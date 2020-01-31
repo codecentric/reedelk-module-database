@@ -17,13 +17,32 @@
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <json.version>20190722</json.version>
+        <c3p0.version>0.9.5.5</c3p0.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.5.5</version>
+            <version>${c3p0.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.reedelk</groupId>
+            <artifactId>module-core</artifactId>
+            <version>0.8.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.reedelk</groupId>
+            <artifactId>module-rest</artifactId>
+            <version>0.8.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
