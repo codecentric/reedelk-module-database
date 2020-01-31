@@ -20,14 +20,14 @@
       }
     },
     {
-      "implementor": "com.reedelk.mysql.Insert",
-      "description": "SQL Insert",
-      "query": "SELECT * FROM orders;",
-      "connectionConfiguration": {"ref": "14f51fc8-04c7-4686-9d9f-ee2a21d78b5d"}
+      "implementor": "com.reedelk.mysql.component.Select",
+      "description": "SQL Select",
+      "connectionConfiguration": {"ref": "14f51fc8-04c7-4686-9d9f-ee2a21d78b5d"},
+      "query": "SELECT * FROM orders;"
     },
     {
-      "implementor": "com.reedelk.mysql.ResultSetAsJson",
-      "description": "Result Set as JSON123"
+      "implementor": "com.reedelk.mysql.component.ResultSetAsJson",
+      "description": "Result Set as JSON"
     }
   ]
 }

@@ -1,8 +1,6 @@
 package com.reedelk.mysql;
 
-import com.reedelk.runtime.api.annotation.Hidden;
-import com.reedelk.runtime.api.annotation.Property;
-import com.reedelk.runtime.api.annotation.Shared;
+import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.Implementor;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -15,12 +13,15 @@ public class ConnectionConfiguration implements Implementor {
     @Property("id")
     private String id;
     @Property("Connection URL")
+    @Hint("jdbc:mysql://localhost:3306/mydatabase")
+    @Default("jdbc:mysql://localhost:3306/mydatabase")
     private String connectionURL;
     @Property("Username")
     private String username;
     @Property("Password")
     private String password;
     @Property("Driver")
+    @Default("com.mysql.cj.jdbc.Driver")
     private String driverClass;
 
     public String getId() {

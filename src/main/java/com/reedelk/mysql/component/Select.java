@@ -1,10 +1,13 @@
-package com.reedelk.mysql;
+package com.reedelk.mysql.component;
 
+import com.reedelk.mysql.ConnectionConfiguration;
+import com.reedelk.mysql.ConnectionPools;
+import com.reedelk.mysql.DatabaseUtils;
+import com.reedelk.mysql.DisposableResultSet;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Property;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
-import com.reedelk.runtime.api.flow.Disposable;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -14,19 +17,18 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 
-@ESBComponent("SQL Insert")
-@Component(service = Insert.class, scope = ServiceScope.PROTOTYPE)
-public class Insert implements ProcessorSync {
+@ESBComponent("SQL Select")
+@Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
+public class Select implements ProcessorSync {
 
-    @Property("SQL Query")
-    private String query;
     @Property("Connection Configuration")
     private ConnectionConfiguration connectionConfiguration;
+    @Property("SQL Query")
+    private String query;
 
     @Reference
     private ConnectionPools pools;
@@ -34,7 +36,7 @@ public class Insert implements ProcessorSync {
 
     @Override
     public void initialize() {
-        requireNotBlank(Insert.class, query, "Query must not be null");
+        requireNotBlank(Select.class, query, "Query must not be null");
     }
 
     @Override

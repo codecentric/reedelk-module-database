@@ -2,22 +2,10 @@
   "componentDescriptors": [
     {
       "hidden": false,
-      "displayName": "SQL Insert",
-      "fullyQualifiedName": "com.reedelk.mysql.Insert",
+      "displayName": "SQL Delete",
+      "fullyQualifiedName": "com.reedelk.mysql.component.Delete",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
-        {
-          "displayName": "SQL Query",
-          "propertyName": "query",
-          "defaultValue": "###USE_DEFAULT_VALUE###",
-          "propertyType": {
-            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
-            "instance": {
-              "type": "java.lang.String"
-            }
-          },
-          "whenDescriptors": []
-        },
         {
           "displayName": "Connection Configuration",
           "propertyName": "connectionConfiguration",
@@ -30,9 +18,10 @@
               "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
               "objectProperties": [
                 {
+                  "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
-                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -68,7 +57,7 @@
                 {
                   "displayName": "Driver",
                   "propertyName": "driverClass",
-                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "defaultValue": "com.mysql.cj.jdbc.Driver",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -82,15 +71,285 @@
             }
           },
           "whenDescriptors": []
+        },
+        {
+          "displayName": "SQL Query",
+          "propertyName": "query",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+            "instance": {
+              "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
         }
       ]
     },
     {
       "hidden": false,
-      "displayName": "Result Set as JSON",
-      "fullyQualifiedName": "com.reedelk.mysql.ResultSetAsJson",
+      "displayName": "SQL Insert",
+      "fullyQualifiedName": "com.reedelk.mysql.component.Insert",
+      "componentType": "PROCESSOR",
+      "componentPropertyDescriptors": [
+        {
+          "displayName": "Connection Configuration",
+          "propertyName": "connectionConfiguration",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
+            "instance": {
+              "shared": "YES",
+              "collapsible": "NO",
+              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "objectProperties": [
+                {
+                  "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "displayName": "Connection URL",
+                  "propertyName": "connectionURL",
+                  "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Username",
+                  "propertyName": "username",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Password",
+                  "propertyName": "password",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Driver",
+                  "propertyName": "driverClass",
+                  "defaultValue": "com.mysql.cj.jdbc.Driver",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                }
+              ],
+              "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "SQL Query",
+          "propertyName": "query",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+            "instance": {
+              "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        }
+      ]
+    },
+    {
+      "hidden": false,
+      "displayName": "Result Set As JSON",
+      "fullyQualifiedName": "com.reedelk.mysql.component.ResultSetAsJson",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": []
+    },
+    {
+      "hidden": false,
+      "displayName": "SQL Select",
+      "fullyQualifiedName": "com.reedelk.mysql.component.Select",
+      "componentType": "PROCESSOR",
+      "componentPropertyDescriptors": [
+        {
+          "displayName": "Connection Configuration",
+          "propertyName": "connectionConfiguration",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
+            "instance": {
+              "shared": "YES",
+              "collapsible": "NO",
+              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "objectProperties": [
+                {
+                  "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "displayName": "Connection URL",
+                  "propertyName": "connectionURL",
+                  "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Username",
+                  "propertyName": "username",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Password",
+                  "propertyName": "password",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Driver",
+                  "propertyName": "driverClass",
+                  "defaultValue": "com.mysql.cj.jdbc.Driver",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                }
+              ],
+              "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "SQL Query",
+          "propertyName": "query",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+            "instance": {
+              "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        }
+      ]
+    },
+    {
+      "hidden": false,
+      "displayName": "SQL Update",
+      "fullyQualifiedName": "com.reedelk.mysql.component.Update",
+      "componentType": "PROCESSOR",
+      "componentPropertyDescriptors": [
+        {
+          "displayName": "Connection Configuration",
+          "propertyName": "connectionConfiguration",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
+            "instance": {
+              "shared": "YES",
+              "collapsible": "NO",
+              "typeFullyQualifiedName": "com.reedelk.mysql.ConnectionConfiguration",
+              "objectProperties": [
+                {
+                  "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "displayName": "Connection URL",
+                  "propertyName": "connectionURL",
+                  "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Username",
+                  "propertyName": "username",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Password",
+                  "propertyName": "password",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Driver",
+                  "propertyName": "driverClass",
+                  "defaultValue": "com.mysql.cj.jdbc.Driver",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                }
+              ],
+              "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "SQL Query",
+          "propertyName": "query",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+            "instance": {
+              "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        }
+      ]
     }
   ],
   "autocompleteContributorDescriptors": []

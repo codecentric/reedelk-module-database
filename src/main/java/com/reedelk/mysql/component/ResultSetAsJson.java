@@ -1,5 +1,6 @@
-package com.reedelk.mysql;
+package com.reedelk.mysql.component;
 
+import com.reedelk.mysql.ResultSetConverter;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
@@ -13,7 +14,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@ESBComponent("Result Set as JSON")
+@ESBComponent("Result Set As JSON")
 @Component(service = ResultSetAsJson.class, scope = ServiceScope.PROTOTYPE)
 public class ResultSetAsJson implements ProcessorSync {
 
