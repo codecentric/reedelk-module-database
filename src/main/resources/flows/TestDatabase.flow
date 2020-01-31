@@ -27,20 +27,20 @@
       "parametersMapping": {"name": "#['item%']"}
     },
     {
-      "implementor": "com.reedelk.database.component.ResultSetAsJson",
-      "description": "Result Set As JSON"
+      "implementor": "com.reedelk.database.component.Insert",
+      "description": "SQL Insert"
     },
     {
       "implementor": "com.reedelk.database.component.Delete",
       "description": "SQL Delete"
     },
     {
-      "implementor": "com.reedelk.database.component.Insert",
-      "description": "SQL Insert"
-    },
-    {
       "implementor": "com.reedelk.database.component.Update",
       "description": "SQL Update"
+    },
+    {
+      "implementor": "com.reedelk.database.component.ResultSetAsJson",
+      "description": "Result Set As JSON"
     }
   ]
 }
