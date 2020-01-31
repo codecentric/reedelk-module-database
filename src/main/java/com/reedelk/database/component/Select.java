@@ -7,6 +7,7 @@ import com.reedelk.database.DisposableResultSet;
 import com.reedelk.database.utils.IsDriverAvailable;
 import com.reedelk.database.utils.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
+import com.reedelk.runtime.api.annotation.Hint;
 import com.reedelk.runtime.api.annotation.Property;
 import com.reedelk.runtime.api.annotation.TabPlacementTop;
 import com.reedelk.runtime.api.component.ProcessorSync;
@@ -33,11 +34,12 @@ import static java.lang.String.*;
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
 public class Select implements ProcessorSync {
 
-    @Property("Connection Configuration")
+    @Property("Connection")
     private ConnectionConfiguration connectionConfiguration;
-    @Property("SQL Query")
+    @Property("Select Query")
+    @Hint("SELECT * FROM orders WHERE  name LIKE :name")
     private String query;
-    @Property("Query Parameters")
+    @Property("Query Variables Mappings")
     @TabPlacementTop
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
