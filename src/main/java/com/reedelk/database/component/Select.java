@@ -77,6 +77,7 @@ public class Select implements ProcessorSync {
 
             resultSet = statement.executeQuery(realQuery);
 
+            // A disposable result set.
             DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
             flowContext.register(wrappedResultSet);
 
@@ -99,7 +100,9 @@ public class Select implements ProcessorSync {
             return MessageBuilder.get().typedContent(objectContent).build();
 
         } catch (Throwable exception) {
-            DatabaseUtils.closeSilently(resultSet, statement, connection);
+            DatabaseUtils.closeSilently(resultSet);
+            DatabaseUtils.closeSilently(statement);
+            DatabaseUtils.closeSilently(connection);
             throw new ESBException(exception);
         }
     }

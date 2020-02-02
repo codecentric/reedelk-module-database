@@ -1,19 +1,20 @@
 package com.reedelk.database;
 
-import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DatabaseUtils {
 
-    public static void closeSilently(AutoCloseable ...closeables) {
-        Arrays.stream(closeables).forEach(autoCloseable -> {
-            if (autoCloseable != null) {
-                try {
-                    autoCloseable.close();
-                } catch (Exception exception) {
-                    // TODO: Log this.
-                    exception.printStackTrace();
-                }
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseUtils.class);
+
+    public static void closeSilently(AutoCloseable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception exception) {
+                String message = String.format("Could not close: %s", exception.getMessage());
+                logger.warn(message, exception);
             }
-        });
+        }
     }
 }
