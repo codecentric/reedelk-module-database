@@ -10,6 +10,7 @@ public class DatabaseUtils {
                 try {
                     autoCloseable.close();
                 } catch (Exception exception) {
+                    // TODO: Log this.
                     exception.printStackTrace();
                 }
             }

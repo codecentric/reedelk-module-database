@@ -7,7 +7,7 @@
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
-          "displayName": "Connection Configuration",
+          "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
@@ -73,13 +73,26 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "SQL Query",
+          "displayName": "Delete Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
               "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "Query Variables Mappings",
+          "propertyName": "parametersMapping",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
+            "instance": {
+              "tabPlacement": "TOP",
+              "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
             }
           },
           "whenDescriptors": []
@@ -93,7 +106,7 @@
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
-          "displayName": "Connection Configuration",
+          "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
@@ -159,13 +172,26 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "SQL Query",
+          "displayName": "Insert Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
               "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "Query Variables Mappings",
+          "propertyName": "parametersMapping",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
+            "instance": {
+              "tabPlacement": "TOP",
+              "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
             }
           },
           "whenDescriptors": []
@@ -186,7 +212,7 @@
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
-          "displayName": "Connection Configuration",
+          "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
@@ -252,7 +278,8 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "SQL Query",
+          "hintValue": "SELECT * FROM orders WHERE  name LIKE :name",
+          "displayName": "Select Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
@@ -264,7 +291,7 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "Query Parameters",
+          "displayName": "Query Variables Mappings",
           "propertyName": "parametersMapping",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
@@ -285,7 +312,7 @@
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
         {
-          "displayName": "Connection Configuration",
+          "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
@@ -351,13 +378,26 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "SQL Query",
+          "displayName": "Update Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
               "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "Query Variables Mappings",
+          "propertyName": "parametersMapping",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
+            "instance": {
+              "tabPlacement": "TOP",
+              "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
             }
           },
           "whenDescriptors": []

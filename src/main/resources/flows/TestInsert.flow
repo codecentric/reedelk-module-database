@@ -1,13 +1,13 @@
 {
-  "id": "83410113-0dad-4640-8e0f-652f012b2fbb",
-  "title": "Test Database",
-  "description": "Test Database Flow",
+  "id": "7a90c5e9-de22-4499-b187-86a80ffbba5a",
+  "title": "Test Insert",
+  "description": "Test Insert Flow",
   "flow": [
     {
       "implementor": "com.reedelk.rest.component.RestListener",
       "description": "REST Listener",
       "configuration": {"ref": "c238c6be-1122-4c79-bcd8-c0fabc891897"},
-      "path": "/database",
+      "path": "/insert",
       "method": "GET",
       "streaming": "AUTO",
       "response": {
@@ -20,15 +20,10 @@
       }
     },
     {
-      "implementor": "com.reedelk.database.component.Select",
-      "description": "Select",
+      "implementor": "com.reedelk.database.component.Insert",
+      "description": "SQL Insert",
       "connectionConfiguration": {"ref": "14f51fc8-04c7-4686-9d9f-ee2a21d78b5d"},
-      "query": "SELECT * FROM orders WHERE  name LIKE :name",
-      "parametersMapping": {"name": "#['item%']"}
-    },
-    {
-      "implementor": "com.reedelk.database.component.ResultSetAsJson",
-      "description": "Result Set As JSON"
+      "query": "INSERT INTO ORDERS VALUES (\"uuff\",\"item3\")"
     }
   ]
 }

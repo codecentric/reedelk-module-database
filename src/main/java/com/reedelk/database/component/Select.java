@@ -1,9 +1,6 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.ConnectionConfiguration;
-import com.reedelk.database.ConnectionPools;
-import com.reedelk.database.DatabaseUtils;
-import com.reedelk.database.DisposableResultSet;
+import com.reedelk.database.*;
 import com.reedelk.database.utils.IsDriverAvailable;
 import com.reedelk.database.utils.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
@@ -15,20 +12,25 @@ import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
+import com.reedelk.runtime.api.message.content.MimeType;
+import com.reedelk.runtime.api.message.content.ObjectContent;
+import com.reedelk.runtime.api.message.content.factory.TypedContentFactory;
+import com.reedelk.runtime.api.message.content.utils.TypedPublisher;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+import reactor.core.publisher.Flux;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Map;
 
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.*;
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
-import static java.lang.String.*;
+import static java.lang.String.format;
 
 @ESBComponent("SQL Select")
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
@@ -77,7 +79,24 @@ public class Select implements ProcessorSync {
 
             DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
             flowContext.register(wrappedResultSet);
-            return MessageBuilder.get().withJavaObject(wrappedResultSet).build();
+
+            Flux<ResultRow> resultSetStream = Flux.create(sink -> {
+                try {
+                    ResultSetMetaData metaData = wrappedResultSet.getMetaData();
+
+                    while (wrappedResultSet.next()) {
+                        ResultRow resultRow = ResultSetConverter.convertRow(metaData, wrappedResultSet);
+                        sink.next(resultRow);
+                    }
+                } catch (Throwable exception) {
+                    exception.printStackTrace();
+                    sink.error(exception);
+                }
+            });
+
+            TypedPublisher<ResultRow> typedPublisher = TypedPublisher.from(resultSetStream, ResultRow.class);
+            ObjectContent objectContent = new ObjectContent(typedPublisher, MimeType.APPLICATION_JAVA);
+            return MessageBuilder.get().typedContent(objectContent).build();
 
         } catch (Throwable exception) {
             DatabaseUtils.closeSilently(resultSet, statement, connection);
