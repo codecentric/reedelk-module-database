@@ -17,14 +17,16 @@ import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxSink;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.*;
 import static java.lang.String.format;
@@ -62,45 +64,59 @@ public class Select implements ProcessorSync {
 
     @Override
     public Message apply(FlowContext flowContext, Message message) {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = pools.getConnection(connectionConfiguration);
-            statement = connection.createStatement();
 
-            Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
-            String realQuery = queryStatement.replace(evaluatedMap);
+        // TODO: This is stream based version.
+        Flux<ResultRow> result = Flux.create(sink -> {
 
-            resultSet = statement.executeQuery(realQuery);
+            Connection connection = null;
+            Statement statement = null;
+            ResultSet resultSet = null;
+            try {
+                connection = pools.getConnection(connectionConfiguration);
+                statement = connection.createStatement();
 
-            // A disposable result set.
-            DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
-            flowContext.register(wrappedResultSet);
+                Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
+                String realQuery = queryStatement.replace(evaluatedMap);
 
-            Publisher<ResultRow> resultSetStream = Flux.create(sink -> {
+                resultSet = statement.executeQuery(realQuery);
+
+                // A disposable result set.
+                // TODO: IF IT IS A STREAM, then we must do it later.
+                DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
+                // flowContext.register(wrappedResultSet);
+
                 try {
                     ResultSetMetaData metaData = wrappedResultSet.getMetaData();
                     while (wrappedResultSet.next()) {
                         ResultRow resultRow = ResultSetConverter.convertRow(metaData, wrappedResultSet);
                         sink.next(resultRow);
                     }
+                    sink.complete();
                 } catch (Throwable exception) {
                     exception.printStackTrace();
                     sink.error(exception);
                 }
-            });
 
-            return MessageBuilder.get()
-                    .withStream(resultSetStream, ResultRow.class)
-                    .build();
+            } catch (Throwable exception) {
+                DatabaseUtils.closeSilently(resultSet);
+                DatabaseUtils.closeSilently(statement);
+                DatabaseUtils.closeSilently(connection);
+                throw new ESBException(exception);
+            } finally {
+                DatabaseUtils.closeSilently(resultSet);
+                DatabaseUtils.closeSilently(statement);
+                DatabaseUtils.closeSilently(connection);
+            }
+        });
 
-        } catch (Throwable exception) {
-            DatabaseUtils.closeSilently(resultSet);
-            DatabaseUtils.closeSilently(statement);
-            DatabaseUtils.closeSilently(connection);
-            throw new ESBException(exception);
-        }
+        return MessageBuilder.get()
+                .withStream(result.map(new Function<ResultRow, String>() {
+                    @Override
+                    public String apply(ResultRow resultRow) {
+                        return (String)resultRow.get(1);
+                    }
+                }), String.class)
+                .build();
     }
 
     public void setQuery(String query) {

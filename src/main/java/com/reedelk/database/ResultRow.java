@@ -2,13 +2,14 @@ package com.reedelk.database;
 
 import com.reedelk.runtime.api.exception.ESBException;
 
+import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ResultRow {
+public class ResultRow implements Serializable {
 
-    private final ResultSetMetaData metadata;
+    private transient final ResultSetMetaData metadata;
     private final List<Object> row;
 
     public ResultRow(ResultSetMetaData metadata, List<Object> row) {
@@ -34,5 +35,12 @@ public class ResultRow {
 
     public Object get(int column) {
         return row.get(column - 1);
+    }
+
+    @Override
+    public String toString() {
+        return "ResultRow{" +
+                "row=" + row +
+                '}';
     }
 }
