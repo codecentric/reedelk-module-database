@@ -8,25 +8,25 @@ import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
+import com.reedelk.runtime.api.message.content.TypedContent;
 import com.reedelk.runtime.api.message.content.TypedPublisher;
 import org.json.JSONArray;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @ESBComponent("Result Set As JSON")
 @Component(service = ResultSetAsJson.class, scope = ServiceScope.PROTOTYPE)
 public class ResultSetAsJson implements ProcessorSync {
 
+    // TODO: Test what happens when cast exception. We must put in the precondtion the type
+    //  which must be correct.
     @Override
     public Message apply(FlowContext flowContext, Message message) {
-        Object payload = message.payload();
-        if (!(payload instanceof TypedPublisher)) {
-            throw new IllegalStateException("Result Set Expected");
-        }
-
-        TypedPublisher<ResultRow> resultSet = (TypedPublisher<ResultRow>) payload;
+        TypedContent<ResultRow, List<ResultRow>> content = message.content();
+        TypedPublisher<ResultRow> resultSet = content.stream();
         try {
             JSONArray convert = ResultSetConverter.convert(resultSet);
             String result = convert.toString(4);
