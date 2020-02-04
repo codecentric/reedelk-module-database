@@ -8,13 +8,11 @@ import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
-import com.reedelk.runtime.api.message.content.utils.TypedPublisher;
+import com.reedelk.runtime.api.message.content.TypedPublisher;
 import org.json.JSONArray;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
-import org.reactivestreams.Publisher;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @ESBComponent("Result Set As JSON")
