@@ -12,15 +12,12 @@ import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
-import com.reedelk.runtime.api.message.content.MimeType;
-import com.reedelk.runtime.api.message.content.ObjectContent;
-import com.reedelk.runtime.api.message.content.factory.TypedContentFactory;
-import com.reedelk.runtime.api.message.content.utils.TypedPublisher;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 
 import java.sql.Connection;
@@ -81,10 +78,9 @@ public class Select implements ProcessorSync {
             DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
             flowContext.register(wrappedResultSet);
 
-            Flux<ResultRow> resultSetStream = Flux.create(sink -> {
+            Publisher<ResultRow> resultSetStream = Flux.create(sink -> {
                 try {
                     ResultSetMetaData metaData = wrappedResultSet.getMetaData();
-
                     while (wrappedResultSet.next()) {
                         ResultRow resultRow = ResultSetConverter.convertRow(metaData, wrappedResultSet);
                         sink.next(resultRow);
@@ -95,9 +91,9 @@ public class Select implements ProcessorSync {
                 }
             });
 
-            TypedPublisher<ResultRow> typedPublisher = TypedPublisher.from(resultSetStream, ResultRow.class);
-            ObjectContent objectContent = new ObjectContent(typedPublisher, MimeType.APPLICATION_JAVA);
-            return MessageBuilder.get().typedContent(objectContent).build();
+            return MessageBuilder.get()
+                    .withStream(resultSetStream, ResultRow.class)
+                    .build();
 
         } catch (Throwable exception) {
             DatabaseUtils.closeSilently(resultSet);

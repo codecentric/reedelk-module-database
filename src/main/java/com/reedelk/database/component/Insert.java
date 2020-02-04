@@ -76,7 +76,9 @@ public class Insert implements ProcessorSync {
         } catch (Throwable exception) {
             throw new ESBException(exception);
         } finally {
-            DatabaseUtils.closeSilently(resultSet, statement, connection);
+            DatabaseUtils.closeSilently(resultSet);
+            DatabaseUtils.closeSilently(statement);
+            DatabaseUtils.closeSilently(connection);
         }
     }
 
