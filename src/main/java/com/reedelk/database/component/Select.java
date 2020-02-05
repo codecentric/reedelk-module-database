@@ -65,26 +65,25 @@ public class Select implements ProcessorSync {
     @Override
     public Message apply(FlowContext flowContext, Message message) {
 
-        // TODO: This is stream based version.
-        Flux<ResultRow> result = Flux.create(sink -> {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = pools.getConnection(connectionConfiguration);
+            statement = connection.createStatement();
 
-            Connection connection = null;
-            Statement statement = null;
-            ResultSet resultSet = null;
-            try {
-                connection = pools.getConnection(connectionConfiguration);
-                statement = connection.createStatement();
+            Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
+            String realQuery = queryStatement.replace(evaluatedMap);
 
-                Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
-                String realQuery = queryStatement.replace(evaluatedMap);
+            resultSet = statement.executeQuery(realQuery);
 
-                resultSet = statement.executeQuery(realQuery);
+            // A disposable result set.
+            // TODO: IF IT IS A STREAM, then we must do it later.
+            DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
+            flowContext.register(wrappedResultSet);
 
-                // A disposable result set.
-                // TODO: IF IT IS A STREAM, then we must do it later.
-                DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
-                // flowContext.register(wrappedResultSet);
-
+            // TODO: This is stream based version.
+            Flux<ResultRow> result = Flux.create(sink -> {
                 try {
                     ResultSetMetaData metaData = wrappedResultSet.getMetaData();
                     while (wrappedResultSet.next()) {
@@ -96,27 +95,18 @@ public class Select implements ProcessorSync {
                     exception.printStackTrace();
                     sink.error(exception);
                 }
+            });
 
-            } catch (Throwable exception) {
-                DatabaseUtils.closeSilently(resultSet);
-                DatabaseUtils.closeSilently(statement);
-                DatabaseUtils.closeSilently(connection);
-                throw new ESBException(exception);
-            } finally {
-                DatabaseUtils.closeSilently(resultSet);
-                DatabaseUtils.closeSilently(statement);
-                DatabaseUtils.closeSilently(connection);
-            }
-        });
+            return MessageBuilder.get()
+                    .withStream(result, ResultRow.class)
+                    .build();
 
-        return MessageBuilder.get()
-                .withStream(result.map(new Function<ResultRow, String>() {
-                    @Override
-                    public String apply(ResultRow resultRow) {
-                        return (String)resultRow.get(1);
-                    }
-                }), String.class)
-                .build();
+        } catch (Throwable exception) {
+            DatabaseUtils.closeSilently(resultSet);
+            DatabaseUtils.closeSilently(statement);
+            DatabaseUtils.closeSilently(connection);
+            throw new ESBException(exception);
+        }
     }
 
     public void setQuery(String query) {
