@@ -3,7 +3,6 @@ package com.reedelk.database.commons;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.component.Select;
 import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.utils.IsDriverAvailable;
 import com.reedelk.runtime.api.exception.ESBException;
 import org.osgi.service.component.annotations.Component;
 

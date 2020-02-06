@@ -1,5 +1,6 @@
 package com.reedelk.database.utils;
 
+import com.reedelk.database.commons.QueryStatementTemplate;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class QueryStatementTemplateTest {
+class   QueryStatementTemplateTest {
 
     @Test
     void shouldCorrectlyReplaceVariables() {
@@ -47,5 +48,18 @@ class QueryStatementTemplateTest {
 
         // Then
         assertThat(replaced).isEqualTo("SELECT * FROM Orders WHERE id = 1238498234");
+    }
+
+    @Test
+    void shouldCorrectlyReplaceParameterizedInsertValues() {
+        // Given
+        QueryStatementTemplate replacer = new QueryStatementTemplate("INSERT INTO ORDERS VALUES (:id,:name)");
+
+        // When
+        Map<String,Object> replacements = ImmutableMap.of("id", "aabbcc", "name", "my test name");
+        String replaced = replacer.replace(replacements);
+
+        // Then
+        assertThat(replaced).isEqualTo("INSERT INTO ORDERS VALUES ('aabbcc','my test name')");
     }
 }

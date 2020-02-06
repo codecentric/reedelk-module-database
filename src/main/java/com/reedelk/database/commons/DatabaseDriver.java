@@ -9,7 +9,9 @@ public enum DatabaseDriver {
     @DisplayName("Oracle (oracle.jdbc.driver.OracleDriver)")
     ORACLE("oracle.jdbc.driver.OracleDriver"),
     @DisplayName("PostgreSQL (org.postgresql.Driver)")
-    POSTGRESQL("org.postgresql.Driver");
+    POSTGRESQL("org.postgresql.Driver"),
+    @DisplayName("H2 (org.h2.Driver)")
+    H2("org.h2.Driver");
 
     private final String qualifiedName;
 

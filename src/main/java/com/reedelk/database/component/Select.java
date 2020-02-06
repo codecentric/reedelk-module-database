@@ -3,7 +3,7 @@ package com.reedelk.database.component;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.*;
 import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.utils.QueryStatementTemplate;
+import com.reedelk.database.commons.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Hint;
 import com.reedelk.runtime.api.annotation.Property;

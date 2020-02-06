@@ -4,7 +4,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.DataSourceService;
 import com.reedelk.database.commons.DatabaseUtils;
 import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.utils.QueryStatementTemplate;
+import com.reedelk.database.commons.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Property;
 import com.reedelk.runtime.api.annotation.TabPlacementTop;

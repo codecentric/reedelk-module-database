@@ -15,7 +15,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
@@ -47,21 +47,66 @@
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
-                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "com.reedelk.runtime.api.annotation.Password"
                     }
                   },
                   "whenDescriptors": []
                 },
                 {
                   "displayName": "Driver",
-                  "propertyName": "driverClass",
-                  "defaultValue": "com.mysql.cj.jdbc.Driver",
+                  "propertyName": "databaseDriver",
+                  "defaultValue": "MYSQL",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
+                    "instance": {
+                      "nameAndDisplayNameMap": {
+                        "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
+                        "H2": "H2 (org.h2.Driver)",
+                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
+                      },
+                      "type": "java.lang.Enum"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "3",
+                  "displayName": "Min Pool Size",
+                  "propertyName": "minPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "20",
+                  "displayName": "Max Pool Size",
+                  "propertyName": "maxPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "5",
+                  "displayName": "Acquire Increment",
+                  "propertyName": "acquireIncrement",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
                     }
                   },
                   "whenDescriptors": []
@@ -114,7 +159,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
@@ -146,21 +191,66 @@
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
-                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "com.reedelk.runtime.api.annotation.Password"
                     }
                   },
                   "whenDescriptors": []
                 },
                 {
                   "displayName": "Driver",
-                  "propertyName": "driverClass",
-                  "defaultValue": "com.mysql.cj.jdbc.Driver",
+                  "propertyName": "databaseDriver",
+                  "defaultValue": "MYSQL",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
+                    "instance": {
+                      "nameAndDisplayNameMap": {
+                        "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
+                        "H2": "H2 (org.h2.Driver)",
+                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
+                      },
+                      "type": "java.lang.Enum"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "3",
+                  "displayName": "Min Pool Size",
+                  "propertyName": "minPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "20",
+                  "displayName": "Max Pool Size",
+                  "propertyName": "maxPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "5",
+                  "displayName": "Acquire Increment",
+                  "propertyName": "acquireIncrement",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
                     }
                   },
                   "whenDescriptors": []
@@ -220,7 +310,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
@@ -252,21 +342,66 @@
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
-                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "com.reedelk.runtime.api.annotation.Password"
                     }
                   },
                   "whenDescriptors": []
                 },
                 {
                   "displayName": "Driver",
-                  "propertyName": "driverClass",
-                  "defaultValue": "com.mysql.cj.jdbc.Driver",
+                  "propertyName": "databaseDriver",
+                  "defaultValue": "MYSQL",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
+                    "instance": {
+                      "nameAndDisplayNameMap": {
+                        "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
+                        "H2": "H2 (org.h2.Driver)",
+                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
+                      },
+                      "type": "java.lang.Enum"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "3",
+                  "displayName": "Min Pool Size",
+                  "propertyName": "minPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "20",
+                  "displayName": "Max Pool Size",
+                  "propertyName": "maxPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "5",
+                  "displayName": "Acquire Increment",
+                  "propertyName": "acquireIncrement",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
                     }
                   },
                   "whenDescriptors": []
@@ -320,7 +455,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
@@ -352,21 +487,66 @@
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
-                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "com.reedelk.runtime.api.annotation.Password"
                     }
                   },
                   "whenDescriptors": []
                 },
                 {
                   "displayName": "Driver",
-                  "propertyName": "driverClass",
-                  "defaultValue": "com.mysql.cj.jdbc.Driver",
+                  "propertyName": "databaseDriver",
+                  "defaultValue": "MYSQL",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
+                    "instance": {
+                      "nameAndDisplayNameMap": {
+                        "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
+                        "H2": "H2 (org.h2.Driver)",
+                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
+                      },
+                      "type": "java.lang.Enum"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "3",
+                  "displayName": "Min Pool Size",
+                  "propertyName": "minPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
-                      "type": "java.lang.String"
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "20",
+                  "displayName": "Max Pool Size",
+                  "propertyName": "maxPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "5",
+                  "displayName": "Acquire Increment",
+                  "propertyName": "acquireIncrement",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
                     }
                   },
                   "whenDescriptors": []

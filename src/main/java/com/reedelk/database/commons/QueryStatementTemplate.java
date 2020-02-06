@@ -1,4 +1,4 @@
-package com.reedelk.database.utils;
+package com.reedelk.database.commons;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -35,6 +35,11 @@ public class QueryStatementTemplate {
                 }
             }
             i = matcher.end();
+        }
+
+        // We must make sure that we append the remaining query string.
+        if (query.length() > i) {
+            builder.append(query.substring(i));
         }
         return builder.toString();
     }

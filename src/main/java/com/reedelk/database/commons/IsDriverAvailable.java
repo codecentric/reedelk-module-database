@@ -1,14 +1,12 @@
-package com.reedelk.database.utils;
-
-import com.reedelk.database.commons.DatabaseDriver;
+package com.reedelk.database.commons;
 
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Enumeration;
 
-public class IsDriverAvailable {
+class IsDriverAvailable {
 
-    public static boolean of(String driverClass) {
+    private static boolean of(String driverClass) {
         Enumeration<Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
             Driver driver = drivers.nextElement();
@@ -19,7 +17,7 @@ public class IsDriverAvailable {
         return false;
     }
 
-    public static boolean of(DatabaseDriver databaseDriver) {
+    static boolean of(DatabaseDriver databaseDriver) {
         return of(databaseDriver.qualifiedName());
     }
 }
