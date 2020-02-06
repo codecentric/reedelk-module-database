@@ -2,6 +2,150 @@
   "componentDescriptors": [
     {
       "hidden": false,
+      "displayName": "DDL Execute",
+      "fullyQualifiedName": "com.reedelk.database.component.DDLExecute",
+      "componentType": "PROCESSOR",
+      "componentPropertyDescriptors": [
+        {
+          "displayName": "Connection",
+          "propertyName": "connectionConfiguration",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
+            "instance": {
+              "shared": "YES",
+              "collapsible": "NO",
+              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
+              "objectProperties": [
+                {
+                  "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "displayName": "Connection URL",
+                  "propertyName": "connectionURL",
+                  "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Username",
+                  "propertyName": "username",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.String"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Password",
+                  "propertyName": "password",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
+                    "instance": {
+                      "type": "com.reedelk.runtime.api.annotation.Password"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "displayName": "Driver",
+                  "propertyName": "databaseDriver",
+                  "defaultValue": "MYSQL",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
+                    "instance": {
+                      "nameAndDisplayNameMap": {
+                        "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
+                        "H2": "H2 (org.h2.Driver)",
+                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
+                      },
+                      "type": "java.lang.Enum"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "3",
+                  "displayName": "Min Pool Size",
+                  "propertyName": "minPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "20",
+                  "displayName": "Max Pool Size",
+                  "propertyName": "maxPoolSize",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                },
+                {
+                  "hintValue": "5",
+                  "displayName": "Acquire Increment",
+                  "propertyName": "acquireIncrement",
+                  "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyType": {
+                    "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+                    "instance": {
+                      "type": "java.lang.Integer"
+                    }
+                  },
+                  "whenDescriptors": []
+                }
+              ],
+              "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "DDL Definition",
+          "propertyName": "query",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+            "instance": {
+              "type": "java.lang.String"
+            }
+          },
+          "whenDescriptors": []
+        },
+        {
+          "displayName": "Query Variables Mappings",
+          "propertyName": "parametersMapping",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
+            "instance": {
+              "tabPlacement": "TOP",
+              "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
+            }
+          },
+          "whenDescriptors": []
+        }
+      ]
+    },
+    {
+      "hidden": false,
       "displayName": "SQL Delete",
       "fullyQualifiedName": "com.reedelk.database.component.Delete",
       "componentType": "PROCESSOR",

@@ -1,0 +1,29 @@
+{
+  "id": "7449dcfb-1262-47ce-a142-6ec1a7e24605",
+  "title": "H2 Select",
+  "description": "H2 Select Flow",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RestListener",
+      "description": "REST Listener",
+      "configuration": {"ref": "c238c6be-1122-4c79-bcd8-c0fabc891897"},
+      "path": "/h2/select",
+      "method": "GET",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.database.component.Select",
+      "description": "SQL Select",
+      "connectionConfiguration": {"ref": "e09c2192-da6b-46bf-82b7-843a67bebec4"},
+      "query": "SELECT * FROM orders;"
+    }
+  ]
+}
