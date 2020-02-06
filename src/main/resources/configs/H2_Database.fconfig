@@ -1,0 +1,9 @@
+{
+  "id": "e09c2192-da6b-46bf-82b7-843a67bebec4",
+  "title": "H2Database",
+  "implementor": "com.reedelk.database.configuration.ConnectionConfiguration",
+  "connectionURL": "jdbc:h2:~/test",
+  "username": "sa",
+  "password": "sa",
+  "databaseDriver": "H2"
+}
