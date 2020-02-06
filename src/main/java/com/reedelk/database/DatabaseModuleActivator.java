@@ -1,6 +1,7 @@
 package com.reedelk.database;
 
 
+import com.reedelk.database.commons.ConnectionPools;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;

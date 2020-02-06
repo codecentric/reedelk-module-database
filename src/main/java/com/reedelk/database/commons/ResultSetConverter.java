@@ -1,4 +1,4 @@
-package com.reedelk.database;
+package com.reedelk.database.commons;
 
 import com.reedelk.runtime.api.message.content.TypedPublisher;
 import org.json.JSONArray;

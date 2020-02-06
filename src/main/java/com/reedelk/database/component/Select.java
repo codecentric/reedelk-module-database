@@ -1,6 +1,7 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.*;
+import com.reedelk.database.commons.*;
+import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.database.utils.IsDriverAvailable;
 import com.reedelk.database.utils.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
@@ -18,15 +19,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.FluxSink;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.*;
 import static java.lang.String.format;
@@ -45,7 +43,7 @@ public class Select implements ProcessorSync {
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference
-    private ConnectionPools pools;
+    private ConnectionPools connectionPools;
     @Reference
     private ScriptEngineService scriptEngine;
 
@@ -55,21 +53,20 @@ public class Select implements ProcessorSync {
     public void initialize() {
         requireNotBlank(Select.class, query, "Select query is not defined");
         requireNotNull(Select.class, connectionConfiguration, "Connection configuration must be available");
-        String driverClass = connectionConfiguration.getDriverClass();
+        DatabaseDriver databaseDriverClass = connectionConfiguration.getDatabaseDriver();
         requireTrue(Select.class,
-                IsDriverAvailable.of(driverClass),
-                format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", driverClass));
+                IsDriverAvailable.of(databaseDriverClass),
+                format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", databaseDriverClass));
         queryStatement = new QueryStatementTemplate(query);
     }
 
     @Override
     public Message apply(FlowContext flowContext, Message message) {
-
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = pools.getConnection(connectionConfiguration);
+            connection = connectionPools.getConnection(connectionConfiguration);
             statement = connection.createStatement();
 
             Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
@@ -77,12 +74,9 @@ public class Select implements ProcessorSync {
 
             resultSet = statement.executeQuery(realQuery);
 
-            // A disposable result set.
-            // TODO: IF IT IS A STREAM, then we must do it later.
             DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
             flowContext.register(wrappedResultSet);
 
-            // TODO: This is stream based version.
             Flux<ResultRow> result = Flux.create(sink -> {
                 try {
                     ResultSetMetaData metaData = wrappedResultSet.getMetaData();
@@ -92,7 +86,6 @@ public class Select implements ProcessorSync {
                     }
                     sink.complete();
                 } catch (Throwable exception) {
-                    exception.printStackTrace();
                     sink.error(exception);
                 }
             });

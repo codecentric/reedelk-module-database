@@ -1,8 +1,9 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.ConnectionConfiguration;
-import com.reedelk.database.ConnectionPools;
-import com.reedelk.database.DatabaseUtils;
+import com.reedelk.database.commons.DatabaseDriver;
+import com.reedelk.database.configuration.ConnectionConfiguration;
+import com.reedelk.database.commons.ConnectionPools;
+import com.reedelk.database.commons.DatabaseUtils;
 import com.reedelk.database.utils.IsDriverAvailable;
 import com.reedelk.database.utils.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
@@ -50,10 +51,10 @@ public class Delete implements ProcessorSync {
     public void initialize() {
         requireNotBlank(Insert.class, query, "Delete query is not defined");
         requireNotNull(Insert.class, connectionConfiguration, "Connection configuration must be available");
-        String driverClass = connectionConfiguration.getDriverClass();
+        DatabaseDriver databaseDriverClass = connectionConfiguration.getDatabaseDriver();
         requireTrue(Insert.class,
-                IsDriverAvailable.of(driverClass),
-                format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", driverClass));
+                IsDriverAvailable.of(databaseDriverClass),
+                format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", databaseDriverClass));
         queryStatement = new QueryStatementTemplate(query);
     }
 

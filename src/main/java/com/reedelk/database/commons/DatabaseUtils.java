@@ -1,4 +1,4 @@
-package com.reedelk.database;
+package com.reedelk.database.commons;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

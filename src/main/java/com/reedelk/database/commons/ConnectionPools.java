@@ -1,6 +1,7 @@
-package com.reedelk.database;
+package com.reedelk.database.commons;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.runtime.api.exception.ESBException;
 import org.osgi.service.component.annotations.Component;
 
@@ -8,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.Optional;
 
 import static org.osgi.service.component.annotations.ServiceScope.SINGLETON;
 
@@ -26,16 +27,23 @@ public class ConnectionPools {
             if (CONFIG_ID_CONNECTION_POOL_MAP.containsKey(connectionConfiguration.getId())) {
                 return getConnectionInternal(connectionConfiguration);
             }
-            // Otherwise create
-            ComboPooledDataSource cpds = new ComboPooledDataSource();
+            // Otherwise we need to create the data source.
+            ComboPooledDataSource pooledDataSource = new ComboPooledDataSource();
             try {
-                cpds.setDriverClass(connectionConfiguration.getDriverClass());
-                cpds.setJdbcUrl(connectionConfiguration.getConnectionURL());
-                cpds.setUser(connectionConfiguration.getUsername());
-                cpds.setPassword(connectionConfiguration.getPassword());
-                CONFIG_ID_CONNECTION_POOL_MAP.put(connectionConfiguration.getId(), cpds);
+                pooledDataSource.setDriverClass(connectionConfiguration.getDatabaseDriver().qualifiedName());
+                pooledDataSource.setJdbcUrl(connectionConfiguration.getConnectionURL());
+                pooledDataSource.setUser(connectionConfiguration.getUsername());
+                pooledDataSource.setPassword(connectionConfiguration.getPassword());
 
-                return cpds.getConnection();
+                Optional.ofNullable(connectionConfiguration.getMinPoolSize())
+                        .ifPresent(pooledDataSource::setMinPoolSize);
+                Optional.ofNullable(connectionConfiguration.getMaxPoolSize())
+                        .ifPresent(pooledDataSource::setMaxPoolSize);
+                Optional.ofNullable(connectionConfiguration.getAcquireIncrement())
+                        .ifPresent(pooledDataSource::setAcquireIncrement);
+
+                CONFIG_ID_CONNECTION_POOL_MAP.put(connectionConfiguration.getId(), pooledDataSource);
+                return pooledDataSource.getConnection();
             } catch (Throwable exception) {
                 throw new ESBException(exception);
             }

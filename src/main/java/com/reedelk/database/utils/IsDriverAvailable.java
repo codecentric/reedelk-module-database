@@ -1,5 +1,7 @@
 package com.reedelk.database.utils;
 
+import com.reedelk.database.commons.DatabaseDriver;
+
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Enumeration;
@@ -15,5 +17,9 @@ public class IsDriverAvailable {
             }
         }
         return false;
+    }
+
+    public static boolean of(DatabaseDriver databaseDriver) {
+        return of(databaseDriver.qualifiedName());
     }
 }
