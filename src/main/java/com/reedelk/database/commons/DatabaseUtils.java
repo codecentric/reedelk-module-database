@@ -11,7 +11,7 @@ public class DatabaseUtils {
         if (closeable != null) {
             try {
                 closeable.close();
-            } catch (Exception exception) {
+            } catch (Throwable exception) {
                 String message = String.format("Could not close: %s", exception.getMessage());
                 logger.warn(message, exception);
             }

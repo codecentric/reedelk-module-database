@@ -1,10 +1,9 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.commons.DatabaseDriver;
-import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.commons.ConnectionPools;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.reedelk.database.commons.DataSourceService;
 import com.reedelk.database.commons.DatabaseUtils;
-import com.reedelk.database.utils.IsDriverAvailable;
+import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.database.utils.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Property;
@@ -25,8 +24,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.*;
-import static java.lang.String.format;
+import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 
 @ESBComponent("SQL Delete")
 @Component(service = Delete.class, scope = ServiceScope.PROTOTYPE)
@@ -41,20 +39,18 @@ public class Delete implements ProcessorSync {
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference
-    private ConnectionPools pools;
+    private DataSourceService dataSourceService;
     @Reference
     private ScriptEngineService scriptEngine;
 
     private QueryStatementTemplate queryStatement;
 
+    private ComboPooledDataSource dataSource;
+
     @Override
     public void initialize() {
         requireNotBlank(Insert.class, query, "Delete query is not defined");
-        requireNotNull(Insert.class, connectionConfiguration, "Connection configuration must be available");
-        DatabaseDriver databaseDriverClass = connectionConfiguration.getDatabaseDriver();
-        requireTrue(Insert.class,
-                IsDriverAvailable.of(databaseDriverClass),
-                format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", databaseDriverClass));
+        dataSource = dataSourceService.getDataSource(this, connectionConfiguration);
         queryStatement = new QueryStatementTemplate(query);
     }
 
@@ -64,7 +60,7 @@ public class Delete implements ProcessorSync {
         Statement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = pools.getConnection(connectionConfiguration);
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
 
             Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
@@ -81,6 +77,13 @@ public class Delete implements ProcessorSync {
             DatabaseUtils.closeSilently(statement);
             DatabaseUtils.closeSilently(connection);
         }
+    }
+
+    @Override
+    public void dispose() {
+        this.dataSourceService.dispose(this, connectionConfiguration);
+        this.dataSource = null;
+        this.queryStatement = null;
     }
 
     public void setQuery(String query) {

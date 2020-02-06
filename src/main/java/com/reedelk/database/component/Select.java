@@ -1,8 +1,8 @@
 package com.reedelk.database.component;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.*;
 import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.utils.IsDriverAvailable;
 import com.reedelk.database.utils.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Hint;
@@ -26,8 +26,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Map;
 
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.*;
-import static java.lang.String.format;
+import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 
 @ESBComponent("SQL Select")
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
@@ -35,28 +34,28 @@ public class Select implements ProcessorSync {
 
     @Property("Connection")
     private ConnectionConfiguration connectionConfiguration;
+
     @Property("Select Query")
     @Hint("SELECT * FROM orders WHERE  name LIKE :name")
     private String query;
+
     @Property("Query Variables Mappings")
     @TabPlacementTop
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference
-    private ConnectionPools connectionPools;
+    private DataSourceService dataSourceService;
     @Reference
     private ScriptEngineService scriptEngine;
 
     private QueryStatementTemplate queryStatement;
 
+    private ComboPooledDataSource dataSource;
+
     @Override
     public void initialize() {
         requireNotBlank(Select.class, query, "Select query is not defined");
-        requireNotNull(Select.class, connectionConfiguration, "Connection configuration must be available");
-        DatabaseDriver databaseDriverClass = connectionConfiguration.getDatabaseDriver();
-        requireTrue(Select.class,
-                IsDriverAvailable.of(databaseDriverClass),
-                format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", databaseDriverClass));
+        dataSource = dataSourceService.getDataSource(this, connectionConfiguration);
         queryStatement = new QueryStatementTemplate(query);
     }
 
@@ -66,7 +65,7 @@ public class Select implements ProcessorSync {
         Statement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = connectionPools.getConnection(connectionConfiguration);
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
 
             Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
@@ -74,14 +73,14 @@ public class Select implements ProcessorSync {
 
             resultSet = statement.executeQuery(realQuery);
 
-            DisposableResultSet wrappedResultSet = new DisposableResultSet(connection, statement, resultSet);
-            flowContext.register(wrappedResultSet);
+            DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
+            flowContext.register(disposableResultSet);
 
             Flux<ResultRow> result = Flux.create(sink -> {
                 try {
-                    ResultSetMetaData metaData = wrappedResultSet.getMetaData();
-                    while (wrappedResultSet.next()) {
-                        ResultRow resultRow = ResultSetConverter.convertRow(metaData, wrappedResultSet);
+                    ResultSetMetaData metaData = disposableResultSet.getMetaData();
+                    while (disposableResultSet.next()) {
+                        ResultRow resultRow = ResultSetConverter.convertRow(metaData, disposableResultSet);
                         sink.next(resultRow);
                     }
                     sink.complete();
@@ -100,6 +99,13 @@ public class Select implements ProcessorSync {
             DatabaseUtils.closeSilently(connection);
             throw new ESBException(exception);
         }
+    }
+
+    @Override
+    public void dispose() {
+        this.dataSourceService.dispose(this, connectionConfiguration);
+        this.dataSource = null;
+        this.queryStatement = null;
     }
 
     public void setQuery(String query) {

@@ -1,7 +1,7 @@
 package com.reedelk.database;
 
 
-import com.reedelk.database.commons.ConnectionPools;
+import com.reedelk.database.commons.DataSourceService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -12,12 +12,12 @@ import static org.osgi.service.component.annotations.ServiceScope.SINGLETON;
 public class DatabaseModuleActivator {
 
     @Reference
-    private ConnectionPools connectionPools;
+    private DataSourceService dataSourceService;
 
     @Deactivate
     public void deactivate() {
         // All the connection pools should be closed, to make sure
         // that nothing has been left open.
-        connectionPools.dispose();
+        dataSourceService.dispose();
     }
 }

@@ -14,15 +14,13 @@ import org.json.JSONArray;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @ESBComponent("Result Set As JSON")
 @Component(service = ResultSetAsJson.class, scope = ServiceScope.PROTOTYPE)
 public class ResultSetAsJson implements ProcessorSync {
 
-    // TODO: Test what happens when cast exception. We must put in the precondtion the type
-    //  which must be correct.
+// TODO: Test when the message  content has a different type.
     @Override
     public Message apply(FlowContext flowContext, Message message) {
         TypedContent<ResultRow, List<ResultRow>> content = message.content();
@@ -31,8 +29,8 @@ public class ResultSetAsJson implements ProcessorSync {
             JSONArray convert = ResultSetConverter.convert(resultSet);
             String result = convert.toString(4);
             return MessageBuilder.get().withJson(result).build();
-        } catch (SQLException e) {
-            throw new ESBException(e);
+        } catch (Throwable exception) {
+            throw new ESBException(exception);
         }
     }
 }
