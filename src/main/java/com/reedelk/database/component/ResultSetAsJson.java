@@ -1,6 +1,5 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.commons.ResultRow;
 import com.reedelk.database.commons.ResultSetConverter;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.component.ProcessorSync;
@@ -8,6 +7,7 @@ import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
+import com.reedelk.runtime.api.message.content.ResultRow;
 import com.reedelk.runtime.api.message.content.TypedContent;
 import com.reedelk.runtime.api.message.content.TypedPublisher;
 import org.json.JSONArray;
@@ -20,7 +20,6 @@ import java.util.List;
 @Component(service = ResultSetAsJson.class, scope = ServiceScope.PROTOTYPE)
 public class ResultSetAsJson implements ProcessorSync {
 
-// TODO: Test when the message  content has a different type.
     @Override
     public Message apply(FlowContext flowContext, Message message) {
         TypedContent<ResultRow, List<ResultRow>> content = message.content();

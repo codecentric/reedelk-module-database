@@ -13,7 +13,7 @@ class   QueryStatementTemplateTest {
     @Test
     void shouldCorrectlyReplaceVariables() {
         // Given
-        QueryStatementTemplate replacer = new QueryStatementTemplate("SELECT * FROM Orders WHERE name = :name AND surname = :surname;");
+        QueryStatementTemplate replacer = new QueryStatementTemplate("SELECT * FROM Orders WHERE name = :name AND surname = :surname");
 
         // When
         Map<String,Object> replacements = ImmutableMap.of("name","Mark", "surname", "Anton");
@@ -34,7 +34,7 @@ class   QueryStatementTemplateTest {
         String replaced = replacer.replace(replacements);
 
         // Then
-        assertThat(replaced).isEqualTo("SELECT * FROM Orders WHERE name = :name AND surname = 'Anton'");
+        assertThat(replaced).isEqualTo("SELECT * FROM Orders WHERE name = :name AND surname = 'Anton';");
     }
 
     @Test
@@ -47,7 +47,7 @@ class   QueryStatementTemplateTest {
         String replaced = replacer.replace(replacements);
 
         // Then
-        assertThat(replaced).isEqualTo("SELECT * FROM Orders WHERE id = 1238498234");
+        assertThat(replaced).isEqualTo("SELECT * FROM Orders WHERE id = 1238498234;");
     }
 
     @Test

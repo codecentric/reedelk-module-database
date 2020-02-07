@@ -3,7 +3,6 @@ package com.reedelk.database.component;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.*;
 import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.commons.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.ESBComponent;
 import com.reedelk.runtime.api.annotation.Hint;
 import com.reedelk.runtime.api.annotation.Property;
@@ -13,6 +12,7 @@ import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
+import com.reedelk.runtime.api.message.content.ResultRow;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
 import org.osgi.service.component.annotations.Component;
@@ -80,8 +80,8 @@ public class Select implements ProcessorSync {
                 try {
                     ResultSetMetaData metaData = disposableResultSet.getMetaData();
                     while (disposableResultSet.next()) {
-                        ResultRow resultRow = ResultSetConverter.convertRow(metaData, disposableResultSet);
-                        sink.next(resultRow);
+                        ResultRow row = ResultSetConverter.convertRow(metaData, disposableResultSet);
+                        sink.next(row);
                     }
                     sink.complete();
                 } catch (Throwable exception) {

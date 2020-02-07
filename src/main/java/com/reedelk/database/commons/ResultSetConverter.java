@@ -1,5 +1,6 @@
 package com.reedelk.database.commons;
 
+import com.reedelk.runtime.api.message.content.ResultRow;
 import com.reedelk.runtime.api.message.content.TypedPublisher;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ResultSetConverter {
 
-    public static JSONArray convert(TypedPublisher<ResultRow> resultSetFlux) throws SQLException, JSONException {
+    public static JSONArray convert(TypedPublisher<ResultRow> resultSetFlux) throws JSONException {
         JSONArray json = new JSONArray();
         Flux.from(resultSetFlux).subscribe(resultSetRow -> {
             JSONObject rowObject = new JSONObject();
@@ -35,7 +36,7 @@ public class ResultSetConverter {
         for (int i = 1; i <= columnCount; i++) {
             row.add(getObjectByColumnId(metaData, i, resultSetRow));
         }
-        return new ResultRow(metaData, row);
+        return new JDBCResultRow(metaData, row);
     }
 
     private static Object getObjectByColumnId(ResultSetMetaData metaData, int columnId, ResultSet resultSetRow) throws SQLException {
