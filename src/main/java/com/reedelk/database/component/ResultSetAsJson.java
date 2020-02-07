@@ -16,6 +16,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.List;
 
+import static com.reedelk.runtime.api.commons.Preconditions.checkArgument;
+
 @ESBComponent("Result Set As JSON")
 @Component(service = ResultSetAsJson.class, scope = ServiceScope.PROTOTYPE)
 public class ResultSetAsJson implements ProcessorSync {
@@ -24,6 +26,10 @@ public class ResultSetAsJson implements ProcessorSync {
     public Message apply(FlowContext flowContext, Message message) {
         TypedContent<ResultRow, List<ResultRow>> content = message.content();
         TypedPublisher<ResultRow> resultSet = content.stream();
+        checkArgument(resultSet.getType().equals(ResultRow.class),
+                ResultSetAsJson.class.getSimpleName() +
+                        " Component expects message with payload of type=[" + ResultRow.class.getSimpleName() + "] " +
+                        "but type=[" + resultSet.getType().getSimpleName() + "] was given.");
         try {
             JSONArray convert = ResultSetConverter.convert(resultSet);
             String result = convert.toString(4);
