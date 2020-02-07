@@ -1,4 +1,4 @@
-package com.reedelk.database.utils;
+package com.reedelk.database.commons;
 
 import com.reedelk.database.commons.QueryStatementTemplate;
 import com.reedelk.runtime.api.commons.ImmutableMap;
