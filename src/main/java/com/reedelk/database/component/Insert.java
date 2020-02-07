@@ -98,4 +98,5 @@ public class Insert implements ProcessorSync {
     public void setParametersMapping(DynamicObjectMap parametersMapping) {
         this.parametersMapping = parametersMapping;
     }
+
 }

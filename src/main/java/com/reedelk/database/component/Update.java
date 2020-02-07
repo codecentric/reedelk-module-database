@@ -39,13 +39,12 @@ public class Update implements ProcessorSync {
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference
-    private DataSourceService dataSourceService;
+    DataSourceService dataSourceService;
     @Reference
-    private ScriptEngineService scriptEngine;
-
-    private QueryStatementTemplate queryStatement;
+    ScriptEngineService scriptEngine;
 
     private ComboPooledDataSource dataSource;
+    private QueryStatementTemplate queryStatement;
 
     @Override
     public void initialize() {

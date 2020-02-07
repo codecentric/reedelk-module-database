@@ -35,7 +35,7 @@ import static org.mockito.Mockito.lenient;
                 + "INSERT INTO Customer(id, name) VALUES (1, 'John Doe');"
 )
 @ExtendWith(MockitoExtension.class)
-class InsertTest {
+class UpdateTest {
 
     @Mock
     private ScriptEngineService mockScriptEngine;
@@ -44,7 +44,7 @@ class InsertTest {
 
     private ModuleContext moduleContext = new ModuleContext(1L);
 
-    private Insert component = new Insert();
+    private Update component = new Update();
 
     private Message testMessage;
 
@@ -57,7 +57,7 @@ class InsertTest {
                 .evaluate(any(DynamicObjectMap.class), any(FlowContext.class), any(Message.class));
 
         ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration();
-        connectionConfiguration.setConnectionURL("jdbc:h2:mem:" + InsertTest.class.getSimpleName());
+        connectionConfiguration.setConnectionURL("jdbc:h2:mem:" + UpdateTest.class.getSimpleName());
         connectionConfiguration.setDatabaseDriver(DatabaseDriver.H2);
         component.setConnectionConfiguration(connectionConfiguration);
         component.dataSourceService = new DataSourceService();
@@ -75,9 +75,9 @@ class InsertTest {
     }
 
     @Test
-    void shouldInsertRowCorrectly(@EmbeddedDatabase final DataSource dataSource) throws SQLException {
+    void shouldUpdateRowCorrectly(@EmbeddedDatabase final DataSource dataSource) throws SQLException {
         // Given
-        component.setQuery("INSERT INTO Customer VALUES (2,'Mark Anton')");
+        component.setQuery("UPDATE Customer SET name = 'Francis Lane' WHERE id = 1;");
         component.initialize();
 
         // When
@@ -87,28 +87,28 @@ class InsertTest {
         int inserted = actual.payload();
         assertThat(inserted).isEqualTo(1);
 
-        ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 2");
+        ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 1");
         assertThat(resultSet.next()).isTrue();
 
         int actualId = resultSet.getInt(1);
-        assertThat(actualId).isEqualTo(2);
+        assertThat(actualId).isEqualTo(1);
 
         String actualName = resultSet.getString(2);
-        assertThat(actualName).isEqualTo("Mark Anton");
+        assertThat(actualName).isEqualTo("Francis Lane");
     }
 
     @Test
     void shouldInsertRowCorrectlyWhenParameterizedQuery(@EmbeddedDatabase final DataSource dataSource) throws SQLException {
         // Given
         DynamicObjectMap map =
-                DynamicObjectMap.from(of("id", "#[4]", "name", "#['Michael S. Madden']"), moduleContext);
+                DynamicObjectMap.from(of("name", "#['Michael S. Madden']"), moduleContext);
 
         lenient()
-                .doReturn(of("id", 4, "name", "Michael S. Madden"))
+                .doReturn(of("name", "Michael S. Madden"))
                 .when(mockScriptEngine)
                 .evaluate(any(DynamicObjectMap.class), any(FlowContext.class), any(Message.class));
 
-        component.setQuery("INSERT INTO Customer VALUES (:id,:name)");
+        component.setQuery("UPDATE Customer SET name =:name WHERE id = 1;");
         component.setParametersMapping(map);
         component.initialize();
 
@@ -119,11 +119,11 @@ class InsertTest {
         int inserted = actual.payload();
         assertThat(inserted).isEqualTo(1);
 
-        ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 4");
+        ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 1");
         assertThat(resultSet.next()).isTrue();
 
         int actualId = resultSet.getInt(1);
-        assertThat(actualId).isEqualTo(4);
+        assertThat(actualId).isEqualTo(1);
 
         String actualName = resultSet.getString(2);
         assertThat(actualName).isEqualTo("Michael S. Madden");
