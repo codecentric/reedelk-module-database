@@ -84,8 +84,8 @@ class UpdateTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        int inserted = actual.payload();
-        assertThat(inserted).isEqualTo(1);
+        int updated = actual.payload();
+        assertThat(updated).isEqualTo(1);
 
         ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 1");
         assertThat(resultSet.next()).isTrue();
@@ -116,10 +116,13 @@ class UpdateTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        int inserted = actual.payload();
-        assertThat(inserted).isEqualTo(1);
+        int updated = actual.payload();
+        assertThat(updated).isEqualTo(1);
 
-        ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 1");
+        ResultSet resultSet = dataSource
+                .getConnection()
+                .createStatement()
+                .executeQuery("SELECT * FROM Customer WHERE id = 1");
         assertThat(resultSet.next()).isTrue();
 
         int actualId = resultSet.getInt(1);

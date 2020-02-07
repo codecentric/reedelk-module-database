@@ -87,7 +87,10 @@ class InsertTest {
         int inserted = actual.payload();
         assertThat(inserted).isEqualTo(1);
 
-        ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 2");
+        ResultSet resultSet = dataSource
+                .getConnection()
+                .createStatement()
+                .executeQuery("SELECT * FROM Customer WHERE id = 2");
         assertThat(resultSet.next()).isTrue();
 
         int actualId = resultSet.getInt(1);
@@ -119,7 +122,10 @@ class InsertTest {
         int inserted = actual.payload();
         assertThat(inserted).isEqualTo(1);
 
-        ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery("SELECT * FROM Customer WHERE id = 4");
+        ResultSet resultSet = dataSource
+                .getConnection()
+                .createStatement()
+                .executeQuery("SELECT * FROM Customer WHERE id = 4");
         assertThat(resultSet.next()).isTrue();
 
         int actualId = resultSet.getInt(1);
