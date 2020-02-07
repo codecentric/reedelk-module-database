@@ -47,15 +47,18 @@ class SelectTest {
 
     private Select component = new Select();
 
+    private Message testMessage;
+
     @BeforeEach
     void setUp() {
+        testMessage = MessageBuilder.get().withText("Test").build();
         lenient()
                 .doReturn(new HashMap<>())
                 .when(mockScriptEngine)
                 .evaluate(any(DynamicObjectMap.class), any(FlowContext.class), any(Message.class));
 
         ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration();
-        connectionConfiguration.setConnectionURL("jdbc:h2:mem:SelectTest");
+        connectionConfiguration.setConnectionURL("jdbc:h2:mem:" + SelectTest.class.getSimpleName());
         connectionConfiguration.setDatabaseDriver(DatabaseDriver.H2);
         component.setConnectionConfiguration(connectionConfiguration);
         component.dataSourceService = new DataSourceService();
@@ -66,20 +69,20 @@ class SelectTest {
     void tearDown(@EmbeddedDatabase final DataSource dataSource) {
         try {
             dataSource.getConnection().createStatement().execute("DROP TABLE Customer");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            // Nothing we can really do here.
+            exception.printStackTrace();
         }
     }
 
     @Test
     void shouldReturnAllRowsFromTable() {
         // Given
-        Message message = MessageBuilder.get().withText("Test").build();
         component.setQuery("SELECT * FROM Customer");
         component.initialize();
 
         // When
-        Message actual = component.apply(mockFlowContext, message);
+        Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
         List<JDBCResultRow> result = actual.payload();
@@ -90,12 +93,11 @@ class SelectTest {
     @Test
     void shouldReturnEmptyResultSet() {
         // Given
-        Message message = MessageBuilder.get().withText("Test").build();
         component.setQuery("SELECT * FROM customer WHERE id = 4;");
         component.initialize();
 
         // When
-        Message actual = component.apply(mockFlowContext, message);
+        Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
         List<JDBCResultRow> result = actual.payload();
@@ -105,12 +107,11 @@ class SelectTest {
     @Test
     void shouldReturnRowsMatchingWhereClause() {
         // Given
-        Message message = MessageBuilder.get().withText("Test").build();
         component.setQuery("SELECT * FROM customer WHERE id = 2");
         component.initialize();
 
         // When
-        Message actual = component.apply(mockFlowContext, message);
+        Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
         List<JDBCResultRow> result = actual.payload();
@@ -121,7 +122,6 @@ class SelectTest {
     @Test
     void shouldReturnRowsMatchingParameterizedQueryWithLike() {
         // Given
-        Message message = MessageBuilder.get().withText("Test").build();
         DynamicObjectMap map =
                 DynamicObjectMap.from(of("paramName", "#['Mar']"), moduleContext);
 
@@ -135,7 +135,7 @@ class SelectTest {
         component.initialize();
 
         // When
-        Message actual = component.apply(mockFlowContext, message);
+        Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
         List<JDBCResultRow> result = actual.payload();
@@ -146,7 +146,6 @@ class SelectTest {
     @Test
     void shouldReturnRowsMatchingParameterizedQueryWithExactMatch() {
         // Given
-        Message message = MessageBuilder.get().withText("Test").build();
         DynamicObjectMap map =
                 DynamicObjectMap.from(of("id", "#[1]"), moduleContext);
 
@@ -160,7 +159,7 @@ class SelectTest {
         component.initialize();
 
         // When
-        Message actual = component.apply(mockFlowContext, message);
+        Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
         List<JDBCResultRow> result = actual.payload();

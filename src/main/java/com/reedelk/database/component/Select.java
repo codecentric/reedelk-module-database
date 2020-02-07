@@ -48,9 +48,8 @@ public class Select implements ProcessorSync {
     @Reference
     ScriptEngineService scriptEngine;
 
-    private QueryStatementTemplate queryStatement;
-
     private ComboPooledDataSource dataSource;
+    private QueryStatementTemplate queryStatement;
 
     @Override
     public void initialize() {
