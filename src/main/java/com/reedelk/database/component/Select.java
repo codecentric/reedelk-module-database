@@ -3,10 +3,7 @@ package com.reedelk.database.component;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.*;
 import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.runtime.api.annotation.ESBComponent;
-import com.reedelk.runtime.api.annotation.Hint;
-import com.reedelk.runtime.api.annotation.Property;
-import com.reedelk.runtime.api.annotation.TabPlacementTop;
+import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
@@ -33,10 +30,19 @@ import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.require
 public class Select implements ProcessorSync {
 
     @Property("Connection")
+    @PropertyInfo("Data source configuration to be used by this query. " +
+            "Shared configurations use the same connection pool.")
     private ConnectionConfiguration connectionConfiguration;
 
     @Property("Select Query")
-    @Hint("SELECT * FROM orders WHERE  name LIKE :name")
+    @Hint("SELECT * FROM orders WHERE name LIKE :name")
+    @PropertyInfo("The <b>select</b> query to be executed on the database with the given Data Source connection. " +
+            "The query might contain parameters which will be filled from the expressions defined in" +
+            "the parameters mapping configuration below. Examples:<br>" +
+            "<ul>" +
+            "<li>SELECT * FROM orders WHERE name = 'John' AND surname = 'Doe'</li>" +
+            "<li>SELECT * FROM orders WHERE name LIKE :name AND surname = :surname</li>" +
+            "</ul>")
     private String query;
 
     @Property("Query Variables Mappings")

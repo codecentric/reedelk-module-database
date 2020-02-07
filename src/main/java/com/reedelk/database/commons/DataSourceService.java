@@ -13,6 +13,7 @@ import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.require
 import static java.lang.String.format;
 import static org.osgi.service.component.annotations.ServiceScope.SINGLETON;
 
+// TODO: This service needs to be properly tested.
 @Component(service = DataSourceService.class, scope = SINGLETON)
 public class DataSourceService {
 
@@ -26,21 +27,22 @@ public class DataSourceService {
                 IsDriverAvailable.of(databaseDriverClass),
                 format("Driver '%s' not found. Make sure that the driver is inside {RUNTIME_HOME}/lib directory.", databaseDriverClass));
 
-        if (CONFIG_ID_CONNECTION_POOL_MAP.containsKey(connectionConfiguration.getId())) {
-            if (CONFIG_ID_COMPONENT_MAP.containsKey(connectionConfiguration.getId())) {
-                CONFIG_ID_COMPONENT_MAP.get(connectionConfiguration.getId()).add(component);
+        String configId = connectionConfiguration.getId();
+        if (CONFIG_ID_CONNECTION_POOL_MAP.containsKey(configId)) {
+            if (CONFIG_ID_COMPONENT_MAP.containsKey(configId)) {
+                CONFIG_ID_COMPONENT_MAP.get(configId).add(component);
             } else {
                 List<com.reedelk.runtime.api.component.Component> components = new ArrayList<>();
                 components.add(component);
-                CONFIG_ID_COMPONENT_MAP.put(connectionConfiguration.getId(), components);
+                CONFIG_ID_COMPONENT_MAP.put(configId, components);
             }
-            return CONFIG_ID_CONNECTION_POOL_MAP.get(connectionConfiguration.getId());
+            return CONFIG_ID_CONNECTION_POOL_MAP.get(configId);
         }
 
         // Otherwise we need to create the data source.
         ComboPooledDataSource pooledDataSource = new ComboPooledDataSource();
         try {
-            pooledDataSource.setDriverClass(connectionConfiguration.getDatabaseDriver().qualifiedName());
+            pooledDataSource.setDriverClass(databaseDriverClass.qualifiedName());
         } catch (Throwable exception) {
             throw new ESBException(exception);
         }
@@ -56,7 +58,7 @@ public class DataSourceService {
         Optional.ofNullable(connectionConfiguration.getAcquireIncrement())
                 .ifPresent(pooledDataSource::setAcquireIncrement);
 
-        CONFIG_ID_CONNECTION_POOL_MAP.put(connectionConfiguration.getId(), pooledDataSource);
+        CONFIG_ID_CONNECTION_POOL_MAP.put(configId, pooledDataSource);
         return pooledDataSource;
 
     }

@@ -17,29 +17,48 @@ public class ConnectionConfiguration implements Implementor {
     @Property("Connection URL")
     @Hint("jdbc:mysql://localhost:3306/mydatabase")
     @Default("jdbc:mysql://localhost:3306/mydatabase")
+    @PropertyInfo("The connection URL is a string that a JDBC driver uses to connect to a database. " +
+            "It can contain information such as where to search for the database, " +
+            "the name of the database to connect to, and configuration properties. Examples:<br>" +
+            "<ul>" +
+            "<li>H2: jdbc:h2:~/test</li>" +
+            "<li>MySQL: jdbc:mysql://localhost:3306/mydatabase</li>" +
+            "<li>Oracle: jdbc:oracle:thin:@localhost:1521:orcl</li>" +
+            "<li>PostgreSQL: jdbc:postgresql://host:port/database</li>" +
+            "</ul>")
     private String connectionURL;
 
     @Property("Username")
+    @PropertyInfo("The username to be used to create the database connection.")
     private String username;
 
     @Password
     @Property("Password")
+    @PropertyInfo("The password to be used to create the database connection.")
     private String password;
 
     @Property("Driver")
     @Default("MYSQL")
+    @PropertyInfo("The fully qualified name of the JDBC database driver class. " +
+            "The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.")
     private DatabaseDriver databaseDriver;
 
     @Hint("3")
     @Property("Min Pool Size")
+    @PropertyInfo("Minimum number of Connections the connection pool will maintain at any given time. " +
+            "<b>Default: 3</b>")
     private Integer minPoolSize;
 
-    @Hint("20")
+    @Hint("15")
     @Property("Max Pool Size")
+    @PropertyInfo("Maximum number of Connections the connection pool will maintain at any given time. " +
+            "<b>Default: 15</b>")
     private Integer maxPoolSize;
 
-    @Hint("5")
+    @Hint("3")
     @Property("Acquire Increment")
+    @PropertyInfo("Determines how many connections at a time the connection pool will try to acquire " +
+            "when the pool is exhausted. <b>Default: 3</b>")
     private Integer acquireIncrement;
 
     public String getId() {
