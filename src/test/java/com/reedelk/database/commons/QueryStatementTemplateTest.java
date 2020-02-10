@@ -1,6 +1,5 @@
 package com.reedelk.database.commons;
 
-import com.reedelk.database.commons.QueryStatementTemplate;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import org.junit.jupiter.api.Test;
 

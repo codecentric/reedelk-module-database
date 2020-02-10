@@ -1,7 +1,5 @@
 package com.reedelk.database.commons;
 
-import com.reedelk.runtime.api.message.content.ResultRow;
-
 public class Messages {
 
     private Messages() {
