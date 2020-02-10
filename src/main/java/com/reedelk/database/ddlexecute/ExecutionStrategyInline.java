@@ -1,7 +1,6 @@
 package com.reedelk.database.ddlexecute;
 
 import com.reedelk.database.component.DDLExecute;
-import com.reedelk.runtime.api.commons.ConfigurationPreconditions;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
@@ -9,9 +8,10 @@ import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicvalue.DynamicString;
 
 import javax.sql.DataSource;
-import java.util.function.Supplier;
 
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.*;
+import static com.reedelk.database.commons.Messages.DDLExecute.DDL_SCRIPT_EVALUATE_ERROR;
+import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
+import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotNull;
 
 class ExecutionStrategyInline extends AbstractExecutionStrategy {
 
@@ -28,11 +28,9 @@ class ExecutionStrategyInline extends AbstractExecutionStrategy {
 
     @Override
     String ddl(FlowContext flowContext, Message message) {
-        return scriptEngine.evaluate(ddlDefinition, flowContext, message).orElseThrow(new Supplier<ESBException>() {
-            @Override
-            public ESBException get() {
-                throw new ESBException("Could not evaluate DDL script: " + ddlDefinition.value());
-            }
-        });
+        return scriptEngine.evaluate(ddlDefinition, flowContext, message)
+                .orElseThrow(() -> {
+                    throw new ESBException(DDL_SCRIPT_EVALUATE_ERROR.format(ddlDefinition.value()));
+                });
     }
 }

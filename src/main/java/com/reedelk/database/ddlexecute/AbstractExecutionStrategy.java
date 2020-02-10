@@ -1,15 +1,24 @@
 package com.reedelk.database.ddlexecute;
 
 import com.reedelk.database.commons.DatabaseUtils;
+import com.reedelk.database.component.DDLExecute;
+import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
+import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
+import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Optional;
+
+import static com.reedelk.database.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR;
+import static com.reedelk.database.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR_WITH_DDL;
+import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 abstract class AbstractExecutionStrategy implements ExecutionStrategy {
 
@@ -33,12 +42,18 @@ abstract class AbstractExecutionStrategy implements ExecutionStrategy {
 
             int rowCount = statement.executeUpdate(ddlToExecute);
 
-            // TODO: The message should contain in the attributes the executed DDL.
-            return MessageBuilder.get().withJavaObject(rowCount).build();
+            MessageAttributes attributes = new DefaultMessageAttributes(DDLExecute.class,
+                    ImmutableMap.of(DDLExecuteAttribute.DDL, ddlToExecute));
+            return MessageBuilder.get()
+                    .withJavaObject(rowCount)
+                    .attributes(attributes)
+                    .build();
 
         } catch (Throwable exception) {
-            // TODO: Log this exception. If ddl to execute != null then log it!
-            throw new ESBException(exception);
+            String errorMessage = Optional.ofNullable(ddlToExecute)
+                    .map(ddl -> DDL_EXECUTE_ERROR_WITH_DDL.format(ddl, rootCauseMessageOf(exception)))
+                    .orElse(DDL_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
+            throw new ESBException(errorMessage, exception);
         } finally {
             DatabaseUtils.closeSilently(resultSet);
             DatabaseUtils.closeSilently(statement);

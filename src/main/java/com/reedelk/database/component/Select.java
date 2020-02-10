@@ -4,10 +4,13 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.*;
 import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.runtime.api.annotation.*;
+import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
+import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
+import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.message.content.ResultRow;
 import com.reedelk.runtime.api.script.ScriptEngineService;
@@ -22,8 +25,12 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.Optional;
 
+import static com.reedelk.database.commons.Messages.Select.QUERY_EXECUTE_ERROR;
+import static com.reedelk.database.commons.Messages.Select.QUERY_EXECUTE_ERROR_WITH_QUERY;
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
+import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 @ESBComponent("SQL Select")
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
@@ -80,13 +87,14 @@ public class Select implements ProcessorSync {
             resultSet = statement.executeQuery(realQuery);
 
         } catch (Throwable exception) {
-
-            // TODO: Throw exception if query is not null need to put in the exception the real query!
-            //  it would be much easier to debug if the executed query is logged.
             DatabaseUtils.closeSilently(resultSet);
             DatabaseUtils.closeSilently(statement);
             DatabaseUtils.closeSilently(connection);
-            throw new ESBException(exception);
+
+            String errorMessage = Optional.ofNullable(realQuery)
+                    .map(query -> QUERY_EXECUTE_ERROR_WITH_QUERY.format(query, rootCauseMessageOf(exception)))
+                    .orElse(QUERY_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
+            throw new ESBException(errorMessage, exception);
         }
 
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
@@ -105,8 +113,10 @@ public class Select implements ProcessorSync {
             }
         });
 
-        // TODO: The message should contain in the attributes the executed SELECT.
+        MessageAttributes attributes = new DefaultMessageAttributes(Select.class,
+                ImmutableMap.of(DatabaseAttribute.QUERY, realQuery));
         return MessageBuilder.get()
+                .attributes(attributes)
                 .withStream(result, ResultRow.class)
                 .build();
 

@@ -83,6 +83,7 @@ public class DDLExecute implements ProcessorSync {
     @Override
     public void dispose() {
         this.dataSourceService.dispose(this, connectionConfiguration);
+        this.ddlFile = null;
         this.dataSource = null;
         this.ddlDefinition = null;
     }
