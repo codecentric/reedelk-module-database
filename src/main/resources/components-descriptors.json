@@ -191,6 +191,7 @@
           "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
@@ -306,9 +307,11 @@
           "whenDescriptors": []
         },
         {
+          "hintValue": "DELETE FROM orders WHERE id \u003d 1",
           "displayName": "Delete Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "The \u003cb\u003edelete\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eDELETE FROM orders WHERE id \u003d 1\u003c/li\u003e\u003cli\u003eDELETE FROM orders WHERE name LIKE \u0027item%\u0027\u003c/li\u003e\u003c/ul\u003e",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
@@ -342,6 +345,7 @@
           "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
@@ -457,9 +461,11 @@
           "whenDescriptors": []
         },
         {
+          "hintValue": "INSERT orders (id, name) VALUES (1, \u0027Items order\u0027)",
           "displayName": "Insert Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "The \u003cb\u003einsert\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eINSERT orders (id, name) VALUES (1, \u0027Items order\u0027)\u003c/li\u003e\u003cli\u003eINSERT orders VALUES (32, \u0027Items order\u0027, \u0027Online shop order\u0027)\u003c/li\u003e\u003c/ul\u003e",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
@@ -654,6 +660,7 @@
           "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
@@ -769,9 +776,11 @@
           "whenDescriptors": []
         },
         {
+          "hintValue": "UPDATE orders SET name \u003d \u0027another name\u0027 WHERE id \u003d 1",
           "displayName": "Update Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "The \u003cb\u003eupdate\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eUPDATE orders SET name \u003d \u0027another name\u0027 WHERE id \u003d 1\u003c/li\u003e\u003cli\u003eUPDATE orders SET name \u003d \u0027another name\u0027, surname \u003d \u0027another surname\u0027 WHERE id \u003d 2\u003c/li\u003e\u003c/ul\u003e",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
