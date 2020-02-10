@@ -33,6 +33,7 @@ public class ResultSetAsJson implements ProcessorSync {
         try {
             JSONArray convert = ResultSetConverter.convert(resultSet);
             String result = convert.toString(4);
+            // TODO: The message should contain in the attributes the executed SELECT.
             return MessageBuilder.get().withJson(result).build();
         } catch (Throwable exception) {
             throw new ESBException(exception);

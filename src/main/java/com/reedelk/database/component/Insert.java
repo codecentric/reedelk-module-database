@@ -69,9 +69,12 @@ public class Insert implements ProcessorSync {
 
             int rowCount = statement.executeUpdate(realQuery);
 
+            // TODO: The message should contain in the attributes the executed INSERT.
             return MessageBuilder.get().withJavaObject(rowCount).build();
 
         } catch (Throwable exception) {
+            // TODO: Throw exception if query is not null need to put in the exception the real query!
+            //  it would be much easier to debug if the executed query is logged.
             throw new ESBException(exception);
         } finally {
             DatabaseUtils.closeSilently(resultSet);

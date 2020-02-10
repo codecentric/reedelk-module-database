@@ -10,6 +10,7 @@
           "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Data source configuration where the DDL statements will be executed on. Shared configurations use the same connection pool.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
@@ -125,29 +126,58 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "DDL Definition",
-          "propertyName": "query",
-          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "displayName": "Strategy",
+          "propertyName": "strategy",
+          "defaultValue": "INLINE",
+          "propertyInfo": "Execution strategy for this DDL. If \u003cb\u003eINLINE\u003c/b\u003e then a static or dynamic inline statement is executed from the given \u003ci\u003eddlDefinition\u003c/i\u003e property, otherwise if \u003cb\u003eFROM_FILE\u003c/b\u003e DDL statements are executed from the given \u003ci\u003eddlFile\u003c/i\u003e local project\u0027s file.",
           "propertyType": {
-            "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
+            "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
             "instance": {
-              "type": "java.lang.String"
+              "nameAndDisplayNameMap": {
+                "FROM_FILE": "From DDL file",
+                "INLINE": "From inline DDL"
+              },
+              "type": "java.lang.Enum"
             }
           },
           "whenDescriptors": []
         },
         {
-          "displayName": "Query Variables Mappings",
-          "propertyName": "parametersMapping",
-          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "hintValue": "CREATE TABLE person (id INT, name VARCHAR(255), surname VARCHAR(255), address VARCHAR(255), city VARCHAR(255))",
+          "displayName": "DDL Definition",
+          "propertyName": "ddlDefinition",
+          "defaultValue": "",
+          "propertyInfo": "Sets the DDL definition to be executed by this component. The DDL definition might be a static ordynamic value. Examples:\u003cul\u003e\u003cli\u003eCREATE TABLE person (id INT, name VARCHAR(255), surname VARCHAR(255), address VARCHAR(255), city VARCHAR(255))\u003c/li\u003e\u003cli\u003eDROP TABLE person\u003c/li\u003e\u003c/ul\u003e",
           "propertyType": {
-            "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
+            "classname": "com.reedelk.module.descriptor.model.TypeDynamicValueDescriptor",
             "instance": {
-              "tabPlacement": "TOP",
-              "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
+              "type": "com.reedelk.runtime.api.script.dynamicvalue.DynamicString"
             }
           },
-          "whenDescriptors": []
+          "whenDescriptors": [
+            {
+              "propertyName": "strategy",
+              "propertyValue": "INLINE"
+            }
+          ]
+        },
+        {
+          "displayName": "DDL File",
+          "propertyName": "ddlFile",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Sets the file path in the project\u0027s resources directory containing the DDL statements to be executed.",
+          "propertyType": {
+            "classname": "com.reedelk.module.descriptor.model.TypeResourceTextDescriptor",
+            "instance": {
+              "type": "com.reedelk.runtime.api.resource.ResourceText"
+            }
+          },
+          "whenDescriptors": [
+            {
+              "propertyName": "strategy",
+              "propertyValue": "FROM_FILE"
+            }
+          ]
         }
       ]
     },

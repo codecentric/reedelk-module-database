@@ -69,41 +69,48 @@ public class Select implements ProcessorSync {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String realQuery = null;
         try {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
 
             Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
-            String realQuery = queryStatement.replace(evaluatedMap);
+            realQuery = queryStatement.replace(evaluatedMap);
 
             resultSet = statement.executeQuery(realQuery);
 
-            DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
-            flowContext.register(disposableResultSet);
-
-            Flux<ResultRow> result = Flux.create(sink -> {
-                try {
-                    ResultSetMetaData metaData = disposableResultSet.getMetaData();
-                    while (disposableResultSet.next()) {
-                        ResultRow row = ResultSetConverter.convertRow(metaData, disposableResultSet);
-                        sink.next(row);
-                    }
-                    sink.complete();
-                } catch (Throwable exception) {
-                    sink.error(exception);
-                }
-            });
-
-            return MessageBuilder.get()
-                    .withStream(result, ResultRow.class)
-                    .build();
-
         } catch (Throwable exception) {
+
+            // TODO: Throw exception if query is not null need to put in the exception the real query!
+            //  it would be much easier to debug if the executed query is logged.
             DatabaseUtils.closeSilently(resultSet);
             DatabaseUtils.closeSilently(statement);
             DatabaseUtils.closeSilently(connection);
             throw new ESBException(exception);
         }
+
+        DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
+        flowContext.register(disposableResultSet);
+
+        Flux<ResultRow> result = Flux.create(sink -> {
+            try {
+                ResultSetMetaData metaData = disposableResultSet.getMetaData();
+                while (disposableResultSet.next()) {
+                    ResultRow row = ResultSetConverter.convertRow(metaData, disposableResultSet);
+                    sink.next(row);
+                }
+                sink.complete();
+            } catch (Throwable exception) {
+                sink.error(exception);
+            }
+        });
+
+        // TODO: The message should contain in the attributes the executed SELECT.
+        return MessageBuilder.get()
+                .withStream(result, ResultRow.class)
+                .build();
+
+
     }
 
     @Override
