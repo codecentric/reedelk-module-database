@@ -1,9 +1,0 @@
-{
-  "id": "2c641032-6401-4f24-8d6a-8ef387172f61",
-  "title": "Postgre SQL",
-  "implementor": "com.reedelk.database.configuration.ConnectionConfiguration",
-  "connectionURL": "jdbc:postgresql://localhost:5432/reedelktest",
-  "username": "reedelk",
-  "password": "reedelk",
-  "databaseDriver": "POSTGRESQL"
-}
