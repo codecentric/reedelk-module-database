@@ -2,16 +2,18 @@ package com.reedelk.database.component;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.DataSourceService;
+import com.reedelk.database.commons.DatabaseAttribute;
 import com.reedelk.database.commons.DatabaseUtils;
-import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.database.commons.QueryStatementTemplate;
-import com.reedelk.runtime.api.annotation.ESBComponent;
-import com.reedelk.runtime.api.annotation.Property;
-import com.reedelk.runtime.api.annotation.TabPlacementTop;
+import com.reedelk.database.configuration.ConnectionConfiguration;
+import com.reedelk.runtime.api.annotation.*;
+import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
+import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
+import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
@@ -23,17 +25,33 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.Optional;
 
+import static com.reedelk.database.commons.Messages.Update.QUERY_EXECUTE_ERROR;
+import static com.reedelk.database.commons.Messages.Update.QUERY_EXECUTE_ERROR_WITH_QUERY;
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
+import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 @ESBComponent("SQL Update")
 @Component(service = Update.class, scope = ServiceScope.PROTOTYPE)
 public class Update implements ProcessorSync {
 
     @Property("Connection")
+    @PropertyInfo("Data source configuration to be used by this query. " +
+            "Shared configurations use the same connection pool.")
     private ConnectionConfiguration connectionConfiguration;
+
     @Property("Update Query")
+    @Hint("UPDATE orders SET name = 'another name' WHERE id = 1")
+    @PropertyInfo("The <b>update</b> query to be executed on the database with the given Data Source connection. " +
+            "The query might contain parameters which will be filled from the expressions defined in" +
+            "the parameters mapping configuration below. Examples:<br>" +
+            "<ul>" +
+            "<li>UPDATE orders SET name = 'another name' WHERE id = 1</li>" +
+            "<li>UPDATE orders SET name = 'another name', surname = 'another surname' WHERE id = 2</li>" +
+            "</ul>")
     private String query;
+
     @Property("Query Variables Mappings")
     @TabPlacementTop
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
@@ -58,22 +76,29 @@ public class Update implements ProcessorSync {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String realQuery = null;
         try {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
 
             Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
-            String realQuery = queryStatement.replace(evaluatedMap);
+            realQuery = queryStatement.replace(evaluatedMap);
 
             int rowCount = statement.executeUpdate(realQuery);
 
-            // TODO: The message should contain in the attributes the executed UPDATE.
-            return MessageBuilder.get().withJavaObject(rowCount).build();
+            MessageAttributes attributes = new DefaultMessageAttributes(Update.class,
+                    ImmutableMap.of(DatabaseAttribute.QUERY, realQuery));
+            return MessageBuilder.get()
+                    .attributes(attributes)
+                    .withJavaObject(rowCount)
+                    .build();
 
         } catch (Throwable exception) {
-            // TODO: Throw exception if query is not null need to put in the exception the real query!
-            //  it would be much easier to debug if the executed query is logged.
-            throw new ESBException(exception);
+            String errorMessage = Optional.ofNullable(realQuery)
+                    .map(query -> QUERY_EXECUTE_ERROR_WITH_QUERY.format(query, rootCauseMessageOf(exception)))
+                    .orElse(QUERY_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
+            throw new ESBException(errorMessage, exception);
+
         } finally {
             DatabaseUtils.closeSilently(resultSet);
             DatabaseUtils.closeSilently(statement);

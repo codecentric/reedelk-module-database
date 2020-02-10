@@ -119,8 +119,6 @@ public class Select implements ProcessorSync {
                 .attributes(attributes)
                 .withStream(result, ResultRow.class)
                 .build();
-
-
     }
 
     @Override

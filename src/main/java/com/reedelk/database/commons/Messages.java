@@ -1,6 +1,6 @@
 package com.reedelk.database.commons;
 
-import com.reedelk.database.component.DDLExecute;
+import com.reedelk.runtime.api.message.content.ResultRow;
 
 public class Messages {
 
@@ -41,6 +41,74 @@ public class Messages {
         private String msg;
 
         Select(String msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public String format(Object... args) {
+            return formatMessage(msg, args);
+        }
+    }
+
+    public enum Insert implements FormattedMessage {
+
+        QUERY_EXECUTE_ERROR("Could not execute insert query: %s"),
+        QUERY_EXECUTE_ERROR_WITH_QUERY("Could not execute insert query=[%s]: %s");
+
+        private String msg;
+
+        Insert(String msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public String format(Object... args) {
+            return formatMessage(msg, args);
+        }
+    }
+
+    public enum Update implements FormattedMessage {
+
+        QUERY_EXECUTE_ERROR("Could not execute update query: %s"),
+        QUERY_EXECUTE_ERROR_WITH_QUERY("Could not execute update query=[%s]: %s");
+
+        private String msg;
+
+        Update(String msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public String format(Object... args) {
+            return formatMessage(msg, args);
+        }
+    }
+
+    public enum Delete implements FormattedMessage {
+
+        QUERY_EXECUTE_ERROR("Could not execute delete query: %s"),
+        QUERY_EXECUTE_ERROR_WITH_QUERY("Could not execute delete query=[%s]: %s");
+
+        private String msg;
+
+        Delete(String msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public String format(Object... args) {
+            return formatMessage(msg, args);
+        }
+    }
+
+    public enum ResultSetAsJson implements FormattedMessage {
+
+        WRONG_ARGUMENT("%s component expects message with payload of type=[%s] " +
+                "but type=[%s] was given.");
+
+        private String msg;
+
+        ResultSetAsJson(String msg) {
             this.msg = msg;
         }
 
