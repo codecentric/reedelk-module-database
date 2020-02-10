@@ -22,6 +22,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -34,6 +35,7 @@
                   "displayName": "Username",
                   "propertyName": "username",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The username to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -46,6 +48,7 @@
                   "displayName": "Password",
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The password to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
@@ -58,6 +61,7 @@
                   "displayName": "Driver",
                   "propertyName": "databaseDriver",
                   "defaultValue": "MYSQL",
+                  "propertyInfo": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
@@ -77,6 +81,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -86,10 +91,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "20",
+                  "hintValue": "15",
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -99,10 +105,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "5",
+                  "hintValue": "3",
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -166,6 +173,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -178,6 +186,7 @@
                   "displayName": "Username",
                   "propertyName": "username",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The username to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -190,6 +199,7 @@
                   "displayName": "Password",
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The password to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
@@ -202,6 +212,7 @@
                   "displayName": "Driver",
                   "propertyName": "databaseDriver",
                   "defaultValue": "MYSQL",
+                  "propertyInfo": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
@@ -221,6 +232,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -230,10 +242,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "20",
+                  "hintValue": "15",
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -243,10 +256,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "5",
+                  "hintValue": "3",
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -310,6 +324,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -322,6 +337,7 @@
                   "displayName": "Username",
                   "propertyName": "username",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The username to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -334,6 +350,7 @@
                   "displayName": "Password",
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The password to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
@@ -346,6 +363,7 @@
                   "displayName": "Driver",
                   "propertyName": "databaseDriver",
                   "defaultValue": "MYSQL",
+                  "propertyInfo": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
@@ -365,6 +383,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -374,10 +393,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "20",
+                  "hintValue": "15",
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -387,10 +407,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "5",
+                  "hintValue": "3",
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -449,6 +470,7 @@
           "displayName": "Connection",
           "propertyName": "connectionConfiguration",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
@@ -461,6 +483,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -473,6 +496,7 @@
                   "displayName": "Username",
                   "propertyName": "username",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The username to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -485,6 +509,7 @@
                   "displayName": "Password",
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The password to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
@@ -497,6 +522,7 @@
                   "displayName": "Driver",
                   "propertyName": "databaseDriver",
                   "defaultValue": "MYSQL",
+                  "propertyInfo": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
@@ -516,6 +542,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -525,10 +552,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "20",
+                  "hintValue": "15",
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -538,10 +566,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "5",
+                  "hintValue": "3",
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -557,10 +586,11 @@
           "whenDescriptors": []
         },
         {
-          "hintValue": "SELECT * FROM orders WHERE  name LIKE :name",
+          "hintValue": "SELECT * FROM orders WHERE name LIKE :name",
           "displayName": "Select Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "The \u003cb\u003eselect\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eSELECT * FROM orders WHERE name \u003d \u0027John\u0027 AND surname \u003d \u0027Doe\u0027\u003c/li\u003e\u003cli\u003eSELECT * FROM orders WHERE name LIKE :name AND surname \u003d :surname\u003c/li\u003e\u003c/ul\u003e",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
@@ -606,6 +636,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -618,6 +649,7 @@
                   "displayName": "Username",
                   "propertyName": "username",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The username to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -630,6 +662,7 @@
                   "displayName": "Password",
                   "propertyName": "password",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "The password to be used to create the database connection.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
@@ -642,6 +675,7 @@
                   "displayName": "Driver",
                   "propertyName": "databaseDriver",
                   "defaultValue": "MYSQL",
+                  "propertyInfo": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
@@ -661,6 +695,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -670,10 +705,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "20",
+                  "hintValue": "15",
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -683,10 +719,11 @@
                   "whenDescriptors": []
                 },
                 {
-                  "hintValue": "5",
+                  "hintValue": "3",
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
