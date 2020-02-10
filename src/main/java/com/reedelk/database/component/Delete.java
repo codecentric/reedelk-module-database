@@ -48,7 +48,7 @@ public class Delete implements ProcessorSync {
             "the parameters mapping configuration below. Examples:<br>" +
             "<ul>" +
             "<li>DELETE FROM orders WHERE id = 1</li>" +
-            "<li>DELETE FROM orders WHERE name LIKE 'item%')</li>" +
+            "<li>DELETE FROM orders WHERE name LIKE 'item%'</li>" +
             "</ul>")
     private String query;
 

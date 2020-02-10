@@ -67,7 +67,7 @@ class ResultSetAsJsonTest {
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
                 () -> component.apply(mockFlowContext, inMessage));
 
-        assertThat(thrown).hasMessage("ResultSetAsJson Component " +
+        assertThat(thrown).hasMessage("ResultSetAsJson component " +
                 "expects message with payload of " +
                 "type=[ResultRow] but type=[String] was given.");
     }
