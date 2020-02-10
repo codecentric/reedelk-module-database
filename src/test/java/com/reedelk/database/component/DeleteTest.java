@@ -4,6 +4,7 @@ import com.reedelk.database.commons.DataSourceService;
 import com.reedelk.database.commons.DatabaseDriver;
 import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.runtime.api.commons.ModuleContext;
+import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 
 import static com.reedelk.runtime.api.commons.ImmutableMap.of;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
@@ -45,7 +47,7 @@ class DeleteTest {
 
     private ModuleContext moduleContext = new ModuleContext(1L);
 
-    private Insert component = new Insert();
+    private Delete component = new Delete();
 
     private Message testMessage;
 
@@ -136,5 +138,20 @@ class DeleteTest {
                 .createStatement()
                 .executeQuery("SELECT * FROM Customer WHERE id = 2");
         assertThat(resultSet.next()).isFalse();
+    }
+
+    @Test
+    void shouldIncludeStatementWhenExceptionThrown() {
+        // Given
+        component.setQuery("DELETE FROM Customer = 1;");
+        component.initialize();
+
+        // When
+        ESBException thrown = assertThrows(ESBException.class,
+                () -> component.apply(mockFlowContext, testMessage));
+
+        assertThat(thrown).isNotNull();
+        assertThat(thrown).hasMessage("Could not execute delete query=[DELETE FROM Customer = 1;]: Syntax error in SQL statement \"DELETE FROM CUSTOMER =[*] 1;\"; SQL statement:\n" +
+                "DELETE FROM Customer = 1; [42000-200]");
     }
 }

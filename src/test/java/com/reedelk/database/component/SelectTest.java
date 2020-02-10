@@ -5,6 +5,7 @@ import com.reedelk.database.commons.DatabaseDriver;
 import com.reedelk.database.commons.JDBCResultRow;
 import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.runtime.api.commons.ModuleContext;
+import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -26,6 +27,7 @@ import java.util.*;
 
 import static com.reedelk.runtime.api.commons.ImmutableMap.of;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.lenient;
 
@@ -165,6 +167,21 @@ class SelectTest {
         List<JDBCResultRow> result = actual.payload();
         assertThat(result).hasSize(1);
         assertFound(result, of("id", 1, "name", "John Doe"));
+    }
+
+    @Test
+    void shouldIncludeStatementWhenExceptionThrown() {
+        // Given
+        component.setQuery("SELECT WHERE customer WHERE id = 2");
+        component.initialize();
+
+        // When
+        ESBException thrown = assertThrows(ESBException.class,
+                () -> component.apply(mockFlowContext, testMessage));
+
+        assertThat(thrown).isNotNull();
+        assertThat(thrown).hasMessage("Could not execute select query=[SELECT WHERE customer WHERE id = 2]: Syntax error in SQL statement \"SELECT WHERE CUSTOMER WHERE[*] ID = 2\"; SQL statement:\n" +
+                "SELECT WHERE customer WHERE id = 2 [42000-200]");
     }
 
     private void assertFound(Collection<JDBCResultRow> rows, Map<String, Object> columnNameAndValueMap) {

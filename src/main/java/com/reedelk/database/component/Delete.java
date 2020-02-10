@@ -57,9 +57,9 @@ public class Delete implements ProcessorSync {
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference
-    private DataSourceService dataSourceService;
+    DataSourceService dataSourceService;
     @Reference
-    private ScriptEngineService scriptEngine;
+    ScriptEngineService scriptEngine;
 
     private QueryStatementTemplate queryStatement;
 

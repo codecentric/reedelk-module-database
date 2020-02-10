@@ -3,16 +3,20 @@ package com.reedelk.database.component;
 import com.reedelk.database.commons.DataSourceService;
 import com.reedelk.database.commons.DatabaseDriver;
 import com.reedelk.database.configuration.ConnectionConfiguration;
+import com.reedelk.database.configuration.DDLDefinitionStrategy;
 import com.reedelk.runtime.api.commons.ModuleContext;
+import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
+import com.reedelk.runtime.api.script.dynamicvalue.DynamicString;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.zapodot.junit.db.annotations.EmbeddedDatabase;
@@ -23,9 +27,11 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Optional;
 
 import static com.reedelk.runtime.api.commons.ImmutableMap.of;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
@@ -133,5 +139,20 @@ class InsertTest {
 
         String actualName = resultSet.getString(2);
         assertThat(actualName).isEqualTo("Michael S. Madden");
+    }
+
+    @Test
+    void shouldIncludeStatementWhenExceptionThrown() {
+        // Given
+        component.setQuery("INSERT INTO Customer VAALUES(2,'Mark Anton')NOT CORRECT");
+        component.initialize();
+
+        // When
+        ESBException thrown = assertThrows(ESBException.class,
+                () -> component.apply(mockFlowContext, testMessage));
+
+        assertThat(thrown).isNotNull();
+        assertThat(thrown).hasMessage("Could not execute insert query=[INSERT INTO Customer VAALUES(2,'Mark Anton')NOT CORRECT]: Syntax error in SQL statement \"INSERT INTO CUSTOMER VAALUES[*](2,'Mark Anton')NOT CORRECT\"; expected \"., (, DIRECT, SORTED, DEFAULT, VALUES, SET, (, WITH, SELECT, TABLE, VALUES\"; SQL statement:\n" +
+                "INSERT INTO Customer VAALUES(2,'Mark Anton')NOT CORRECT [42001-200]");
     }
 }

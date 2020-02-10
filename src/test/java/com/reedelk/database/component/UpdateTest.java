@@ -4,6 +4,7 @@ import com.reedelk.database.commons.DataSourceService;
 import com.reedelk.database.commons.DatabaseDriver;
 import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.runtime.api.commons.ModuleContext;
+import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.zapodot.junit.db.annotations.EmbeddedDatabase;
@@ -26,6 +28,7 @@ import java.util.HashMap;
 
 import static com.reedelk.runtime.api.commons.ImmutableMap.of;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
@@ -130,5 +133,20 @@ class UpdateTest {
 
         String actualName = resultSet.getString(2);
         assertThat(actualName).isEqualTo("Michael S. Madden");
+    }
+
+    @Test
+    void shouldIncludeStatementWhenExceptionThrown() {
+        // Given
+        component.setQuery("UPDATE Customer SETWHERE id = 1;");
+        component.initialize();
+
+        // When
+        ESBException thrown = assertThrows(ESBException.class,
+                () -> component.apply(mockFlowContext, testMessage));
+
+        assertThat(thrown).isNotNull();
+        assertThat(thrown).hasMessage("Could not execute update query=[UPDATE Customer SETWHERE id = 1;]: Syntax error in SQL statement \"UPDATE CUSTOMER SETWHERE ID[*] = 1;\"; expected \"SET\"; SQL statement:\n" +
+                "UPDATE Customer SETWHERE id = 1; [42001-200]");
     }
 }

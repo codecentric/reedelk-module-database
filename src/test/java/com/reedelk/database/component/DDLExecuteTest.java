@@ -97,12 +97,8 @@ class DDLExecuteTest {
         component.initialize();
 
         // When
-        ESBException thrown = assertThrows(ESBException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                component.apply(mockFlowContext, testMessage);
-            }
-        });
+        ESBException thrown = assertThrows(ESBException.class,
+                () -> component.apply(mockFlowContext, testMessage));
 
         assertThat(thrown).isNotNull();
         assertThat(thrown).hasMessage("Could not execute DDL=[CREATE NOT_VALID Customer(id INTEGER PRIMARY KEY, name VARCHAR(512))]: Syntax error in SQL statement \"CREATE NOT_VALID[*] CUSTOMER(ID INTEGER PRIMARY KEY, NAME VARCHAR(512))\"; expected \"OR, FORCE, VIEW, ALIAS, SEQUENCE, USER, TRIGGER, ROLE, SCHEMA, CONSTANT, DOMAIN, TYPE, DATATYPE, AGGREGATE, LINKED, MEMORY, CACHED, LOCAL, GLOBAL, TEMP, TEMPORARY, TABLE, SYNONYM, PRIMARY, UNIQUE, HASH, SPATIAL, INDEX\"; SQL statement:\n" +
