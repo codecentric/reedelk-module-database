@@ -53,9 +53,9 @@ public class DDLExecute implements ProcessorSync {
     private ResourceText ddlFile;
 
     @Reference
-    private DataSourceService dataSourceService;
+    DataSourceService dataSourceService;
     @Reference
-    private ScriptEngineService scriptEngine;
+    ScriptEngineService scriptEngine;
 
     private ExecutionStrategy executionStrategy;
 
