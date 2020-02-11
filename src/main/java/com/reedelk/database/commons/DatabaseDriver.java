@@ -6,7 +6,7 @@ public enum DatabaseDriver {
 
     @DisplayName("MySQL (com.mysql.cj.jdbc.Driver)")
     MYSQL("com.mysql.cj.jdbc.Driver"),
-    @DisplayName("Oracle (oracle.jdbc.driver.OracleDriver)")
+    @DisplayName("Oracle (oracle.jdbc.OracleDriver)")
     ORACLE("oracle.jdbc.OracleDriver"),
     @DisplayName("PostgreSQL (org.postgresql.Driver)")
     POSTGRESQL("org.postgresql.Driver"),
