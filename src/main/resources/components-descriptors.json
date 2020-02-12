@@ -69,7 +69,7 @@
                       "nameAndDisplayNameMap": {
                         "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
                         "H2": "H2 (org.h2.Driver)",
-                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "ORACLE": "Oracle (oracle.jdbc.OracleDriver)",
                         "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
                       },
                       "type": "java.lang.Enum"
@@ -250,7 +250,7 @@
                       "nameAndDisplayNameMap": {
                         "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
                         "H2": "H2 (org.h2.Driver)",
-                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "ORACLE": "Oracle (oracle.jdbc.OracleDriver)",
                         "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
                       },
                       "type": "java.lang.Enum"
@@ -404,7 +404,7 @@
                       "nameAndDisplayNameMap": {
                         "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
                         "H2": "H2 (org.h2.Driver)",
-                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "ORACLE": "Oracle (oracle.jdbc.OracleDriver)",
                         "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
                       },
                       "type": "java.lang.Enum"
@@ -565,7 +565,7 @@
                       "nameAndDisplayNameMap": {
                         "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
                         "H2": "H2 (org.h2.Driver)",
-                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "ORACLE": "Oracle (oracle.jdbc.OracleDriver)",
                         "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
                       },
                       "type": "java.lang.Enum"
@@ -719,7 +719,7 @@
                       "nameAndDisplayNameMap": {
                         "MYSQL": "MySQL (com.mysql.cj.jdbc.Driver)",
                         "H2": "H2 (org.h2.Driver)",
-                        "ORACLE": "Oracle (oracle.jdbc.driver.OracleDriver)",
+                        "ORACLE": "Oracle (oracle.jdbc.OracleDriver)",
                         "POSTGRESQL": "PostgreSQL (org.postgresql.Driver)"
                       },
                       "type": "java.lang.Enum"
