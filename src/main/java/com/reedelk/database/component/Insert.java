@@ -32,28 +32,32 @@ import static com.reedelk.database.commons.Messages.Insert.QUERY_EXECUTE_ERROR_W
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
-@ESBComponent("SQL Insert")
+@ModuleComponent(
+        name = "SQL Insert",
+        description = "Executes an INSERT SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Insert.class, scope = ServiceScope.PROTOTYPE)
 public class Insert implements ProcessorSync {
 
     @Property("Connection")
-    @PropertyInfo("Data source configuration to be used by this query. " +
+    @PropertyDescription("Data source configuration to be used by this query. " +
             "Shared configurations use the same connection pool.")
     private ConnectionConfiguration connectionConfiguration;
 
-    @Property("Insert Query")
-    @Hint("INSERT orders (id, name) VALUES (1, 'Items order')")
-    @PropertyInfo("The <b>insert</b> query to be executed on the database with the given Data Source connection. " +
-            "The query might contain parameters which will be filled from the expressions defined in" +
-            "the parameters mapping configuration below. Examples:<br>" +
-            "<ul>" +
-            "<li>INSERT orders (id, name) VALUES (1, 'Items order')</li>" +
-            "<li>INSERT orders VALUES (32, 'Items order', 'Online shop order')</li>" +
+    @Example("<ul>" +
+            "<li><code>INSERT orders (id, name) VALUES (1, 'Items order')</code></li>" +
+            "<li><code>INSERT orders VALUES (32, 'Items order', 'Online shop order')</code></li>" +
             "</ul>")
+    @Hint("INSERT orders (id, name) VALUES (1, 'Items order')")
+    @Property("Insert Query")
+    @PropertyDescription("The <b>insert</b> query to be executed on the database with the given Data Source connection. " +
+            "The query might contain parameters which will be filled from the expressions defined in" +
+            "the parameters mapping configuration below.")
     private String query;
 
-    @Property("Query Variables Mappings")
     @TabPlacementTop
+    @Example("name > <code>message.payload()</code>")
+    @Property("Query Parameters Mappings")
+    @PropertyDescription("Mapping of insert query parameters > values. Query parameters will be evaluated and replaced each time before the query is executed.")
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference

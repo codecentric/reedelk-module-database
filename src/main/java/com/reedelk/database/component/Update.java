@@ -32,28 +32,32 @@ import static com.reedelk.database.commons.Messages.Update.QUERY_EXECUTE_ERROR_W
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
-@ESBComponent("SQL Update")
+@ModuleComponent(
+        name = "SQL Update",
+        description = "Executes an UPDATE SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Update.class, scope = ServiceScope.PROTOTYPE)
 public class Update implements ProcessorSync {
 
     @Property("Connection")
-    @PropertyInfo("Data source configuration to be used by this query. " +
+    @PropertyDescription("Data source configuration to be used by this query. " +
             "Shared configurations use the same connection pool.")
     private ConnectionConfiguration connectionConfiguration;
 
-    @Property("Update Query")
-    @Hint("UPDATE orders SET name = 'another name' WHERE id = 1")
-    @PropertyInfo("The <b>update</b> query to be executed on the database with the given Data Source connection. " +
-            "The query might contain parameters which will be filled from the expressions defined in" +
-            "the parameters mapping configuration below. Examples:<br>" +
-            "<ul>" +
-            "<li>UPDATE orders SET name = 'another name' WHERE id = 1</li>" +
-            "<li>UPDATE orders SET name = 'another name', surname = 'another surname' WHERE id = 2</li>" +
+    @Example("<ul>" +
+            "<li><code>UPDATE orders SET name = 'another name' WHERE id = 1</code></li>" +
+            "<li><code>UPDATE orders SET name = 'another name', surname = 'another surname' WHERE id = 2</code></li>" +
             "</ul>")
+    @Hint("UPDATE orders SET name = 'another name' WHERE id = 1")
+    @Property("Update Query")
+    @PropertyDescription("The <b>update</b> query to be executed on the database with the given Data Source connection. " +
+            "The query might contain parameters which will be filled from the expressions defined in" +
+            "the parameters mapping configuration below.")
     private String query;
 
-    @Property("Query Variables Mappings")
+    @Example("name > <code>message.payload()</code>")
     @TabPlacementTop
+    @Property("Query Parameters Mappings")
+    @PropertyDescription("Mapping of update query parameters > values. Query parameters will be evaluated and replaced each time before the query is executed.")
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference

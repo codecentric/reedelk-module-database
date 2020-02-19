@@ -32,28 +32,32 @@ import static com.reedelk.database.commons.Messages.Delete.QUERY_EXECUTE_ERROR_W
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
-@ESBComponent("SQL Delete")
+@ModuleComponent(
+        name = "SQL Delete",
+        description = "Executes a DELETE SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Delete.class, scope = ServiceScope.PROTOTYPE)
 public class Delete implements ProcessorSync {
 
     @Property("Connection")
-    @PropertyInfo("Data source configuration to be used by this query. " +
+    @PropertyDescription("Data source configuration to be used by this query. " +
             "Shared configurations use the same connection pool.")
     private ConnectionConfiguration connectionConfiguration;
 
-    @Property("Delete Query")
-    @Hint("DELETE FROM orders WHERE id = 1")
-    @PropertyInfo("The <b>delete</b> query to be executed on the database with the given Data Source connection. " +
-            "The query might contain parameters which will be filled from the expressions defined in" +
-            "the parameters mapping configuration below. Examples:<br>" +
-            "<ul>" +
+    @Example("<ul>" +
             "<li>DELETE FROM orders WHERE id = 1</li>" +
             "<li>DELETE FROM orders WHERE name LIKE 'item%'</li>" +
             "</ul>")
+    @Hint("DELETE FROM orders WHERE id = 1")
+    @Property("Delete Query")
+    @PropertyDescription("The <b>delete</b> query to be executed on the database with the given Data Source connection. " +
+            "The query might contain parameters which will be filled from the expressions defined in" +
+            "the parameters mapping configuration below.")
     private String query;
 
-    @Property("Query Variables Mappings")
+    @Example("id > <code>message.payload()</code>")
     @TabPlacementTop
+    @Property("Query Parameters Mappings")
+    @PropertyDescription("Mapping of delete query parameters > values. Query parameters will be evaluated and replaced each time before the query is executed.")
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference

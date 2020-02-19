@@ -32,28 +32,32 @@ import static com.reedelk.database.commons.Messages.Select.QUERY_EXECUTE_ERROR_W
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
-@ESBComponent("SQL Select")
+@ModuleComponent(
+        name = "SQL Select",
+        description = "Executes a SELECT SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
 public class Select implements ProcessorSync {
 
     @Property("Connection")
-    @PropertyInfo("Data source configuration to be used by this query. " +
+    @PropertyDescription("Data source configuration to be used by this query. " +
             "Shared configurations use the same connection pool.")
     private ConnectionConfiguration connectionConfiguration;
 
+    @Example("<ul>" +
+            "<li><code>SELECT * FROM orders WHERE name = 'John' AND surname = 'Doe'</code></li>" +
+            "<li><code>SELECT * FROM orders WHERE name LIKE :name AND surname = :surname</code></li>" +
+            "</ul>")
     @Property("Select Query")
     @Hint("SELECT * FROM orders WHERE name LIKE :name")
-    @PropertyInfo("The <b>select</b> query to be executed on the database with the given Data Source connection. " +
+    @PropertyDescription("The <b>select</b> query to be executed on the database with the given Data Source connection. " +
             "The query might contain parameters which will be filled from the expressions defined in" +
-            "the parameters mapping configuration below. Examples:<br>" +
-            "<ul>" +
-            "<li>SELECT * FROM orders WHERE name = 'John' AND surname = 'Doe'</li>" +
-            "<li>SELECT * FROM orders WHERE name LIKE :name AND surname = :surname</li>" +
-            "</ul>")
+            "the parameters mapping configuration. below.")
     private String query;
 
-    @Property("Query Variables Mappings")
+    @Example("name > <code>message.payload()</code>")
     @TabPlacementTop
+    @Property("Query Parameters Mappings")
+    @PropertyDescription("Mapping of select query parameters > values. Query parameters will be evaluated and replaced each time before the query is executed.")
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 
     @Reference

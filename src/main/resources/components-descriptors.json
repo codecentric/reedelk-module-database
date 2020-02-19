@@ -2,7 +2,7 @@
   "componentDescriptors": [
     {
       "hidden": false,
-      "displayName": "DDL Execute",
+      "displayName": "DDLExecute",
       "fullyQualifiedName": "com.reedelk.database.component.DDLExecute",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
@@ -23,7 +23,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
-                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -82,7 +82,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -96,7 +96,7 @@
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -110,7 +110,7 @@
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -146,8 +146,8 @@
           "hintValue": "CREATE TABLE person (id INT, name VARCHAR(255), surname VARCHAR(255), address VARCHAR(255), city VARCHAR(255))",
           "displayName": "DDL Definition",
           "propertyName": "ddlDefinition",
-          "defaultValue": "",
-          "propertyInfo": "Sets the DDL definition to be executed by this component. The DDL definition might be a static ordynamic value. Examples:\u003cul\u003e\u003cli\u003eCREATE TABLE person (id INT, name VARCHAR(255), surname VARCHAR(255), address VARCHAR(255), city VARCHAR(255))\u003c/li\u003e\u003cli\u003eDROP TABLE person\u003c/li\u003e\u003c/ul\u003e",
+          "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Sets the DDL definition to be executed by this component. The DDL definition might be a static or dynamic value.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicValueDescriptor",
             "instance": {
@@ -165,7 +165,7 @@
           "displayName": "DDL File",
           "propertyName": "ddlFile",
           "defaultValue": "###USE_DEFAULT_VALUE###",
-          "propertyInfo": "Sets the file path in the project\u0027s resources directory containing the DDL statements to be executed.",
+          "propertyInfo": "Sets the file path in the project\u0027s resources directory containing the DDL statements to be executed when the strategy is \u003cb\u003eFROM_FILE\u003c/b\u003e.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeResourceTextDescriptor",
             "instance": {
@@ -183,7 +183,7 @@
     },
     {
       "hidden": false,
-      "displayName": "SQL Delete",
+      "displayName": "Delete",
       "fullyQualifiedName": "com.reedelk.database.component.Delete",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
@@ -204,7 +204,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
-                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -263,7 +263,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -277,7 +277,7 @@
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -291,7 +291,7 @@
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -311,7 +311,7 @@
           "displayName": "Delete Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
-          "propertyInfo": "The \u003cb\u003edelete\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eDELETE FROM orders WHERE id \u003d 1\u003c/li\u003e\u003cli\u003eDELETE FROM orders WHERE name LIKE \u0027item%\u0027\u003c/li\u003e\u003c/ul\u003e",
+          "propertyInfo": "The \u003cb\u003edelete\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
@@ -321,9 +321,10 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "Query Variables Mappings",
+          "displayName": "Query Parameters Mappings",
           "propertyName": "parametersMapping",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Mapping of delete query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
@@ -337,7 +338,7 @@
     },
     {
       "hidden": false,
-      "displayName": "SQL Insert",
+      "displayName": "Insert",
       "fullyQualifiedName": "com.reedelk.database.component.Insert",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
@@ -358,7 +359,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
-                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -417,7 +418,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -431,7 +432,7 @@
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -445,7 +446,7 @@
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -465,7 +466,7 @@
           "displayName": "Insert Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
-          "propertyInfo": "The \u003cb\u003einsert\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eINSERT orders (id, name) VALUES (1, \u0027Items order\u0027)\u003c/li\u003e\u003cli\u003eINSERT orders VALUES (32, \u0027Items order\u0027, \u0027Online shop order\u0027)\u003c/li\u003e\u003c/ul\u003e",
+          "propertyInfo": "The \u003cb\u003einsert\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
@@ -475,9 +476,10 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "Query Variables Mappings",
+          "displayName": "Query Parameters Mappings",
           "propertyName": "parametersMapping",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Mapping of insert query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
@@ -491,14 +493,14 @@
     },
     {
       "hidden": false,
-      "displayName": "Result Set As JSON",
+      "displayName": "ResultSetAsJson",
       "fullyQualifiedName": "com.reedelk.database.component.ResultSetAsJson",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": []
     },
     {
       "hidden": false,
-      "displayName": "SQL Select",
+      "displayName": "Select",
       "fullyQualifiedName": "com.reedelk.database.component.Select",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
@@ -519,7 +521,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
-                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -578,7 +580,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -592,7 +594,7 @@
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -606,7 +608,7 @@
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -626,7 +628,7 @@
           "displayName": "Select Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
-          "propertyInfo": "The \u003cb\u003eselect\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eSELECT * FROM orders WHERE name \u003d \u0027John\u0027 AND surname \u003d \u0027Doe\u0027\u003c/li\u003e\u003cli\u003eSELECT * FROM orders WHERE name LIKE :name AND surname \u003d :surname\u003c/li\u003e\u003c/ul\u003e",
+          "propertyInfo": "The \u003cb\u003eselect\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration. below.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
@@ -636,9 +638,10 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "Query Variables Mappings",
+          "displayName": "Query Parameters Mappings",
           "propertyName": "parametersMapping",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Mapping of select query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
@@ -652,7 +655,7 @@
     },
     {
       "hidden": false,
-      "displayName": "SQL Update",
+      "displayName": "Update",
       "fullyQualifiedName": "com.reedelk.database.component.Update",
       "componentType": "PROCESSOR",
       "componentPropertyDescriptors": [
@@ -673,7 +676,7 @@
                   "displayName": "Connection URL",
                   "propertyName": "connectionURL",
                   "defaultValue": "jdbc:mysql://localhost:3306/mydatabase",
-                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
+                  "propertyInfo": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -732,7 +735,7 @@
                   "displayName": "Min Pool Size",
                   "propertyName": "minPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -746,7 +749,7 @@
                   "displayName": "Max Pool Size",
                   "propertyName": "maxPoolSize",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time. \u003cb\u003eDefault: 15\u003c/b\u003e",
+                  "propertyInfo": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -760,7 +763,7 @@
                   "displayName": "Acquire Increment",
                   "propertyName": "acquireIncrement",
                   "defaultValue": "###USE_DEFAULT_VALUE###",
-                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted. \u003cb\u003eDefault: 3\u003c/b\u003e",
+                  "propertyInfo": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "propertyType": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
@@ -780,7 +783,7 @@
           "displayName": "Update Query",
           "propertyName": "query",
           "defaultValue": "###USE_DEFAULT_VALUE###",
-          "propertyInfo": "The \u003cb\u003eupdate\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below. Examples:\u003cbr\u003e\u003cul\u003e\u003cli\u003eUPDATE orders SET name \u003d \u0027another name\u0027 WHERE id \u003d 1\u003c/li\u003e\u003cli\u003eUPDATE orders SET name \u003d \u0027another name\u0027, surname \u003d \u0027another surname\u0027 WHERE id \u003d 2\u003c/li\u003e\u003c/ul\u003e",
+          "propertyInfo": "The \u003cb\u003eupdate\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
@@ -790,9 +793,10 @@
           "whenDescriptors": []
         },
         {
-          "displayName": "Query Variables Mappings",
+          "displayName": "Query Parameters Mappings",
           "propertyName": "parametersMapping",
           "defaultValue": "###USE_DEFAULT_VALUE###",
+          "propertyInfo": "Mapping of update query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "propertyType": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
