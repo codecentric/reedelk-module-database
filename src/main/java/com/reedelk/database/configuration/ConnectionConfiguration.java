@@ -48,21 +48,21 @@ public class ConnectionConfiguration implements Implementor {
 
     @Hint("3")
     @Example("5")
-    @DefaultRenameMe("3")
+    @DefaultValue("3")
     @Property("Min Pool Size")
     @PropertyDescription("Minimum number of Connections the connection pool will maintain at any given time.")
     private Integer minPoolSize;
 
     @Hint("15")
     @Example("20")
-    @DefaultRenameMe("15")
+    @DefaultValue("15")
     @Property("Max Pool Size")
     @PropertyDescription("Maximum number of Connections the connection pool will maintain at any given time.")
     private Integer maxPoolSize;
 
     @Hint("3")
     @Example("5")
-    @DefaultRenameMe("3")
+    @DefaultValue("3")
     @Property("Acquire Increment")
     @PropertyDescription("Determines how many connections at a time the connection pool will try to acquire " +
             "when the pool is exhausted.")

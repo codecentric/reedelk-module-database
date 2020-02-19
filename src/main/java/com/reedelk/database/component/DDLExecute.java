@@ -36,7 +36,7 @@ public class DDLExecute implements ProcessorSync {
 
     @Example("FROM_FILE")
     @InitValue("INLINE")
-    @DefaultRenameMe("INLINE")
+    @DefaultValue("INLINE")
     @Property("Strategy")
     @PropertyDescription("Execution strategy for this DDL. If <b>INLINE</b> then a static or dynamic inline statement is executed from the given <i>ddlDefinition</i> property," +
             " otherwise if <b>FROM_FILE</b> DDL statements are executed from the given <i>ddlFile</i> local project's file.")
