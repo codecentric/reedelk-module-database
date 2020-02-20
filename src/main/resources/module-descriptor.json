@@ -2,18 +2,17 @@
   "components": [
     {
       "hidden": false,
+      "type": "PROCESSOR",
       "displayName": "DDL Execute",
       "description": "Executes the given DDL statement/s on the configured data source connection. This component can be used to create/drop/alter/rename database tables. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver). The database drivers libraries must be present in the \u003cb\u003e{RUNTIME_HOME}/lib\u003c/b\u003e directory.",
       "fullyQualifiedName": "com.reedelk.database.component.DDLExecute",
-      "componentType": "PROCESSOR",
       "properties": [
         {
+          "name": "connectionConfiguration",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Data source configuration where the DDL statements will be executed on. Shared configurations use the same connection pool.",
           "displayName": "Connection",
-          "propertyName": "connectionConfiguration",
-          "propertyDescription": "Data source configuration where the DDL statements will be executed on. Shared configurations use the same connection pool.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
               "shared": "YES",
@@ -21,56 +20,55 @@
               "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
+                  "name": "connectionURL",
                   "example": "\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "initValue": "jdbc:mysql://localhost:3306/mydatabase",
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "description": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "displayName": "Connection URL",
-                  "propertyName": "connectionURL",
-                  "propertyDescription": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "username",
                   "example": "myDatabaseUser",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The username to be used to create the database connection.",
                   "displayName": "Username",
-                  "propertyName": "username",
-                  "propertyDescription": "The username to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "password",
                   "example": "myDatabasePassword",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The password to be used to create the database connection.",
                   "displayName": "Password",
-                  "propertyName": "password",
-                  "propertyDescription": "The password to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
                       "type": "com.reedelk.runtime.api.annotation.Password"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "databaseDriver",
                   "example": "ORACLE",
                   "initValue": "MYSQL",
+                  "description": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "displayName": "Driver",
-                  "propertyName": "databaseDriver",
-                  "propertyDescription": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
                       "nameAndDisplayNameMap": {
@@ -81,70 +79,71 @@
                       },
                       "type": "java.lang.Enum"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "minPoolSize",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Min Pool Size",
                   "defaultValue": "3",
-                  "propertyName": "minPoolSize",
-                  "propertyDescription": "Minimum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "maxPoolSize",
                   "example": "20",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "15",
+                  "description": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Max Pool Size",
                   "defaultValue": "15",
-                  "propertyName": "maxPoolSize",
-                  "propertyDescription": "Maximum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "acquireIncrement",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "displayName": "Acquire Increment",
                   "defaultValue": "3",
-                  "propertyName": "acquireIncrement",
-                  "propertyDescription": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 }
               ],
               "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "strategy",
           "example": "FROM_FILE",
           "initValue": "INLINE",
+          "description": "Execution strategy for this DDL. If \u003cb\u003eINLINE\u003c/b\u003e then a static or dynamic inline statement is executed from the given \u003ci\u003eddlDefinition\u003c/i\u003e property, otherwise if \u003cb\u003eFROM_FILE\u003c/b\u003e DDL statements are executed from the given \u003ci\u003eddlFile\u003c/i\u003e local project\u0027s file.",
           "displayName": "Strategy",
           "defaultValue": "INLINE",
-          "propertyName": "strategy",
-          "propertyDescription": "Execution strategy for this DDL. If \u003cb\u003eINLINE\u003c/b\u003e then a static or dynamic inline statement is executed from the given \u003ci\u003eddlDefinition\u003c/i\u003e property, otherwise if \u003cb\u003eFROM_FILE\u003c/b\u003e DDL statements are executed from the given \u003ci\u003eddlFile\u003c/i\u003e local project\u0027s file.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
             "instance": {
               "nameAndDisplayNameMap": {
@@ -153,63 +152,63 @@
               },
               "type": "java.lang.Enum"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "ddlDefinition",
           "example": "\u003cul\u003e\u003cli\u003e\u003ccode\u003eCREATE TABLE person (id INT, name VARCHAR(255), surname VARCHAR(255), address VARCHAR(255), city VARCHAR(255))\u003c/code\u003e\u003c/li\u003e\u003cli\u003e\u003ccode\u003eDROP TABLE person\u003c/code\u003e\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "CREATE TABLE person (id INT, name VARCHAR(255), surname VARCHAR(255), address VARCHAR(255), city VARCHAR(255))",
+          "description": "Sets the DDL definition to be executed by this component. The DDL definition might be a static or dynamic value.",
           "displayName": "DDL Definition",
-          "propertyName": "ddlDefinition",
-          "propertyDescription": "Sets the DDL definition to be executed by this component. The DDL definition might be a static or dynamic value.",
+          "type": {
+            "classname": "com.reedelk.module.descriptor.model.TypeDynamicValueDescriptor",
+            "instance": {
+              "type": "com.reedelk.runtime.api.script.dynamicvalue.DynamicString"
+            }
+          },
           "whens": [
             {
               "propertyName": "strategy",
               "propertyValue": "INLINE"
             }
-          ],
-          "propertyType": {
-            "classname": "com.reedelk.module.descriptor.model.TypeDynamicValueDescriptor",
-            "instance": {
-              "type": "com.reedelk.runtime.api.script.dynamicvalue.DynamicString"
-            }
-          }
+          ]
         },
         {
+          "name": "ddlFile",
           "example": "assets/create_table_company.sql",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Sets the file path in the project\u0027s resources directory containing the DDL statements to be executed when the strategy is \u003cb\u003eFROM_FILE\u003c/b\u003e.",
           "displayName": "DDL File",
-          "propertyName": "ddlFile",
-          "propertyDescription": "Sets the file path in the project\u0027s resources directory containing the DDL statements to be executed when the strategy is \u003cb\u003eFROM_FILE\u003c/b\u003e.",
+          "type": {
+            "classname": "com.reedelk.module.descriptor.model.TypeResourceTextDescriptor",
+            "instance": {
+              "type": "com.reedelk.runtime.api.resource.ResourceText"
+            }
+          },
           "whens": [
             {
               "propertyName": "strategy",
               "propertyValue": "FROM_FILE"
             }
-          ],
-          "propertyType": {
-            "classname": "com.reedelk.module.descriptor.model.TypeResourceTextDescriptor",
-            "instance": {
-              "type": "com.reedelk.runtime.api.resource.ResourceText"
-            }
-          }
+          ]
         }
       ]
     },
     {
       "hidden": false,
+      "type": "PROCESSOR",
       "displayName": "SQL Delete",
       "description": "Executes a DELETE SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).",
       "fullyQualifiedName": "com.reedelk.database.component.Delete",
-      "componentType": "PROCESSOR",
       "properties": [
         {
+          "name": "connectionConfiguration",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "displayName": "Connection",
-          "propertyName": "connectionConfiguration",
-          "propertyDescription": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
               "shared": "YES",
@@ -217,56 +216,55 @@
               "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
+                  "name": "connectionURL",
                   "example": "\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "initValue": "jdbc:mysql://localhost:3306/mydatabase",
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "description": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "displayName": "Connection URL",
-                  "propertyName": "connectionURL",
-                  "propertyDescription": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "username",
                   "example": "myDatabaseUser",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The username to be used to create the database connection.",
                   "displayName": "Username",
-                  "propertyName": "username",
-                  "propertyDescription": "The username to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "password",
                   "example": "myDatabasePassword",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The password to be used to create the database connection.",
                   "displayName": "Password",
-                  "propertyName": "password",
-                  "propertyDescription": "The password to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
                       "type": "com.reedelk.runtime.api.annotation.Password"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "databaseDriver",
                   "example": "ORACLE",
                   "initValue": "MYSQL",
+                  "description": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "displayName": "Driver",
-                  "propertyName": "databaseDriver",
-                  "propertyDescription": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
                       "nameAndDisplayNameMap": {
@@ -277,107 +275,108 @@
                       },
                       "type": "java.lang.Enum"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "minPoolSize",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Min Pool Size",
                   "defaultValue": "3",
-                  "propertyName": "minPoolSize",
-                  "propertyDescription": "Minimum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "maxPoolSize",
                   "example": "20",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "15",
+                  "description": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Max Pool Size",
                   "defaultValue": "15",
-                  "propertyName": "maxPoolSize",
-                  "propertyDescription": "Maximum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "acquireIncrement",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "displayName": "Acquire Increment",
                   "defaultValue": "3",
-                  "propertyName": "acquireIncrement",
-                  "propertyDescription": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 }
               ],
               "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "query",
           "example": "\u003cul\u003e\u003cli\u003eDELETE FROM orders WHERE id \u003d 1\u003c/li\u003e\u003cli\u003eDELETE FROM orders WHERE name LIKE \u0027item%\u0027\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "DELETE FROM orders WHERE id \u003d 1",
+          "description": "The \u003cb\u003edelete\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
           "displayName": "Delete Query",
-          "propertyName": "query",
-          "propertyDescription": "The \u003cb\u003edelete\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
               "type": "java.lang.String"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "parametersMapping",
           "example": "id \u003e \u003ccode\u003emessage.payload()\u003c/code\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Mapping of delete query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "displayName": "Query Parameters Mappings",
-          "propertyName": "parametersMapping",
-          "propertyDescription": "Mapping of delete query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
               "tabPlacement": "TOP",
               "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
             }
-          }
+          },
+          "whens": []
         }
       ]
     },
     {
       "hidden": false,
+      "type": "PROCESSOR",
       "displayName": "SQL Insert",
       "description": "Executes an INSERT SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).",
       "fullyQualifiedName": "com.reedelk.database.component.Insert",
-      "componentType": "PROCESSOR",
       "properties": [
         {
+          "name": "connectionConfiguration",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "displayName": "Connection",
-          "propertyName": "connectionConfiguration",
-          "propertyDescription": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
               "shared": "YES",
@@ -385,56 +384,55 @@
               "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
+                  "name": "connectionURL",
                   "example": "\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "initValue": "jdbc:mysql://localhost:3306/mydatabase",
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "description": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "displayName": "Connection URL",
-                  "propertyName": "connectionURL",
-                  "propertyDescription": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "username",
                   "example": "myDatabaseUser",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The username to be used to create the database connection.",
                   "displayName": "Username",
-                  "propertyName": "username",
-                  "propertyDescription": "The username to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "password",
                   "example": "myDatabasePassword",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The password to be used to create the database connection.",
                   "displayName": "Password",
-                  "propertyName": "password",
-                  "propertyDescription": "The password to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
                       "type": "com.reedelk.runtime.api.annotation.Password"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "databaseDriver",
                   "example": "ORACLE",
                   "initValue": "MYSQL",
+                  "description": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "displayName": "Driver",
-                  "propertyName": "databaseDriver",
-                  "propertyDescription": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
                       "nameAndDisplayNameMap": {
@@ -445,115 +443,116 @@
                       },
                       "type": "java.lang.Enum"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "minPoolSize",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Min Pool Size",
                   "defaultValue": "3",
-                  "propertyName": "minPoolSize",
-                  "propertyDescription": "Minimum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "maxPoolSize",
                   "example": "20",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "15",
+                  "description": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Max Pool Size",
                   "defaultValue": "15",
-                  "propertyName": "maxPoolSize",
-                  "propertyDescription": "Maximum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "acquireIncrement",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "displayName": "Acquire Increment",
                   "defaultValue": "3",
-                  "propertyName": "acquireIncrement",
-                  "propertyDescription": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 }
               ],
               "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "query",
           "example": "\u003cul\u003e\u003cli\u003e\u003ccode\u003eINSERT orders (id, name) VALUES (1, \u0027Items order\u0027)\u003c/code\u003e\u003c/li\u003e\u003cli\u003e\u003ccode\u003eINSERT orders VALUES (32, \u0027Items order\u0027, \u0027Online shop order\u0027)\u003c/code\u003e\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "INSERT orders (id, name) VALUES (1, \u0027Items order\u0027)",
+          "description": "The \u003cb\u003einsert\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
           "displayName": "Insert Query",
-          "propertyName": "query",
-          "propertyDescription": "The \u003cb\u003einsert\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
               "type": "java.lang.String"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "parametersMapping",
           "example": "name \u003e \u003ccode\u003emessage.payload()\u003c/code\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Mapping of insert query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "displayName": "Query Parameters Mappings",
-          "propertyName": "parametersMapping",
-          "propertyDescription": "Mapping of insert query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
               "tabPlacement": "TOP",
               "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
             }
-          }
+          },
+          "whens": []
         }
       ]
     },
     {
       "hidden": false,
+      "type": "PROCESSOR",
       "displayName": "Result Set As JSON",
       "description": "Converts a Result Set into a JSON structure.",
       "fullyQualifiedName": "com.reedelk.database.component.ResultSetAsJson",
-      "componentType": "PROCESSOR",
       "properties": []
     },
     {
       "hidden": false,
+      "type": "PROCESSOR",
       "displayName": "SQL Select",
       "description": "Executes a SELECT SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).",
       "fullyQualifiedName": "com.reedelk.database.component.Select",
-      "componentType": "PROCESSOR",
       "properties": [
         {
+          "name": "connectionConfiguration",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "displayName": "Connection",
-          "propertyName": "connectionConfiguration",
-          "propertyDescription": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
               "shared": "YES",
@@ -561,56 +560,55 @@
               "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
+                  "name": "connectionURL",
                   "example": "\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "initValue": "jdbc:mysql://localhost:3306/mydatabase",
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "description": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "displayName": "Connection URL",
-                  "propertyName": "connectionURL",
-                  "propertyDescription": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "username",
                   "example": "myDatabaseUser",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The username to be used to create the database connection.",
                   "displayName": "Username",
-                  "propertyName": "username",
-                  "propertyDescription": "The username to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "password",
                   "example": "myDatabasePassword",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The password to be used to create the database connection.",
                   "displayName": "Password",
-                  "propertyName": "password",
-                  "propertyDescription": "The password to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
                       "type": "com.reedelk.runtime.api.annotation.Password"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "databaseDriver",
                   "example": "ORACLE",
                   "initValue": "MYSQL",
+                  "description": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "displayName": "Driver",
-                  "propertyName": "databaseDriver",
-                  "propertyDescription": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
                       "nameAndDisplayNameMap": {
@@ -621,107 +619,108 @@
                       },
                       "type": "java.lang.Enum"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "minPoolSize",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Min Pool Size",
                   "defaultValue": "3",
-                  "propertyName": "minPoolSize",
-                  "propertyDescription": "Minimum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "maxPoolSize",
                   "example": "20",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "15",
+                  "description": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Max Pool Size",
                   "defaultValue": "15",
-                  "propertyName": "maxPoolSize",
-                  "propertyDescription": "Maximum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "acquireIncrement",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "displayName": "Acquire Increment",
                   "defaultValue": "3",
-                  "propertyName": "acquireIncrement",
-                  "propertyDescription": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 }
               ],
               "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "query",
           "example": "\u003cul\u003e\u003cli\u003e\u003ccode\u003eSELECT * FROM orders WHERE name \u003d \u0027John\u0027 AND surname \u003d \u0027Doe\u0027\u003c/code\u003e\u003c/li\u003e\u003cli\u003e\u003ccode\u003eSELECT * FROM orders WHERE name LIKE :name AND surname \u003d :surname\u003c/code\u003e\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "SELECT * FROM orders WHERE name LIKE :name",
+          "description": "The \u003cb\u003eselect\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration. below.",
           "displayName": "Select Query",
-          "propertyName": "query",
-          "propertyDescription": "The \u003cb\u003eselect\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration. below.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
               "type": "java.lang.String"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "parametersMapping",
           "example": "name \u003e \u003ccode\u003emessage.payload()\u003c/code\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Mapping of select query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "displayName": "Query Parameters Mappings",
-          "propertyName": "parametersMapping",
-          "propertyDescription": "Mapping of select query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
               "tabPlacement": "TOP",
               "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
             }
-          }
+          },
+          "whens": []
         }
       ]
     },
     {
       "hidden": false,
+      "type": "PROCESSOR",
       "displayName": "SQL Update",
       "description": "Executes an UPDATE SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).",
       "fullyQualifiedName": "com.reedelk.database.component.Update",
-      "componentType": "PROCESSOR",
       "properties": [
         {
+          "name": "connectionConfiguration",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
           "displayName": "Connection",
-          "propertyName": "connectionConfiguration",
-          "propertyDescription": "Data source configuration to be used by this query. Shared configurations use the same connection pool.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeObjectDescriptor",
             "instance": {
               "shared": "YES",
@@ -729,56 +728,55 @@
               "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
               "objectProperties": [
                 {
+                  "name": "connectionURL",
                   "example": "\u003cul\u003e\u003cli\u003eH2: jdbc:h2:~/test\u003c/li\u003e\u003cli\u003eMySQL: jdbc:mysql://localhost:3306/mydatabase\u003c/li\u003e\u003cli\u003eOracle: jdbc:oracle:thin:@localhost:1521:orcl\u003c/li\u003e\u003cli\u003ePostgreSQL: jdbc:postgresql://host:port/database\u003c/li\u003e\u003c/ul\u003e",
                   "initValue": "jdbc:mysql://localhost:3306/mydatabase",
                   "hintValue": "jdbc:mysql://localhost:3306/mydatabase",
+                  "description": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
                   "displayName": "Connection URL",
-                  "propertyName": "connectionURL",
-                  "propertyDescription": "The connection URL is a string that a JDBC driver uses to connect to a database. It can contain information such as where to search for the database, the name of the database to connect to, and configuration properties.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "username",
                   "example": "myDatabaseUser",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The username to be used to create the database connection.",
                   "displayName": "Username",
-                  "propertyName": "username",
-                  "propertyDescription": "The username to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.String"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "password",
                   "example": "myDatabasePassword",
                   "initValue": "###USE_DEFAULT_VALUE###",
+                  "description": "The password to be used to create the database connection.",
                   "displayName": "Password",
-                  "propertyName": "password",
-                  "propertyDescription": "The password to be used to create the database connection.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePasswordDescriptor",
                     "instance": {
                       "type": "com.reedelk.runtime.api.annotation.Password"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "databaseDriver",
                   "example": "ORACLE",
                   "initValue": "MYSQL",
+                  "description": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
                   "displayName": "Driver",
-                  "propertyName": "databaseDriver",
-                  "propertyDescription": "The fully qualified name of the JDBC database driver class. The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypeEnumDescriptor",
                     "instance": {
                       "nameAndDisplayNameMap": {
@@ -789,90 +787,92 @@
                       },
                       "type": "java.lang.Enum"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "minPoolSize",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Minimum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Min Pool Size",
                   "defaultValue": "3",
-                  "propertyName": "minPoolSize",
-                  "propertyDescription": "Minimum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "maxPoolSize",
                   "example": "20",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "15",
+                  "description": "Maximum number of Connections the connection pool will maintain at any given time.",
                   "displayName": "Max Pool Size",
                   "defaultValue": "15",
-                  "propertyName": "maxPoolSize",
-                  "propertyDescription": "Maximum number of Connections the connection pool will maintain at any given time.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 },
                 {
+                  "name": "acquireIncrement",
                   "example": "5",
                   "initValue": "###USE_DEFAULT_VALUE###",
                   "hintValue": "3",
+                  "description": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
                   "displayName": "Acquire Increment",
                   "defaultValue": "3",
-                  "propertyName": "acquireIncrement",
-                  "propertyDescription": "Determines how many connections at a time the connection pool will try to acquire when the pool is exhausted.",
-                  "whens": [],
-                  "propertyType": {
+                  "type": {
                     "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
                     "instance": {
                       "type": "java.lang.Integer"
                     }
-                  }
+                  },
+                  "whens": []
                 }
               ],
               "type": "com.reedelk.module.descriptor.model.TypeObjectDescriptor$TypeObject"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "query",
           "example": "\u003cul\u003e\u003cli\u003e\u003ccode\u003eUPDATE orders SET name \u003d \u0027another name\u0027 WHERE id \u003d 1\u003c/code\u003e\u003c/li\u003e\u003cli\u003e\u003ccode\u003eUPDATE orders SET name \u003d \u0027another name\u0027, surname \u003d \u0027another surname\u0027 WHERE id \u003d 2\u003c/code\u003e\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "UPDATE orders SET name \u003d \u0027another name\u0027 WHERE id \u003d 1",
+          "description": "The \u003cb\u003eupdate\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
           "displayName": "Update Query",
-          "propertyName": "query",
-          "propertyDescription": "The \u003cb\u003eupdate\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
             "instance": {
               "type": "java.lang.String"
             }
-          }
+          },
+          "whens": []
         },
         {
+          "name": "parametersMapping",
           "example": "name \u003e \u003ccode\u003emessage.payload()\u003c/code\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
+          "description": "Mapping of update query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
           "displayName": "Query Parameters Mappings",
-          "propertyName": "parametersMapping",
-          "propertyDescription": "Mapping of update query parameters \u003e values. Query parameters will be evaluated and replaced each time before the query is executed.",
-          "whens": [],
-          "propertyType": {
+          "type": {
             "classname": "com.reedelk.module.descriptor.model.TypeDynamicMapDescriptor",
             "instance": {
               "tabPlacement": "TOP",
               "type": "com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap"
             }
-          }
+          },
+          "whens": []
         }
       ]
     }
