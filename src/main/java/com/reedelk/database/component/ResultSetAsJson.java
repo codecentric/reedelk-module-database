@@ -18,6 +18,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.List;
 
+// TODO: Should this one be in the JSON module!?
 @ModuleComponent("Result Set As JSON")
 @Description("Converts a Result Set into a JSON structure.")
 @Component(service = ResultSetAsJson.class, scope = ServiceScope.PROTOTYPE)
