@@ -1,8 +1,8 @@
 package com.reedelk.database.commons;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.reedelk.database.component.Select;
 import com.reedelk.database.component.ConnectionConfiguration;
+import com.reedelk.database.component.Select;
 import com.reedelk.runtime.api.exception.ESBException;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
