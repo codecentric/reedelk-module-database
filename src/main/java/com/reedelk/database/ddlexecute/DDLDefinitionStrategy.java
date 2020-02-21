@@ -1,4 +1,4 @@
-package com.reedelk.database.configuration;
+package com.reedelk.database.ddlexecute;
 
 import com.reedelk.runtime.api.annotation.DisplayName;
 

@@ -1,6 +1,5 @@
 package com.reedelk.database.ddlexecute;
 
-import com.reedelk.database.configuration.DDLDefinitionStrategy;
 import com.reedelk.runtime.api.resource.ResourceText;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicvalue.DynamicString;

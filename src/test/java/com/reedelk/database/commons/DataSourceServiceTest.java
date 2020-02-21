@@ -1,7 +1,7 @@
 package com.reedelk.database.commons;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.reedelk.database.configuration.ConnectionConfiguration;
+import com.reedelk.database.component.ConnectionConfiguration;
 import com.reedelk.runtime.api.component.Component;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.flow.FlowContext;

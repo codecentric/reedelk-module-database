@@ -17,7 +17,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.component.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "name": "connectionURL",
@@ -213,7 +213,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.component.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "name": "connectionURL",
@@ -381,7 +381,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.component.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "name": "connectionURL",
@@ -557,7 +557,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.component.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "name": "connectionURL",
@@ -725,7 +725,7 @@
             "instance": {
               "shared": "YES",
               "collapsible": "NO",
-              "typeFullyQualifiedName": "com.reedelk.database.configuration.ConnectionConfiguration",
+              "typeFullyQualifiedName": "com.reedelk.database.component.ConnectionConfiguration",
               "objectProperties": [
                 {
                   "name": "connectionURL",

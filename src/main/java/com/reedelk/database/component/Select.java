@@ -2,7 +2,6 @@ package com.reedelk.database.component;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.commons.*;
-import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;

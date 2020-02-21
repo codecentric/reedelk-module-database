@@ -1,8 +1,7 @@
 package com.reedelk.database.component;
 
 import com.reedelk.database.commons.DataSourceService;
-import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.configuration.DDLDefinitionStrategy;
+import com.reedelk.database.ddlexecute.DDLDefinitionStrategy;
 import com.reedelk.database.ddlexecute.ExecutionStrategy;
 import com.reedelk.database.ddlexecute.ExecutionStrategyBuilder;
 import com.reedelk.runtime.api.annotation.*;

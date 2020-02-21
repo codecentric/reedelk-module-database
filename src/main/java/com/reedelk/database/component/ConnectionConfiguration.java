@@ -1,4 +1,4 @@
-package com.reedelk.database.configuration;
+package com.reedelk.database.component;
 
 import com.reedelk.database.commons.DatabaseDriver;
 import com.reedelk.runtime.api.annotation.*;

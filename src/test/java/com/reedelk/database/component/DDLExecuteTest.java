@@ -2,8 +2,7 @@ package com.reedelk.database.component;
 
 import com.reedelk.database.commons.DataSourceService;
 import com.reedelk.database.commons.DatabaseDriver;
-import com.reedelk.database.configuration.ConnectionConfiguration;
-import com.reedelk.database.configuration.DDLDefinitionStrategy;
+import com.reedelk.database.ddlexecute.DDLDefinitionStrategy;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;

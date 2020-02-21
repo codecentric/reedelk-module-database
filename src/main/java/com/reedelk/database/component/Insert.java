@@ -5,7 +5,6 @@ import com.reedelk.database.commons.DataSourceService;
 import com.reedelk.database.commons.DatabaseAttribute;
 import com.reedelk.database.commons.DatabaseUtils;
 import com.reedelk.database.commons.QueryStatementTemplate;
-import com.reedelk.database.configuration.ConnectionConfiguration;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
