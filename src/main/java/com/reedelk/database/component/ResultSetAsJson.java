@@ -2,6 +2,7 @@ package com.reedelk.database.component;
 
 import com.reedelk.database.commons.Messages;
 import com.reedelk.database.commons.ResultSetConverter;
+import com.reedelk.runtime.api.annotation.Description;
 import com.reedelk.runtime.api.annotation.ModuleComponent;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.ESBException;
@@ -17,9 +18,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.List;
 
-@ModuleComponent(
-        name = "Result Set As JSON",
-        description = "Converts a Result Set into a JSON structure.")
+@ModuleComponent("Result Set As JSON")
+@Description("Converts a Result Set into a JSON structure.")
 @Component(service = ResultSetAsJson.class, scope = ServiceScope.PROTOTYPE)
 public class ResultSetAsJson implements ProcessorSync {
 

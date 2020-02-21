@@ -10,10 +10,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(service = ConnectionConfiguration.class, scope = ServiceScope.PROTOTYPE)
 public class ConnectionConfiguration implements Implementor {
 
-    @Hidden
     @Property("id")
+    @Hidden
     private String id;
 
+    @Property("Connection URL")
     @Example("<ul>" +
             "<li>H2: jdbc:h2:~/test</li>" +
             "<li>MySQL: jdbc:mysql://localhost:3306/mydatabase</li>" +
@@ -22,49 +23,48 @@ public class ConnectionConfiguration implements Implementor {
             "</ul>")
     @Hint("jdbc:mysql://localhost:3306/mydatabase")
     @InitValue("jdbc:mysql://localhost:3306/mydatabase")
-    @Property("Connection URL")
-    @PropertyDescription("The connection URL is a string that a JDBC driver uses to connect to a database. " +
+    @Description("The connection URL is a string that a JDBC driver uses to connect to a database. " +
             "It can contain information such as where to search for the database, " +
             "the name of the database to connect to, and configuration properties.")
     private String connectionURL;
 
-    @Example("myDatabaseUser")
     @Property("Username")
-    @PropertyDescription("The username to be used to create the database connection.")
+    @Example("myDatabaseUser")
+    @Description("The username to be used to create the database connection.")
     private String username;
 
-    @Example("myDatabasePassword")
-    @Password
     @Property("Password")
-    @PropertyDescription("The password to be used to create the database connection.")
+    @Password
+    @Example("myDatabasePassword")
+    @Description("The password to be used to create the database connection.")
     private String password;
 
     @Example("ORACLE")
     @InitValue("MYSQL")
     @Property("Driver")
-    @PropertyDescription("The fully qualified name of the JDBC database driver class. " +
+    @Description("The fully qualified name of the JDBC database driver class. " +
             "The JDBC drivers must be present in the {RUNTIME_HOME}/lib directory.")
     private DatabaseDriver databaseDriver;
 
+    @Property("Min Pool Size")
     @Hint("3")
     @Example("5")
     @DefaultValue("3")
-    @Property("Min Pool Size")
-    @PropertyDescription("Minimum number of Connections the connection pool will maintain at any given time.")
+    @Description("Minimum number of Connections the connection pool will maintain at any given time.")
     private Integer minPoolSize;
 
+    @Property("Max Pool Size")
     @Hint("15")
     @Example("20")
     @DefaultValue("15")
-    @Property("Max Pool Size")
-    @PropertyDescription("Maximum number of Connections the connection pool will maintain at any given time.")
+    @Description("Maximum number of Connections the connection pool will maintain at any given time.")
     private Integer maxPoolSize;
 
+    @Property("Acquire Increment")
     @Hint("3")
     @Example("5")
     @DefaultValue("3")
-    @Property("Acquire Increment")
-    @PropertyDescription("Determines how many connections at a time the connection pool will try to acquire " +
+    @Description("Determines how many connections at a time the connection pool will try to acquire " +
             "when the pool is exhausted.")
     private Integer acquireIncrement;
 
