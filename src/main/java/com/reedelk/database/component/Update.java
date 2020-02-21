@@ -49,7 +49,7 @@ public class Update implements ProcessorSync {
             "</ul>")
     @Hint("UPDATE orders SET name = 'another name' WHERE id = 1")
     @Description("The <b>update</b> query to be executed on the database with the given Data Source connection. " +
-            "The query might contain parameters which will be filled from the expressions defined in" +
+            "The query might contain parameters which will be filled from the expressions defined in " +
             "the parameters mapping configuration below.")
     private String query;
 

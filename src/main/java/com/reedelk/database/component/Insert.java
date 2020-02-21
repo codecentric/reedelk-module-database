@@ -49,7 +49,7 @@ public class Insert implements ProcessorSync {
             "</ul>")
     @Hint("INSERT orders (id, name) VALUES (1, 'Items order')")
     @Description("The <b>insert</b> query to be executed on the database with the given Data Source connection. " +
-            "The query might contain parameters which will be filled from the expressions defined in" +
+            "The query might contain parameters which will be filled from the expressions defined in " +
             "the parameters mapping configuration below.")
     private String query;
 

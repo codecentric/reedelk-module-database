@@ -337,7 +337,7 @@
           "example": "\u003cul\u003e\u003cli\u003eDELETE FROM orders WHERE id \u003d 1\u003c/li\u003e\u003cli\u003eDELETE FROM orders WHERE name LIKE \u0027item%\u0027\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "DELETE FROM orders WHERE id \u003d 1",
-          "description": "The \u003cb\u003edelete\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
+          "description": "The \u003cb\u003edelete\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined in the parameters mapping configuration below.",
           "displayName": "Delete Query",
           "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
@@ -505,7 +505,7 @@
           "example": "\u003cul\u003e\u003cli\u003e\u003ccode\u003eINSERT orders (id, name) VALUES (1, \u0027Items order\u0027)\u003c/code\u003e\u003c/li\u003e\u003cli\u003e\u003ccode\u003eINSERT orders VALUES (32, \u0027Items order\u0027, \u0027Online shop order\u0027)\u003c/code\u003e\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "INSERT orders (id, name) VALUES (1, \u0027Items order\u0027)",
-          "description": "The \u003cb\u003einsert\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
+          "description": "The \u003cb\u003einsert\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined in the parameters mapping configuration below.",
           "displayName": "Insert Query",
           "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
@@ -681,7 +681,7 @@
           "example": "\u003cul\u003e\u003cli\u003e\u003ccode\u003eSELECT * FROM orders WHERE name \u003d \u0027John\u0027 AND surname \u003d \u0027Doe\u0027\u003c/code\u003e\u003c/li\u003e\u003cli\u003e\u003ccode\u003eSELECT * FROM orders WHERE name LIKE :name AND surname \u003d :surname\u003c/code\u003e\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "SELECT * FROM orders WHERE name LIKE :name",
-          "description": "The \u003cb\u003eselect\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration. below.",
+          "description": "The \u003cb\u003eselect\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined in the parameters mapping configuration. below.",
           "displayName": "Select Query",
           "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
@@ -849,7 +849,7 @@
           "example": "\u003cul\u003e\u003cli\u003e\u003ccode\u003eUPDATE orders SET name \u003d \u0027another name\u0027 WHERE id \u003d 1\u003c/code\u003e\u003c/li\u003e\u003cli\u003e\u003ccode\u003eUPDATE orders SET name \u003d \u0027another name\u0027, surname \u003d \u0027another surname\u0027 WHERE id \u003d 2\u003c/code\u003e\u003c/li\u003e\u003c/ul\u003e",
           "initValue": "###USE_DEFAULT_VALUE###",
           "hintValue": "UPDATE orders SET name \u003d \u0027another name\u0027 WHERE id \u003d 1",
-          "description": "The \u003cb\u003eupdate\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined inthe parameters mapping configuration below.",
+          "description": "The \u003cb\u003eupdate\u003c/b\u003e query to be executed on the database with the given Data Source connection. The query might contain parameters which will be filled from the expressions defined in the parameters mapping configuration below.",
           "displayName": "Update Query",
           "type": {
             "classname": "com.reedelk.module.descriptor.model.TypePrimitiveDescriptor",
