@@ -84,12 +84,12 @@ class ResultSetAsJsonTest {
         }
 
         @Override
-        public int getColumnCount() {
+        public int columnCount() {
             return columns.size();
         }
 
         @Override
-        public String getColumnName(int i) {
+        public String columnName(int i) {
             return columns.get(i - 1);
         }
 

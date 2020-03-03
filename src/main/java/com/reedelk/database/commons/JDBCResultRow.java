@@ -20,7 +20,7 @@ public class JDBCResultRow implements ResultRow {
     }
 
     @Override
-    public int getColumnCount() {
+    public int columnCount() {
         try {
             return metadata.getColumnCount();
         } catch (SQLException e) {
@@ -29,7 +29,7 @@ public class JDBCResultRow implements ResultRow {
     }
 
     @Override
-    public String getColumnName(int i) {
+    public String columnName(int i) {
         try {
             return metadata.getColumnName(i);
         } catch (SQLException e) {

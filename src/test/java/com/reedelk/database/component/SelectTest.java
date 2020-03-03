@@ -200,9 +200,9 @@ class SelectTest {
     private boolean sameRow(JDBCResultRow given, Map<String, Object> columnNameAndValueMap) {
         boolean[] matches = new boolean[]{true};
         columnNameAndValueMap.forEach((columnName, columnValue) -> {
-            int columnCount = given.getColumnCount();
+            int columnCount = given.columnCount();
             for (int i = 1; i <= columnCount; i++) {
-                String currentColName = given.getColumnName(i);
+                String currentColName = given.columnName(i);
                 if (currentColName.equals(columnName)) {
                     matches[0] = Objects.equals(given.get(i), columnValue);
                 }

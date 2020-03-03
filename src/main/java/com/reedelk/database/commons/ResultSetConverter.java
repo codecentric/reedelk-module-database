@@ -19,9 +19,9 @@ public class ResultSetConverter {
         JSONArray json = new JSONArray();
         Flux.from(resultSetFlux).subscribe(resultSetRow -> {
             JSONObject rowObject = new JSONObject();
-            int numColumns = resultSetRow.getColumnCount();
+            int numColumns = resultSetRow.columnCount();
             for (int i = 1; i < numColumns + 1; i++) {
-                String columnName = resultSetRow.getColumnName(i);
+                String columnName = resultSetRow.columnName(i);
                 rowObject.put(columnName, resultSetRow.get(i));
             }
             json.put(rowObject);
