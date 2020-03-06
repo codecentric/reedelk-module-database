@@ -8,6 +8,7 @@ import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
+import com.reedelk.runtime.api.message.content.ResultRow;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
 import org.junit.jupiter.api.AfterEach;
@@ -86,7 +87,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<JDBCResultRow> result = actual.payload();
+        List<ResultRow> result = actual.payload();
         assertFound(result, of("id", 1, "name", "John Doe"));
         assertFound(result, of("id", 2, "name", "Mark Anton"));
     }
@@ -115,7 +116,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<JDBCResultRow> result = actual.payload();
+        List<ResultRow> result = actual.payload();
         assertThat(result).hasSize(1);
         assertFound(result, of("id", 2, "name", "Mark Anton"));
     }
@@ -139,7 +140,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<JDBCResultRow> result = actual.payload();
+        List<ResultRow> result = actual.payload();
         assertThat(result).hasSize(1);
         assertFound(result, of("id", 2, "name", "Mark Anton"));
     }
@@ -163,7 +164,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<JDBCResultRow> result = actual.payload();
+        List<ResultRow> result = actual.payload();
         assertThat(result).hasSize(1);
         assertFound(result, of("id", 1, "name", "John Doe"));
     }
@@ -183,13 +184,13 @@ class SelectTest {
                 "SELECT WHERE customer WHERE id = 2 [42000-200]");
     }
 
-    private void assertFound(Collection<JDBCResultRow> rows, Map<String, Object> columnNameAndValueMap) {
+    private void assertFound(Collection<ResultRow> rows, Map<String, Object> columnNameAndValueMap) {
         boolean found = findRowInCollection(rows, columnNameAndValueMap);
         assertThat(found).isTrue();
     }
 
-    private boolean findRowInCollection(Collection<JDBCResultRow> rows, Map<String, Object> columnNameAndValueMap) {
-        for (JDBCResultRow current : rows) {
+    private boolean findRowInCollection(Collection<ResultRow> rows, Map<String, Object> columnNameAndValueMap) {
+        for (ResultRow current : rows) {
             if (sameRow(current, columnNameAndValueMap)) {
                 return true;
             }
@@ -197,7 +198,7 @@ class SelectTest {
         return false;
     }
 
-    private boolean sameRow(JDBCResultRow given, Map<String, Object> columnNameAndValueMap) {
+    private boolean sameRow(ResultRow given, Map<String, Object> columnNameAndValueMap) {
         boolean[] matches = new boolean[]{true};
         columnNameAndValueMap.forEach((columnName, columnValue) -> {
             int columnCount = given.columnCount();
@@ -205,6 +206,7 @@ class SelectTest {
                 String currentColName = given.columnName(i);
                 if (currentColName.equals(columnName)) {
                     matches[0] = Objects.equals(given.get(i), columnValue);
+                    matches[0] = Objects.equals(given.getByColumnName(columnName), columnValue);
                 }
             }
         });

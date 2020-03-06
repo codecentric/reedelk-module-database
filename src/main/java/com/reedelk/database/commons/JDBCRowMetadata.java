@@ -14,7 +14,10 @@ public class JDBCRowMetadata implements Serializable {
     private final List<Integer> columnTypes;
     private final Map<String, Integer> columnNameIndexMap;
 
-    public JDBCRowMetadata(int columnCount, List<String> columnNames, List<Integer> columnTypes, Map<String, Integer> columnNameIndexMap) {
+    public JDBCRowMetadata(int columnCount,
+                           List<String> columnNames,
+                           List<Integer> columnTypes,
+                           Map<String, Integer> columnNameIndexMap) {
         this.columnCount = columnCount;
         this.columnNames = columnNames;
         this.columnTypes = columnTypes;
