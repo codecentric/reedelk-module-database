@@ -1,5 +1,6 @@
 package com.reedelk.database.component;
 
+import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -101,6 +102,16 @@ class ResultSetAsJsonTest {
         @Override
         public Object get(int i) {
             return values.get(i - 1);
+        }
+
+        @Override
+        public Object get(String columnName) {
+            for (int i = 1; i <= columns.size(); i++) {
+                if (columns.get(i).equals(columnName)) {
+                    return i;
+                }
+            }
+            throw new ESBException("Could not find column with name: " + columnName);
         }
 
         @Override

@@ -105,8 +105,9 @@ public class Select implements ProcessorSync {
         Flux<ResultRow> result = Flux.create(sink -> {
             try {
                 ResultSetMetaData metaData = disposableResultSet.getMetaData();
+                JDBCRowMetadata jdbcMetadata = JDBCRowMetadata.from(metaData);
                 while (disposableResultSet.next()) {
-                    ResultRow row = ResultSetConverter.convertRow(metaData, disposableResultSet);
+                    ResultRow row = ResultSetConverter.convertRow(jdbcMetadata, disposableResultSet);
                     sink.next(row);
                 }
                 sink.complete();

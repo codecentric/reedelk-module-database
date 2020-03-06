@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import reactor.core.publisher.Flux;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class ResultSetConverter {
         return json;
     }
 
-    public static ResultRow convertRow(ResultSetMetaData metaData, ResultSet resultSetRow) throws SQLException {
+    public static ResultRow convertRow(JDBCRowMetadata metaData, ResultSet resultSetRow) throws SQLException {
         int columnCount = metaData.getColumnCount();
         List<Object> row = new ArrayList<>();
         for (int i = 1; i <= columnCount; i++) {
@@ -39,7 +38,7 @@ public class ResultSetConverter {
         return new JDBCResultRow(metaData, row);
     }
 
-    private static Object getObjectByColumnId(ResultSetMetaData metaData, int columnId, ResultSet resultSetRow) throws SQLException {
+    private static Object getObjectByColumnId(JDBCRowMetadata metaData, int columnId, ResultSet resultSetRow) throws SQLException {
         if (metaData.getColumnType(columnId) == java.sql.Types.ARRAY) {
             return resultSetRow.getArray(columnId);
         } else if (metaData.getColumnType(columnId) == java.sql.Types.BIGINT) {
