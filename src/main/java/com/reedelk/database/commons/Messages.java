@@ -98,21 +98,4 @@ public class Messages {
             return formatMessage(msg, args);
         }
     }
-
-    public enum ResultSetAsJson implements FormattedMessage {
-
-        WRONG_ARGUMENT("%s component expects message with payload of type=[%s] " +
-                "but type=[%s] was given.");
-
-        private String msg;
-
-        ResultSetAsJson(String msg) {
-            this.msg = msg;
-        }
-
-        @Override
-        public String format(Object... args) {
-            return formatMessage(msg, args);
-        }
-    }
 }
