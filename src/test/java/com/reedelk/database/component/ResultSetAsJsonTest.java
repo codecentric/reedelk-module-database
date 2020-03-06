@@ -105,7 +105,7 @@ class ResultSetAsJsonTest {
         }
 
         @Override
-        public Object get(String columnName) {
+        public Object getByColumnName(String columnName) {
             for (int i = 1; i <= columns.size(); i++) {
                 if (columns.get(i).equals(columnName)) {
                     return i;

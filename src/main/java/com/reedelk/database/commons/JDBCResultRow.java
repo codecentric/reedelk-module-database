@@ -36,7 +36,7 @@ public class JDBCResultRow implements ResultRow {
     }
 
     @Override
-    public Object get(String columnName) {
+    public Object getByColumnName(String columnName) {
         int index = metadata.getColumnIndex(columnName);
         return row.get(index);
     }
