@@ -52,9 +52,11 @@ public class Select implements ProcessorSync {
             "the parameters mapping configuration. below.")
     private String query;
 
-    @Example("name > <code>message.payload()</code>")
-    @TabPlacementTop
     @Property("Query Parameters Mappings")
+    @TabPlacementTop
+    @KeyName("Query Parameter Name")
+    @ValueName("Query Parameter Value")
+    @Example("name > <code>message.payload()</code>")
     @Description("Mapping of select query parameters > values. Query parameters will be evaluated and replaced each time before the query is executed.")
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 

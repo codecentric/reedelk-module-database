@@ -53,8 +53,10 @@ public class Update implements ProcessorSync {
     private String query;
 
     @Property("Query Parameters Mappings")
-    @Example("name > <code>message.payload()</code>")
     @TabPlacementTop
+    @KeyName("Query Parameter Name")
+    @ValueName("Query Parameter Value")
+    @Example("name > <code>message.payload()</code>")
     @Description("Mapping of update query parameters > values. Query parameters will be evaluated and replaced each time before the query is executed.")
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
 

@@ -54,6 +54,8 @@ public class Delete implements ProcessorSync {
 
     @Property("Query Parameters Mappings")
     @TabPlacementTop
+    @KeyName("Query Parameter Name")
+    @ValueName("Query Parameter Value")
     @Example("id > <code>message.payload()</code>")
     @Description("Mapping of delete query parameters > values. Query parameters will be evaluated and replaced each time before the query is executed.")
     private DynamicObjectMap parametersMapping = DynamicObjectMap.empty();
