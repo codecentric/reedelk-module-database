@@ -52,8 +52,8 @@ public class Delete implements ProcessorSync {
             "the parameters mapping configuration below.")
     private String query;
 
-    @Property("Query Parameters Mappings")
-    @TabPlacementTop
+    @Property("Query Parameter Mappings")
+    @TabGroup("Query Parameter Mappings")
     @KeyName("Query Parameter Name")
     @ValueName("Query Parameter Value")
     @Example("id > <code>message.payload()</code>")
