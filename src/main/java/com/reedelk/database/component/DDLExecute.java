@@ -51,6 +51,7 @@ public class DDLExecute implements ProcessorSync {
     private DynamicString ddlDefinition;
 
     @Property("DDL File")
+    @HintBrowseFile("Select DDL File ...")
     @Example("assets/create_table_company.sql")
     @When(propertyName = "strategy", propertyValue = "FROM_FILE")
     @Description("Sets the file path in the project's resources directory containing the DDL statements to be executed when the strategy is <b>FROM_FILE</b>.")
