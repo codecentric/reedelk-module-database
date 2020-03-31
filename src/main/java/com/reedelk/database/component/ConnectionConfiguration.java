@@ -29,6 +29,7 @@ public class ConnectionConfiguration implements Implementor {
     private String connectionURL;
 
     @Property("Username")
+    @Hint("myDatabaseUser")
     @Example("myDatabaseUser")
     @Description("The username to be used to create the database connection.")
     private String username;
