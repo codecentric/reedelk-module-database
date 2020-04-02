@@ -1,16 +1,16 @@
 package com.reedelk.database.commons;
 
-import com.reedelk.runtime.api.message.content.ResultRow;
+import com.reedelk.runtime.api.message.content.DataRow;
 
 import java.util.Collections;
 import java.util.List;
 
-public class JDBCResultRow implements ResultRow {
+public class JDBCDataRow implements DataRow {
 
     private final JDBCRowMetadata metadata;
     private final List<Object> row;
 
-    JDBCResultRow(JDBCRowMetadata metadata, List<Object> row) {
+    JDBCDataRow(JDBCRowMetadata metadata, List<Object> row) {
         this.metadata = metadata;
         this.row = Collections.unmodifiableList(row);
     }
@@ -48,7 +48,7 @@ public class JDBCResultRow implements ResultRow {
 
     @Override
     public String toString() {
-        return "JDBCResultRow{" +
+        return "JDBCDataRow{" +
                 "metadata=" + metadata +
                 ", row=" + row +
                 '}';

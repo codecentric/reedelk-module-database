@@ -11,7 +11,7 @@ import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
-import com.reedelk.runtime.api.message.content.ResultRow;
+import com.reedelk.runtime.api.message.content.DataRow;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
 import org.osgi.service.component.annotations.Component;
@@ -104,12 +104,12 @@ public class Select implements ProcessorSync {
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
         flowContext.register(disposableResultSet);
 
-        Flux<ResultRow> result = Flux.create(sink -> {
+        Flux<DataRow> result = Flux.create(sink -> {
             try {
                 ResultSetMetaData metaData = disposableResultSet.getMetaData();
                 JDBCRowMetadata jdbcMetadata = JDBCRowMetadata.from(metaData);
                 while (disposableResultSet.next()) {
-                    ResultRow row = ResultSetConverter.convertRow(jdbcMetadata, disposableResultSet);
+                    DataRow row = ResultSetConverter.convertRow(jdbcMetadata, disposableResultSet);
                     sink.next(row);
                 }
                 sink.complete();
@@ -122,7 +122,7 @@ public class Select implements ProcessorSync {
                 ImmutableMap.of(DatabaseAttribute.QUERY, realQuery));
         return MessageBuilder.get()
                 .attributes(attributes)
-                .withStream(result, ResultRow.class)
+                .withStream(result, DataRow.class)
                 .build();
     }
 

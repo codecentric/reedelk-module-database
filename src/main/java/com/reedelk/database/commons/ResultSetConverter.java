@@ -1,6 +1,6 @@
 package com.reedelk.database.commons;
 
-import com.reedelk.runtime.api.message.content.ResultRow;
+import com.reedelk.runtime.api.message.content.DataRow;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,13 +9,13 @@ import java.util.List;
 
 public class ResultSetConverter {
 
-    public static ResultRow convertRow(JDBCRowMetadata metaData, ResultSet resultSetRow) throws SQLException {
+    public static DataRow convertRow(JDBCRowMetadata metaData, ResultSet resultSetRow) throws SQLException {
         int columnCount = metaData.getColumnCount();
         List<Object> row = new ArrayList<>();
         for (int i = 1; i <= columnCount; i++) {
             row.add(getObjectByColumnId(metaData, i, resultSetRow));
         }
-        return new JDBCResultRow(metaData, row);
+        return new JDBCDataRow(metaData, row);
     }
 
     private static Object getObjectByColumnId(JDBCRowMetadata metaData, int columnId, ResultSet resultSetRow) throws SQLException {
