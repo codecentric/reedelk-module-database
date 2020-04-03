@@ -27,6 +27,7 @@ import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.require
 @Component(service = DDLExecute.class, scope = ServiceScope.PROTOTYPE)
 public class DDLExecute implements ProcessorSync {
 
+    @DialogTitle("Data Source Configuration")
     @Property("Connection")
     @Description("Data source configuration where the DDL statements will be executed on. " +
             "Shared configurations use the same connection pool.")
