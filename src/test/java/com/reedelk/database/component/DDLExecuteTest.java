@@ -1,8 +1,8 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.commons.DataSourceService;
-import com.reedelk.database.commons.DatabaseDriver;
-import com.reedelk.database.ddlexecute.DDLDefinitionStrategy;
+import com.reedelk.database.internal.commons.DataSourceService;
+import com.reedelk.database.internal.commons.DatabaseDriver;
+import com.reedelk.database.internal.ddlexecute.DDLDefinitionStrategy;
 import com.reedelk.runtime.api.exception.ESBException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;

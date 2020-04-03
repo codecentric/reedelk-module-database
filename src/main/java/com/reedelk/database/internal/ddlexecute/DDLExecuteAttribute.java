@@ -1,4 +1,4 @@
-package com.reedelk.database.ddlexecute;
+package com.reedelk.database.internal.ddlexecute;
 
 class DDLExecuteAttribute {
 

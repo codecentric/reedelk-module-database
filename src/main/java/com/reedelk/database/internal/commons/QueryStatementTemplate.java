@@ -1,4 +1,4 @@
-package com.reedelk.database.commons;
+package com.reedelk.database.internal.commons;
 
 import java.util.Map;
 import java.util.regex.Matcher;

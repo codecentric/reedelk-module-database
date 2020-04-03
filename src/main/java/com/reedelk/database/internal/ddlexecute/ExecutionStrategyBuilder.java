@@ -1,4 +1,4 @@
-package com.reedelk.database.ddlexecute;
+package com.reedelk.database.internal.ddlexecute;
 
 import com.reedelk.runtime.api.resource.ResourceText;
 import com.reedelk.runtime.api.script.ScriptEngineService;

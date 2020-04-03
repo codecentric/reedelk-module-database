@@ -1,4 +1,4 @@
-package com.reedelk.database.ddlexecute;
+package com.reedelk.database.internal.ddlexecute;
 
 import com.reedelk.database.component.DDLExecute;
 import com.reedelk.runtime.api.exception.ESBException;
@@ -9,7 +9,7 @@ import com.reedelk.runtime.api.script.dynamicvalue.DynamicString;
 
 import javax.sql.DataSource;
 
-import static com.reedelk.database.commons.Messages.DDLExecute.DDL_SCRIPT_EVALUATE_ERROR;
+import static com.reedelk.database.internal.commons.Messages.DDLExecute.DDL_SCRIPT_EVALUATE_ERROR;
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotNull;
 

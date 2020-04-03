@@ -1,6 +1,6 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.commons.DatabaseDriver;
+import com.reedelk.database.internal.commons.DatabaseDriver;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.Implementor;
 import org.osgi.service.component.annotations.Component;

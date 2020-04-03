@@ -1,7 +1,7 @@
-package com.reedelk.database;
+package com.reedelk.database.internal;
 
 
-import com.reedelk.database.commons.DataSourceService;
+import com.reedelk.database.internal.commons.DataSourceService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;

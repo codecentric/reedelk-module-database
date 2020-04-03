@@ -1,4 +1,4 @@
-package com.reedelk.database.commons;
+package com.reedelk.database.internal.commons;
 
 import java.sql.Driver;
 import java.sql.DriverManager;

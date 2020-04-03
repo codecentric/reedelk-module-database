@@ -1,4 +1,4 @@
-package com.reedelk.database.ddlexecute;
+package com.reedelk.database.internal.ddlexecute;
 
 import com.reedelk.database.component.DDLExecute;
 import com.reedelk.runtime.api.commons.StreamUtils;

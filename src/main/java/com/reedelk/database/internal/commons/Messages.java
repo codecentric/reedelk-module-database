@@ -1,4 +1,4 @@
-package com.reedelk.database.commons;
+package com.reedelk.database.internal.commons;
 
 public class Messages {
 

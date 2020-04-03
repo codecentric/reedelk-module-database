@@ -1,9 +1,9 @@
 package com.reedelk.database.component;
 
-import com.reedelk.database.commons.DataSourceService;
-import com.reedelk.database.ddlexecute.DDLDefinitionStrategy;
-import com.reedelk.database.ddlexecute.ExecutionStrategy;
-import com.reedelk.database.ddlexecute.ExecutionStrategyBuilder;
+import com.reedelk.database.internal.commons.DataSourceService;
+import com.reedelk.database.internal.ddlexecute.DDLDefinitionStrategy;
+import com.reedelk.database.internal.ddlexecute.ExecutionStrategy;
+import com.reedelk.database.internal.ddlexecute.ExecutionStrategyBuilder;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.flow.FlowContext;

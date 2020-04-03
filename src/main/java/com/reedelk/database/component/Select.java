@@ -1,7 +1,7 @@
 package com.reedelk.database.component;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.reedelk.database.commons.*;
+import com.reedelk.database.internal.commons.*;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
@@ -26,8 +26,8 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.reedelk.database.commons.Messages.Select.QUERY_EXECUTE_ERROR;
-import static com.reedelk.database.commons.Messages.Select.QUERY_EXECUTE_ERROR_WITH_QUERY;
+import static com.reedelk.database.internal.commons.Messages.Select.QUERY_EXECUTE_ERROR;
+import static com.reedelk.database.internal.commons.Messages.Select.QUERY_EXECUTE_ERROR_WITH_QUERY;
 import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 

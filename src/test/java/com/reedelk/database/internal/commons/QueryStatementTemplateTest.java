@@ -1,4 +1,4 @@
-package com.reedelk.database.commons;
+package com.reedelk.database.internal.commons;
 
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
-package com.reedelk.database.ddlexecute;
+package com.reedelk.database.internal.ddlexecute;
 
-import com.reedelk.database.commons.DatabaseUtils;
+import com.reedelk.database.internal.commons.DatabaseUtils;
 import com.reedelk.database.component.DDLExecute;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.exception.ESBException;
@@ -16,8 +16,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Optional;
 
-import static com.reedelk.database.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR;
-import static com.reedelk.database.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR_WITH_DDL;
+import static com.reedelk.database.internal.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR;
+import static com.reedelk.database.internal.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR_WITH_DDL;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 abstract class AbstractExecutionStrategy implements ExecutionStrategy {

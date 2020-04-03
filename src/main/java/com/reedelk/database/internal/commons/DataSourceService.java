@@ -1,4 +1,4 @@
-package com.reedelk.database.commons;
+package com.reedelk.database.internal.commons;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.component.ConnectionConfiguration;
