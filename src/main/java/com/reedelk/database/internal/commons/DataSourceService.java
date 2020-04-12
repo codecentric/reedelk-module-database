@@ -3,7 +3,7 @@ package com.reedelk.database.internal.commons;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.component.ConnectionConfiguration;
 import com.reedelk.database.component.Select;
-import com.reedelk.runtime.api.exception.ESBException;
+import com.reedelk.runtime.api.exception.PlatformException;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class DataSourceService {
             try {
                 pooledDataSource.setDriverClass(databaseDriverClass.qualifiedName());
             } catch (Throwable exception) {
-                throw new ESBException(exception);
+                throw new PlatformException(exception);
             }
 
             pooledDataSource.setJdbcUrl(connectionConfiguration.getConnectionURL());

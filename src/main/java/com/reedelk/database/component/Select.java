@@ -5,7 +5,7 @@ import com.reedelk.database.internal.commons.*;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
-import com.reedelk.runtime.api.exception.ESBException;
+import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
@@ -98,7 +98,7 @@ public class Select implements ProcessorSync {
             String errorMessage = Optional.ofNullable(realQuery)
                     .map(query -> QUERY_EXECUTE_ERROR_WITH_QUERY.format(query, rootCauseMessageOf(exception)))
                     .orElse(QUERY_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
-            throw new ESBException(errorMessage, exception);
+            throw new PlatformException(errorMessage, exception);
         }
 
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);

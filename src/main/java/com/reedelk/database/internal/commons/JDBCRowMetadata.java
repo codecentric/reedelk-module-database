@@ -1,6 +1,6 @@
 package com.reedelk.database.internal.commons;
 
-import com.reedelk.runtime.api.exception.ESBException;
+import com.reedelk.runtime.api.exception.PlatformException;
 
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
@@ -61,8 +61,8 @@ public class JDBCRowMetadata implements Serializable {
             List<Integer> columnTypes = getColumnType(metadata);
             Map<String, Integer> columnNameIndexMap = getColumnIndex(metadata);
             return new JDBCRowMetadata(columnCount, columnNames, columnTypes, columnNameIndexMap);
-        } catch (SQLException e) {
-            throw new ESBException("Could not create result row metadata", e);
+        } catch (SQLException exception) {
+            throw new PlatformException("Could not create result row metadata", exception);
         }
     }
 
@@ -73,8 +73,8 @@ public class JDBCRowMetadata implements Serializable {
                 columnNames.add(metadata.getColumnName(i));
             }
             return Collections.unmodifiableList(columnNames);
-        } catch (SQLException e) {
-            throw new ESBException(e);
+        } catch (SQLException exception) {
+            throw new PlatformException(exception);
         }
     }
 
@@ -85,8 +85,8 @@ public class JDBCRowMetadata implements Serializable {
                 columnTypes.add(metadata.getColumnType(i));
             }
             return Collections.unmodifiableList(columnTypes);
-        } catch (SQLException e) {
-            throw new ESBException(e);
+        } catch (SQLException exception) {
+            throw new PlatformException(exception);
         }
     }
 
@@ -97,8 +97,8 @@ public class JDBCRowMetadata implements Serializable {
                 columnNameIndexMap.put(metadata.getColumnName(i), i);
             }
             return Collections.unmodifiableMap(columnNameIndexMap);
-        } catch (SQLException e) {
-            throw new ESBException(e);
+        } catch (SQLException exception) {
+            throw new PlatformException(exception);
         }
     }
 }

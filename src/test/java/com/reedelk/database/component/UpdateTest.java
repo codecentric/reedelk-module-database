@@ -3,7 +3,7 @@ package com.reedelk.database.component;
 import com.reedelk.database.internal.commons.DataSourceService;
 import com.reedelk.database.internal.commons.DatabaseDriver;
 import com.reedelk.runtime.api.commons.ModuleContext;
-import com.reedelk.runtime.api.exception.ESBException;
+import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -140,7 +140,7 @@ class UpdateTest {
         component.initialize();
 
         // When
-        ESBException thrown = assertThrows(ESBException.class,
+        PlatformException thrown = assertThrows(PlatformException.class,
                 () -> component.apply(mockFlowContext, testMessage));
 
         assertThat(thrown).isNotNull();
