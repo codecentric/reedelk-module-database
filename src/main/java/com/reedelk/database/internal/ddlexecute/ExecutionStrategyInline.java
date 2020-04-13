@@ -29,8 +29,6 @@ class ExecutionStrategyInline extends AbstractExecutionStrategy {
     @Override
     String ddl(FlowContext flowContext, Message message) {
         return scriptEngine.evaluate(ddlDefinition, flowContext, message)
-                .orElseThrow(() -> {
-                    throw new PlatformException(DDL_SCRIPT_EVALUATE_ERROR.format(ddlDefinition.value()));
-                });
+                .orElseThrow(() -> new PlatformException(DDL_SCRIPT_EVALUATE_ERROR.format(ddlDefinition.value())));
     }
 }

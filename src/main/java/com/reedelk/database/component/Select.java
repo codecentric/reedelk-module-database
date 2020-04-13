@@ -19,6 +19,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import reactor.core.publisher.Flux;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -104,19 +105,7 @@ public class Select implements ProcessorSync {
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
         flowContext.register(disposableResultSet);
 
-        Flux<DataRow> result = Flux.create(sink -> {
-            try {
-                ResultSetMetaData metaData = disposableResultSet.getMetaData();
-                JDBCRowMetadata jdbcMetadata = JDBCRowMetadata.from(metaData);
-                while (disposableResultSet.next()) {
-                    DataRow row = ResultSetConverter.convertRow(jdbcMetadata, disposableResultSet);
-                    sink.next(row);
-                }
-                sink.complete();
-            } catch (Throwable exception) {
-                sink.error(exception);
-            }
-        });
+        @SuppressWarnings("rawtypes") Flux<DataRow> result = createResultStream(disposableResultSet);
 
         MessageAttributes attributes = new DefaultMessageAttributes(Select.class,
                 ImmutableMap.of(DatabaseAttribute.QUERY, realQuery));
@@ -143,5 +132,22 @@ public class Select implements ProcessorSync {
 
     public void setParametersMapping(DynamicObjectMap parametersMapping) {
         this.parametersMapping = parametersMapping;
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    private Flux<DataRow> createResultStream(DisposableResultSet disposableResultSet) {
+        return Flux.create(sink -> {
+            try {
+                ResultSetMetaData metaData = disposableResultSet.getMetaData();
+                JDBCRowMetadata jdbcMetadata = JDBCRowMetadata.from(metaData);
+                while (disposableResultSet.next()) {
+                    DataRow<Serializable> row = ResultSetConverter.convertRow(jdbcMetadata, disposableResultSet);
+                    sink.next(row);
+                }
+                sink.complete();
+            } catch (Throwable exception) {
+                sink.error(exception);
+            }
+        });
     }
 }
