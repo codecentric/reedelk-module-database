@@ -5,6 +5,7 @@ import com.reedelk.runtime.api.commons.ByteArrayUtils;
 import com.reedelk.runtime.api.message.content.DataRow;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.ResultSet;
@@ -52,8 +53,8 @@ public class ResultSetConverter {
             return resultSetRow.getTimestamp(columnId);
         } else if (columnType == java.sql.Types.BLOB) {
             Blob blob = resultSetRow.getBlob(columnId);
-            try {
-                return ByteArrayUtils.from(blob.getBinaryStream());
+            try (InputStream inputStream = blob.getBinaryStream()){
+                return ByteArrayUtils.from(inputStream);
             } catch (IOException exception) {
                 String columnName = metaData.getColumnName(columnId);
                 String error = BLOB_TO_BYTES_ERROR.format(columnName);
