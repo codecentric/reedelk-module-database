@@ -18,7 +18,7 @@ import static com.reedelk.database.internal.commons.Messages.Select.COLUMN_TYPE_
 
 public class ResultSetConverter {
 
-    public static DataRow<Serializable> convertRow(JDBCRowMetadata metaData, ResultSet resultSetRow) throws SQLException {
+    public static DataRow<Serializable> convertRow(JDBCMetadata metaData, ResultSet resultSetRow) throws SQLException {
         int columnCount = metaData.getColumnCount();
         List<Serializable> row = new ArrayList<>();
         for (int i = 1; i <= columnCount; i++) {
@@ -27,7 +27,7 @@ public class ResultSetConverter {
         return new JDBCDataRow(metaData, row);
     }
 
-    private static Serializable getObjectByColumnId(JDBCRowMetadata metaData, int columnId, ResultSet resultSetRow) throws SQLException {
+    private static Serializable getObjectByColumnId(JDBCMetadata metaData, int columnId, ResultSet resultSetRow) throws SQLException {
         int columnType = metaData.getColumnType(columnId);
         if (columnType == java.sql.Types.BIGINT) {
             return resultSetRow.getInt(columnId);

@@ -139,7 +139,7 @@ public class Select implements ProcessorSync {
         return Flux.create(sink -> {
             try {
                 ResultSetMetaData metaData = disposableResultSet.getMetaData();
-                JDBCRowMetadata jdbcMetadata = JDBCRowMetadata.from(metaData);
+                JDBCMetadata jdbcMetadata = JDBCMetadata.from(metaData);
                 while (disposableResultSet.next()) {
                     DataRow<Serializable> row = ResultSetConverter.convertRow(jdbcMetadata, disposableResultSet);
                     sink.next(row);

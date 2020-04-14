@@ -5,30 +5,41 @@ import com.reedelk.runtime.api.message.content.DataRow;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class JDBCDataRow implements DataRow<Serializable> {
 
-    private final JDBCRowMetadata metadata;
+    private final JDBCMetadata attributes;
     private final List<Serializable> row;
 
-    JDBCDataRow(JDBCRowMetadata metadata, List<Serializable> row) {
-        this.metadata = metadata;
+    JDBCDataRow(JDBCMetadata attributes, List<Serializable> row) {
+        this.attributes = attributes;
         this.row = Collections.unmodifiableList(row);
     }
 
     @Override
+    public Map<String, Serializable> attributes() {
+        return attributes;
+    }
+
+    @Override
+    public Serializable attribute(String name) {
+        return attributes.get(name);
+    }
+
+    @Override
     public int columnCount() {
-        return metadata.getColumnCount();
+        return attributes.getColumnCount();
     }
 
     @Override
     public String columnName(int i) {
-        return metadata.getColumnName(i);
+        return attributes.getColumnName(i);
     }
 
     @Override
     public List<String> columnNames() {
-        return metadata.getColumnNames();
+        return attributes.getColumnNames();
     }
 
     @Override
@@ -38,7 +49,7 @@ public class JDBCDataRow implements DataRow<Serializable> {
 
     @Override
     public Serializable getByColumnName(String columnName) {
-        int index = metadata.getColumnIndex(columnName);
+        int index = attributes.getColumnIndex(columnName);
         return row.get(index - 1);
     }
 
@@ -50,8 +61,9 @@ public class JDBCDataRow implements DataRow<Serializable> {
     @Override
     public String toString() {
         return "JDBCDataRow{" +
-                "columnNames=" + metadata.getColumnNames() +
-                ", values=" + row +
+                "columnNames=" + attributes.getColumnNames() +
+                ", row=" + row +
+                ", attributes=" + attributes +
                 '}';
     }
 }
