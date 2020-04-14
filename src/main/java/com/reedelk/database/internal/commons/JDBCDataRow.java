@@ -43,15 +43,15 @@ public class JDBCDataRow implements DataRow<Serializable> {
     }
 
     @Override
-    public List<Serializable> row() {
+    public List<Serializable> values() {
         return row;
     }
 
     @Override
     public String toString() {
         return "JDBCDataRow{" +
-                "metadata=" + metadata +
-                ", row=" + row +
+                "columnNames=" + metadata.getColumnNames() +
+                ", values=" + row +
                 '}';
     }
 }
