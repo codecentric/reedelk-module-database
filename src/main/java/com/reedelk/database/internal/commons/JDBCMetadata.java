@@ -1,5 +1,6 @@
 package com.reedelk.database.internal.commons;
 
+import com.reedelk.runtime.api.commons.SerializableUtils;
 import com.reedelk.runtime.api.exception.PlatformException;
 
 import java.io.Serializable;
@@ -19,13 +20,13 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
     private static final String ATTRIBUTE_COLUMN_NAME_INDEX_MAP = "columnNameIndexMap";
 
     private JDBCMetadata(int columnCount,
-                        ArrayList<String> columnNames,
-                        ArrayList<Integer> columnTypes,
-                        HashMap<String, Integer> columnNameIndexMap) {
+                         List<String> columnNames,
+                         List<Integer> columnTypes,
+                         Map<String, Integer> columnNameIndexMap) {
         put(ATTRIBUTE_COLUMN_COUNT, columnCount);
-        put(ATTRIBUTE_COLUMN_NAMES, columnNames);
-        put(ATTRIBUTE_COLUMN_TYPES, columnTypes);
-        put(ATTRIBUTE_COLUMN_NAME_INDEX_MAP, columnNameIndexMap);
+        put(ATTRIBUTE_COLUMN_NAMES, SerializableUtils.asSerializableList(columnNames));
+        put(ATTRIBUTE_COLUMN_TYPES, SerializableUtils.asSerializableList(columnTypes));
+        put(ATTRIBUTE_COLUMN_NAME_INDEX_MAP, SerializableUtils.asSerializableMap(columnNameIndexMap));
     }
 
     public int getColumnCount() {
@@ -51,8 +52,8 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
     public static JDBCMetadata from(ResultSetMetaData metadata) {
         try {
             int columnCount = metadata.getColumnCount();
-            ArrayList<String> columnNames = getColumnNames(metadata);
-            ArrayList<Integer> columnTypes = getColumnType(metadata);
+            List<String> columnNames = getColumnNames(metadata);
+            List<Integer> columnTypes = getColumnType(metadata);
             HashMap<String, Integer> columnNameIndexMap = getColumnIndex(metadata);
             return new JDBCMetadata(columnCount, columnNames, columnTypes, columnNameIndexMap);
         } catch (SQLException exception) {
@@ -60,8 +61,8 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
         }
     }
 
-    private static ArrayList<String> getColumnNames(ResultSetMetaData metadata) {
-        ArrayList<String> columnNames = new ArrayList<>();
+    private static List<String> getColumnNames(ResultSetMetaData metadata) {
+        List<String> columnNames = new ArrayList<>();
         try {
             for (int i = 1; i <= metadata.getColumnCount(); i++) {
                 columnNames.add(metadata.getColumnName(i));
@@ -72,7 +73,7 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
         }
     }
 
-    private static ArrayList<Integer> getColumnType(ResultSetMetaData metadata) {
+    private static List<Integer> getColumnType(ResultSetMetaData metadata) {
         ArrayList<Integer> columnTypes = new ArrayList<>();
         try {
             for (int i = 1; i <= metadata.getColumnCount(); i++) {
