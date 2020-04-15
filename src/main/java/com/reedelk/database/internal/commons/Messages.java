@@ -1,16 +1,10 @@
 package com.reedelk.database.internal.commons;
 
+import com.reedelk.runtime.api.commons.FormattedMessage;
+
 public class Messages {
 
     private Messages() {
-    }
-
-    private static String formatMessage(String template, Object ...args) {
-        return String.format(template, args);
-    }
-
-    interface FormattedMessage {
-        String format(Object ...args);
     }
 
     public enum DDLExecute implements FormattedMessage {
@@ -19,15 +13,15 @@ public class Messages {
         DDL_EXECUTE_ERROR_WITH_DDL("Could not execute DDL=[%s]: %s"),
         DDL_SCRIPT_EVALUATE_ERROR("Could not evaluate DDL script=[%s]");
 
-        private String msg;
+        private String message;
 
-        DDLExecute(String msg) {
-            this.msg = msg;
+        DDLExecute(String message) {
+            this.message = message;
         }
 
         @Override
-        public String format(Object... args) {
-            return formatMessage(msg, args);
+        public String template() {
+            return message;
         }
     }
 
@@ -38,15 +32,15 @@ public class Messages {
         COLUMN_TYPE_NOT_SUPPORTED("Column type id=[%d] not supported for column name=[%s]"),
         BLOB_TO_BYTES_ERROR("Could not convert bytes from blob, column name=[%s]");
 
-        private String msg;
+        private String message;
 
-        Select(String msg) {
-            this.msg = msg;
+        Select(String message) {
+            this.message = message;
         }
 
         @Override
-        public String format(Object... args) {
-            return formatMessage(msg, args);
+        public String template() {
+            return message;
         }
     }
 
@@ -55,15 +49,15 @@ public class Messages {
         QUERY_EXECUTE_ERROR("Could not execute insert query: %s"),
         QUERY_EXECUTE_ERROR_WITH_QUERY("Could not execute insert query=[%s]: %s");
 
-        private String msg;
+        private String message;
 
-        Insert(String msg) {
-            this.msg = msg;
+        Insert(String message) {
+            this.message = message;
         }
 
         @Override
-        public String format(Object... args) {
-            return formatMessage(msg, args);
+        public String template() {
+            return message;
         }
     }
 
@@ -72,15 +66,15 @@ public class Messages {
         QUERY_EXECUTE_ERROR("Could not execute update query: %s"),
         QUERY_EXECUTE_ERROR_WITH_QUERY("Could not execute update query=[%s]: %s");
 
-        private String msg;
+        private String message;
 
-        Update(String msg) {
-            this.msg = msg;
+        Update(String message) {
+            this.message = message;
         }
 
         @Override
-        public String format(Object... args) {
-            return formatMessage(msg, args);
+        public String template() {
+            return message;
         }
     }
 
@@ -89,15 +83,15 @@ public class Messages {
         QUERY_EXECUTE_ERROR("Could not execute delete query: %s"),
         QUERY_EXECUTE_ERROR_WITH_QUERY("Could not execute delete query=[%s]: %s");
 
-        private String msg;
+        private String message;
 
-        Delete(String msg) {
-            this.msg = msg;
+        Delete(String message) {
+            this.message = message;
         }
 
         @Override
-        public String format(Object... args) {
-            return formatMessage(msg, args);
+        public String template() {
+            return message;
         }
     }
 }
