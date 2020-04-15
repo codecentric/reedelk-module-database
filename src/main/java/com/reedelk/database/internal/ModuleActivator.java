@@ -8,8 +8,8 @@ import org.osgi.service.component.annotations.Reference;
 
 import static org.osgi.service.component.annotations.ServiceScope.SINGLETON;
 
-@Component(service = DatabaseModuleActivator.class, scope = SINGLETON, immediate = true)
-public class DatabaseModuleActivator {
+@Component(service = ModuleActivator.class, scope = SINGLETON, immediate = true)
+public class ModuleActivator {
 
     @Reference
     private DataSourceService dataSourceService;
