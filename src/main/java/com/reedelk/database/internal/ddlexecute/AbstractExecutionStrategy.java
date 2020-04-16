@@ -1,19 +1,19 @@
 package com.reedelk.database.internal.ddlexecute;
 
-import com.reedelk.database.internal.commons.DatabaseUtils;
 import com.reedelk.database.component.DDLExecute;
+import com.reedelk.database.internal.commons.DatabaseUtils;
 import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
-import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
-import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 
 import javax.sql.DataSource;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.reedelk.database.internal.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR;
@@ -42,9 +42,9 @@ abstract class AbstractExecutionStrategy implements ExecutionStrategy {
 
             int rowCount = statement.executeUpdate(ddlToExecute);
 
-            MessageAttributes attributes = new DefaultMessageAttributes(DDLExecute.class,
-                    ImmutableMap.of(DDLExecuteAttribute.DDL, ddlToExecute));
-            return MessageBuilder.get()
+            Map<String, Serializable> attributes = ImmutableMap.of(DDLExecuteAttribute.DDL, ddlToExecute);
+
+            return MessageBuilder.get(DDLExecute.class)
                     .withJavaObject(rowCount)
                     .attributes(attributes)
                     .build();
@@ -54,6 +54,7 @@ abstract class AbstractExecutionStrategy implements ExecutionStrategy {
                     .map(ddl -> DDL_EXECUTE_ERROR_WITH_DDL.format(ddl, rootCauseMessageOf(exception)))
                     .orElse(DDL_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
             throw new PlatformException(errorMessage, exception);
+
         } finally {
             DatabaseUtils.closeSilently(resultSet);
             DatabaseUtils.closeSilently(statement);

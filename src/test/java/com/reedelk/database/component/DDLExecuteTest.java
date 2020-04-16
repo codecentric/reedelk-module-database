@@ -38,7 +38,7 @@ class DDLExecuteTest {
     @Mock
     private FlowContext mockFlowContext;
 
-    private Message testMessage = MessageBuilder.get().withText("test").build();
+    private Message testMessage = MessageBuilder.get(TestComponent.class).withText("test").build();
 
     private DDLExecute component = new DDLExecute();
 

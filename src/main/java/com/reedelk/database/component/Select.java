@@ -7,9 +7,7 @@ import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
-import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
-import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.message.content.DataRow;
 import com.reedelk.runtime.api.script.ScriptEngineService;
@@ -107,11 +105,11 @@ public class Select implements ProcessorSync {
 
         @SuppressWarnings("rawtypes") Flux<DataRow> result = createResultStream(disposableResultSet);
 
-        MessageAttributes attributes = new DefaultMessageAttributes(Select.class,
-                ImmutableMap.of(DatabaseAttribute.QUERY, realQuery));
-        return MessageBuilder.get()
-                .attributes(attributes)
+        Map<String, Serializable> attributes = ImmutableMap.of(DatabaseAttribute.QUERY, realQuery);
+
+        return MessageBuilder.get(Select.class)
                 .withStream(result, DataRow.class)
+                .attributes(attributes)
                 .build();
     }
 
@@ -122,16 +120,16 @@ public class Select implements ProcessorSync {
         this.queryStatement = null;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
     public void setConnectionConfiguration(ConnectionConfiguration connectionConfiguration) {
         this.connectionConfiguration = connectionConfiguration;
     }
 
     public void setParametersMapping(DynamicObjectMap parametersMapping) {
         this.parametersMapping = parametersMapping;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     @SuppressWarnings({"rawtypes"})

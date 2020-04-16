@@ -10,9 +10,7 @@ import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
-import com.reedelk.runtime.api.message.DefaultMessageAttributes;
 import com.reedelk.runtime.api.message.Message;
-import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
@@ -20,6 +18,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -91,11 +90,11 @@ public class Delete implements ProcessorSync {
 
             int rowCount = statement.executeUpdate(realQuery);
 
-            MessageAttributes attributes = new DefaultMessageAttributes(Delete.class,
-                    ImmutableMap.of(DatabaseAttribute.QUERY, realQuery));
-            return MessageBuilder.get()
-                    .attributes(attributes)
+            Map<String, Serializable> attributes = ImmutableMap.of(DatabaseAttribute.QUERY, realQuery);
+
+            return MessageBuilder.get(Delete.class)
                     .withJavaObject(rowCount)
+                    .attributes(attributes)
                     .build();
 
         } catch (Throwable exception) {
@@ -118,15 +117,15 @@ public class Delete implements ProcessorSync {
         this.queryStatement = null;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
+    public void setParametersMapping(DynamicObjectMap parametersMapping) {
+        this.parametersMapping = parametersMapping;
     }
 
     public void setConnectionConfiguration(ConnectionConfiguration connectionConfiguration) {
         this.connectionConfiguration = connectionConfiguration;
     }
 
-    public void setParametersMapping(DynamicObjectMap parametersMapping) {
-        this.parametersMapping = parametersMapping;
+    public void setQuery(String query) {
+        this.query = query;
     }
 }

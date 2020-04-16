@@ -51,7 +51,7 @@ class InsertTest {
 
     @BeforeEach
     void setUp() {
-        testMessage = MessageBuilder.get().withText("Test").build();
+        testMessage = MessageBuilder.get(TestComponent.class).withText("Test").build();
         lenient()
                 .doReturn(new HashMap<>())
                 .when(mockScriptEngine)
