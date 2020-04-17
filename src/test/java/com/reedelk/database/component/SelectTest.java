@@ -22,6 +22,7 @@ import org.zapodot.junit.db.annotations.EmbeddedDatabaseTest;
 import org.zapodot.junit.db.common.Engine;
 
 import javax.sql.DataSource;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -87,7 +88,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow> result = actual.payload();
+        List<DataRow<Serializable>> result = actual.payload();
         assertFound(result, of("id", 1, "name", "John Doe"));
         assertFound(result, of("id", 2, "name", "Mark Anton"));
     }
@@ -116,7 +117,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow> result = actual.payload();
+        List<DataRow<Serializable>> result = actual.payload();
         assertThat(result).hasSize(1);
         assertFound(result, of("id", 2, "name", "Mark Anton"));
     }
@@ -140,7 +141,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow> result = actual.payload();
+        List<DataRow<Serializable>> result = actual.payload();
         assertThat(result).hasSize(1);
         assertFound(result, of("id", 2, "name", "Mark Anton"));
     }
@@ -164,7 +165,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow> result = actual.payload();
+        List<DataRow<Serializable>> result = actual.payload();
         assertThat(result).hasSize(1);
         assertFound(result, of("id", 1, "name", "John Doe"));
     }
@@ -184,13 +185,13 @@ class SelectTest {
                 "SELECT WHERE customer WHERE id = 2 [42000-200]");
     }
 
-    private void assertFound(Collection<DataRow> rows, Map<String, Object> columnNameAndValueMap) {
+    private void assertFound(Collection<DataRow<Serializable>> rows, Map<String, Object> columnNameAndValueMap) {
         boolean found = findRowInCollection(rows, columnNameAndValueMap);
         assertThat(found).isTrue();
     }
 
-    private boolean findRowInCollection(Collection<DataRow> rows, Map<String, Object> columnNameAndValueMap) {
-        for (DataRow current : rows) {
+    private boolean findRowInCollection(Collection<DataRow<Serializable>> rows, Map<String, Object> columnNameAndValueMap) {
+        for (DataRow<Serializable> current : rows) {
             if (sameRow(current, columnNameAndValueMap)) {
                 return true;
             }
@@ -198,11 +199,11 @@ class SelectTest {
         return false;
     }
 
-    private boolean sameRow(DataRow given, Map<String, Object> columnNameAndValueMap) {
+    private boolean sameRow(DataRow<Serializable> given, Map<String, Object> columnNameAndValueMap) {
         boolean[] matches = new boolean[]{true};
         columnNameAndValueMap.forEach((columnName, columnValue) -> {
             int columnCount = given.columnCount();
-            for (int i = 1; i <= columnCount; i++) {
+            for (int i = 0; i < columnCount; i++) {
                 String currentColName = given.columnName(i);
                 if (currentColName.equals(columnName)) {
                     matches[0] = Objects.equals(given.get(i), columnValue);

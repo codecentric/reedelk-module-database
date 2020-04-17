@@ -38,7 +38,7 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
     }
 
     public String getColumnName(int column) {
-        return getColumnNames().get(column - 1);
+        return getColumnNames().get(column);
     }
 
     public int getColumnIndex(String columnName) {
@@ -46,7 +46,7 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
     }
 
     public int getColumnType(int columnId) {
-        return ((List<Integer>)get(ATTRIBUTE_COLUMN_TYPES)).get(columnId - 1);
+        return ((List<Integer>) get(ATTRIBUTE_COLUMN_TYPES)).get(columnId);
     }
 
     public static JDBCMetadata from(ResultSetMetaData metadata) {
@@ -54,7 +54,7 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
             int columnCount = metadata.getColumnCount();
             List<String> columnNames = getColumnNames(metadata);
             List<Integer> columnTypes = getColumnType(metadata);
-            HashMap<String, Integer> columnNameIndexMap = getColumnIndex(metadata);
+            Map<String, Integer> columnNameIndexMap = getColumnIndex(metadata);
             return new JDBCMetadata(columnCount, columnNames, columnTypes, columnNameIndexMap);
         } catch (SQLException exception) {
             throw new PlatformException("Could not create result row metadata", exception);
@@ -64,8 +64,8 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
     private static List<String> getColumnNames(ResultSetMetaData metadata) {
         List<String> columnNames = new ArrayList<>();
         try {
-            for (int i = 1; i <= metadata.getColumnCount(); i++) {
-                columnNames.add(metadata.getColumnName(i));
+            for (int i = 0; i < metadata.getColumnCount(); i++) {
+                columnNames.add(metadata.getColumnName(i + 1)); // Index Starts fro 1 instead of 0
             }
             return columnNames;
         } catch (SQLException exception) {
@@ -74,10 +74,10 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
     }
 
     private static List<Integer> getColumnType(ResultSetMetaData metadata) {
-        ArrayList<Integer> columnTypes = new ArrayList<>();
+        List<Integer> columnTypes = new ArrayList<>();
         try {
-            for (int i = 1; i <= metadata.getColumnCount(); i++) {
-                columnTypes.add(metadata.getColumnType(i));
+            for (int i = 0; i < metadata.getColumnCount(); i++) {
+                columnTypes.add(metadata.getColumnType(i + 1)); // Index Starts fro 1 instead of 0
             }
             return columnTypes;
         } catch (SQLException exception) {
@@ -85,11 +85,11 @@ public class JDBCMetadata extends HashMap<String, Serializable> {
         }
     }
 
-    private static HashMap<String, Integer> getColumnIndex(ResultSetMetaData metadata) {
-        HashMap<String, Integer> columnNameIndexMap = new HashMap<>();
+    private static Map<String, Integer> getColumnIndex(ResultSetMetaData metadata) {
+        Map<String, Integer> columnNameIndexMap = new HashMap<>();
         try {
-            for (int i = 1; i <= metadata.getColumnCount(); i++) {
-                columnNameIndexMap.put(metadata.getColumnName(i), i);
+            for (int i = 0; i < metadata.getColumnCount(); i++) {
+                columnNameIndexMap.put(metadata.getColumnName(i + 1), i); // Index Starts fro 1 instead of 0
             }
             return columnNameIndexMap;
         } catch (SQLException exception) {

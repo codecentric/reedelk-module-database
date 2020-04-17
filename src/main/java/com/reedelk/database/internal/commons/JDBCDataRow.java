@@ -44,13 +44,13 @@ public class JDBCDataRow implements DataRow<Serializable> {
 
     @Override
     public Serializable get(int column) {
-        return row.get(column - 1);
+        return row.get(column);
     }
 
     @Override
     public Serializable getByColumnName(String columnName) {
         int index = attributes.getColumnIndex(columnName);
-        return row.get(index - 1);
+        return row.get(index);
     }
 
     @Override

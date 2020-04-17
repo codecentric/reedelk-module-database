@@ -21,7 +21,7 @@ public class ResultSetConverter {
     public static DataRow<Serializable> convertRow(JDBCMetadata metaData, ResultSet resultSetRow) throws SQLException {
         int columnCount = metaData.getColumnCount();
         List<Serializable> row = new ArrayList<>();
-        for (int i = 1; i <= columnCount; i++) {
+        for (int i = 0; i < columnCount; i++) {
             row.add(getObjectByColumnId(metaData, i, resultSetRow));
         }
         return new JDBCDataRow(metaData, row);
@@ -29,34 +29,35 @@ public class ResultSetConverter {
 
     private static Serializable getObjectByColumnId(JDBCMetadata metaData, int columnId, ResultSet resultSetRow) throws SQLException {
         int columnType = metaData.getColumnType(columnId);
+        int sqlColumnIndex = columnId + 1; // starts from 1 instead of zero ...
         if (columnType == java.sql.Types.BIGINT) {
-            return resultSetRow.getInt(columnId);
+            return resultSetRow.getInt(sqlColumnIndex);
         } else if (columnType == java.sql.Types.BOOLEAN) {
-            return resultSetRow.getBoolean(columnId);
+            return resultSetRow.getBoolean(sqlColumnIndex);
         } else if (columnType == java.sql.Types.DOUBLE) {
-            return resultSetRow.getDouble(columnId);
+            return resultSetRow.getDouble(sqlColumnIndex);
         } else if (columnType == java.sql.Types.FLOAT) {
-            return resultSetRow.getFloat(columnId);
+            return resultSetRow.getFloat(sqlColumnIndex);
         } else if (columnType == java.sql.Types.INTEGER) {
-            return resultSetRow.getInt(columnId);
+            return resultSetRow.getInt(sqlColumnIndex);
         } else if (columnType == java.sql.Types.NVARCHAR) {
-            return resultSetRow.getNString(columnId);
+            return resultSetRow.getNString(sqlColumnIndex);
         } else if (columnType == java.sql.Types.VARCHAR) {
-            return resultSetRow.getString(columnId);
+            return resultSetRow.getString(sqlColumnIndex);
         } else if (columnType == java.sql.Types.TINYINT) {
-            return resultSetRow.getInt(columnId);
+            return resultSetRow.getInt(sqlColumnIndex);
         } else if (columnType == java.sql.Types.SMALLINT) {
-            return resultSetRow.getInt(columnId);
+            return resultSetRow.getInt(sqlColumnIndex);
         } else if (columnType == java.sql.Types.DATE) {
-            return resultSetRow.getDate(columnId);
+            return resultSetRow.getDate(sqlColumnIndex);
         } else if (columnType == java.sql.Types.TIMESTAMP) {
-            return resultSetRow.getTimestamp(columnId);
+            return resultSetRow.getTimestamp(sqlColumnIndex);
         } else if (columnType == java.sql.Types.BLOB) {
-            Blob blob = resultSetRow.getBlob(columnId);
+            Blob blob = resultSetRow.getBlob(sqlColumnIndex);
             try (InputStream inputStream = blob.getBinaryStream()){
                 return ByteArrayUtils.from(inputStream);
             } catch (IOException exception) {
-                String columnName = metaData.getColumnName(columnId);
+                String columnName = metaData.getColumnName(sqlColumnIndex);
                 String error = BLOB_TO_BYTES_ERROR.format(columnName);
                 throw new ConversionError(error);
             }
