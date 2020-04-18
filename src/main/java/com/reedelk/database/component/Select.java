@@ -10,6 +10,7 @@ import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.message.content.DataRow;
+import com.reedelk.runtime.api.message.content.TypedPublisher;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
 import org.osgi.service.component.annotations.Component;
@@ -74,6 +75,7 @@ public class Select implements ProcessorSync {
         queryStatement = new QueryStatementTemplate(query);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public Message apply(FlowContext flowContext, Message message) {
         Connection connection = null;
@@ -103,12 +105,12 @@ public class Select implements ProcessorSync {
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
         flowContext.register(disposableResultSet);
 
-        @SuppressWarnings("rawtypes") Flux<DataRow> result = createResultStream(disposableResultSet);
+        TypedPublisher<DataRow> result = createResultStream(disposableResultSet);
 
         Map<String, Serializable> attributes = ImmutableMap.of(DatabaseAttribute.QUERY, realQuery);
 
         return MessageBuilder.get(Select.class)
-                .withStream(result, DataRow.class)
+                .withTypedPublisher(result)
                 .attributes(attributes)
                 .build();
     }
@@ -133,8 +135,8 @@ public class Select implements ProcessorSync {
     }
 
     @SuppressWarnings({"rawtypes"})
-    private Flux<DataRow> createResultStream(DisposableResultSet disposableResultSet) {
-        return Flux.create(sink -> {
+    private TypedPublisher<DataRow> createResultStream(DisposableResultSet disposableResultSet) {
+        return TypedPublisher.from(Flux.create(sink -> {
             try {
                 ResultSetMetaData metaData = disposableResultSet.getMetaData();
                 JDBCMetadata jdbcMetadata = JDBCMetadata.from(metaData);
@@ -146,6 +148,6 @@ public class Select implements ProcessorSync {
             } catch (Throwable exception) {
                 sink.error(exception);
             }
-        });
+        }), DataRow.class);
     }
 }
