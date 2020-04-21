@@ -105,6 +105,11 @@ public class Select implements ProcessorSync {
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
         flowContext.register(disposableResultSet);
 
+        // TODO: This is wrong the result set should not contain all the attributes, the attributes
+        //   are the same for all the rows it does not make sense to have the attributes for each row.
+        //  the DataRow object should just not contain attributes. Also from the data Row I want to be able
+        //  to get the value from the ID and from the Column Name. Eg item['MY_COLUMN'] also the output
+        //  from the DB should be possible to write to CSV.
         TypedPublisher<DataRow> result = createResultStream(disposableResultSet);
 
         Map<String, Serializable> attributes = ImmutableMap.of(DatabaseAttribute.QUERY, realQuery);
