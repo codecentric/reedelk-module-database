@@ -10,8 +10,8 @@ import com.reedelk.runtime.api.script.dynamicvalue.DynamicString;
 import javax.sql.DataSource;
 
 import static com.reedelk.database.internal.commons.Messages.DDLExecute.DDL_SCRIPT_EVALUATE_ERROR;
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotNull;
+import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotBlank;
+import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotNull;
 
 class ExecutionStrategyInline extends AbstractExecutionStrategy {
 

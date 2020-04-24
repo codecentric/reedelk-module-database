@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotNull;
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireTrue;
+import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotNull;
+import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireTrue;
 import static java.lang.String.format;
 import static org.osgi.service.component.annotations.ServiceScope.SINGLETON;
 

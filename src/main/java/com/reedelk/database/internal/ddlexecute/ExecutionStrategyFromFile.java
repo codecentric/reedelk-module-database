@@ -8,7 +8,7 @@ import com.reedelk.runtime.api.resource.ResourceText;
 
 import javax.sql.DataSource;
 
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotNull;
+import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotNull;
 
 class ExecutionStrategyFromFile extends AbstractExecutionStrategy {
 

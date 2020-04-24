@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import javax.sql.DataSource;
 
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotNull;
+import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotNull;
 
 @ModuleComponent("DDL Execute")
 @Description("Executes the given DDL statement/s on the configured data source connection. " +

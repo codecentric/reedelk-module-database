@@ -27,7 +27,7 @@ import java.util.Optional;
 
 import static com.reedelk.database.internal.commons.Messages.Insert.QUERY_EXECUTE_ERROR;
 import static com.reedelk.database.internal.commons.Messages.Insert.QUERY_EXECUTE_ERROR_WITH_QUERY;
-import static com.reedelk.runtime.api.commons.ConfigurationPreconditions.requireNotBlank;
+import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotBlank;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 @ModuleComponent("SQL Insert")
