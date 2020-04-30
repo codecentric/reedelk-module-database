@@ -1,13 +1,14 @@
 package com.reedelk.database.component;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.reedelk.database.internal.attribute.DatabaseAttributes;
 import com.reedelk.database.internal.commons.*;
 import com.reedelk.runtime.api.annotation.*;
-import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
+import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.message.content.DataRow;
 import com.reedelk.runtime.api.message.content.TypedPublisher;
@@ -112,7 +113,7 @@ public class Select implements ProcessorSync {
         //  from the DB should be possible to write to CSV.
         TypedPublisher<DataRow> result = createResultStream(disposableResultSet);
 
-        Map<String, Serializable> attributes = ImmutableMap.of(DatabaseAttribute.QUERY, realQuery);
+        MessageAttributes attributes = new DatabaseAttributes(realQuery);
 
         return MessageBuilder.get(Select.class)
                 .withTypedPublisher(result)

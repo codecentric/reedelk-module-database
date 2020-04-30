@@ -1,16 +1,16 @@
 package com.reedelk.database.component;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.reedelk.database.internal.attribute.DatabaseAttributes;
 import com.reedelk.database.internal.commons.DataSourceService;
-import com.reedelk.database.internal.commons.DatabaseAttribute;
 import com.reedelk.database.internal.commons.DatabaseUtils;
 import com.reedelk.database.internal.commons.QueryStatementTemplate;
 import com.reedelk.runtime.api.annotation.*;
-import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
+import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
@@ -18,7 +18,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -88,8 +87,8 @@ public class Update implements ProcessorSync {
             realQuery = queryStatement.replace(evaluatedMap);
 
             int rowCount = statement.executeUpdate(realQuery);
-
-            Map<String, Serializable> attributes = ImmutableMap.of(DatabaseAttribute.QUERY, realQuery);
+            
+            MessageAttributes attributes = new DatabaseAttributes(realQuery);
 
             return MessageBuilder.get(Update.class)
                     .withJavaObject(rowCount)

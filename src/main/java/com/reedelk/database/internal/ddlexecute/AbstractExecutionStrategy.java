@@ -1,19 +1,18 @@
 package com.reedelk.database.internal.ddlexecute;
 
 import com.reedelk.database.component.DDLExecute;
+import com.reedelk.database.internal.attribute.DDLExecuteAttributes;
 import com.reedelk.database.internal.commons.DatabaseUtils;
-import com.reedelk.runtime.api.commons.ImmutableMap;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
+import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
 
 import javax.sql.DataSource;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Map;
 import java.util.Optional;
 
 import static com.reedelk.database.internal.commons.Messages.DDLExecute.DDL_EXECUTE_ERROR;
@@ -42,7 +41,7 @@ abstract class AbstractExecutionStrategy implements ExecutionStrategy {
 
             int rowCount = statement.executeUpdate(ddlToExecute);
 
-            Map<String, Serializable> attributes = ImmutableMap.of(DDLExecuteAttribute.DDL, ddlToExecute);
+            MessageAttributes attributes = new DDLExecuteAttributes(ddlToExecute);
 
             return MessageBuilder.get(DDLExecute.class)
                     .withJavaObject(rowCount)
