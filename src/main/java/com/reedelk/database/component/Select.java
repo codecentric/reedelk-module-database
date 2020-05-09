@@ -37,10 +37,11 @@ import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
 public class Select implements ProcessorSync {
 
+    @DialogTitle("Data Source Configuration")
     @Property("Connection")
     @Description("Data source configuration to be used by this query. " +
             "Shared configurations use the same connection pool.")
-    private ConnectionConfiguration connectionConfiguration;
+    private ConnectionConfiguration connection;
 
     @Example("<ul>" +
             "<li><code>SELECT * FROM orders WHERE name = 'John' AND surname = 'Doe'</code></li>" +
@@ -72,7 +73,7 @@ public class Select implements ProcessorSync {
     @Override
     public void initialize() {
         requireNotBlank(Select.class, query, "Select query is not defined");
-        dataSource = dataSourceService.getDataSource(this, connectionConfiguration);
+        dataSource = dataSourceService.getDataSource(this, connection);
         queryStatement = new QueryStatementTemplate(query);
     }
 
@@ -123,13 +124,13 @@ public class Select implements ProcessorSync {
 
     @Override
     public void dispose() {
-        this.dataSourceService.dispose(this, connectionConfiguration);
+        this.dataSourceService.dispose(this, connection);
         this.dataSource = null;
         this.queryStatement = null;
     }
 
-    public void setConnectionConfiguration(ConnectionConfiguration connectionConfiguration) {
-        this.connectionConfiguration = connectionConfiguration;
+    public void setConnection(ConnectionConfiguration connection) {
+        this.connection = connection;
     }
 
     public void setParametersMapping(DynamicObjectMap parametersMapping) {

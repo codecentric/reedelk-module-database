@@ -63,7 +63,7 @@ class SelectTest {
         ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration();
         connectionConfiguration.setConnectionURL("jdbc:h2:mem:" + SelectTest.class.getSimpleName());
         connectionConfiguration.setDatabaseDriver(DatabaseDriver.H2);
-        component.setConnectionConfiguration(connectionConfiguration);
+        component.setConnection(connectionConfiguration);
         component.dataSourceService = new DataSourceService();
         component.scriptEngine = mockScriptEngine;
     }

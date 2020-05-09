@@ -31,7 +31,7 @@ public class DDLExecute implements ProcessorSync {
     @Property("Connection")
     @Description("Data source configuration where the DDL statements will be executed on. " +
             "Shared configurations use the same connection pool.")
-    private ConnectionConfiguration connectionConfiguration;
+    private ConnectionConfiguration connection;
 
     @Property("Strategy")
     @InitValue("INLINE")
@@ -69,8 +69,8 @@ public class DDLExecute implements ProcessorSync {
 
     @Override
     public void initialize() {
-        requireNotNull(DDLExecute.class, connectionConfiguration, "Connection configuration must be defined.");
-        dataSource = dataSourceService.getDataSource(this, connectionConfiguration);
+        requireNotNull(DDLExecute.class, connection, "Connection configuration must be defined.");
+        dataSource = dataSourceService.getDataSource(this, connection);
         executionStrategy = ExecutionStrategyBuilder.get()
                 .with(strategy)
                 .with(ddlFile)
@@ -88,14 +88,14 @@ public class DDLExecute implements ProcessorSync {
 
     @Override
     public void dispose() {
-        this.dataSourceService.dispose(this, connectionConfiguration);
+        this.dataSourceService.dispose(this, connection);
         this.ddlFile = null;
         this.dataSource = null;
         this.ddlDefinition = null;
     }
 
-    public void setConnectionConfiguration(ConnectionConfiguration connectionConfiguration) {
-        this.connectionConfiguration = connectionConfiguration;
+    public void setConnection(ConnectionConfiguration connection) {
+        this.connection = connection;
     }
 
     public void setStrategy(DDLDefinitionStrategy strategy) {

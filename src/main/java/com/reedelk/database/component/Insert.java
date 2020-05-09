@@ -34,10 +34,11 @@ import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf
 @Component(service = Insert.class, scope = ServiceScope.PROTOTYPE)
 public class Insert implements ProcessorSync {
 
+    @DialogTitle("Data Source Configuration")
     @Property("Connection")
     @Description("Data source configuration to be used by this query. " +
             "Shared configurations use the same connection pool.")
-    private ConnectionConfiguration connectionConfiguration;
+    private ConnectionConfiguration connection;
 
     @Property("Insert Query")
     @Example("<ul>" +
@@ -69,7 +70,7 @@ public class Insert implements ProcessorSync {
     @Override
     public void initialize() {
         requireNotBlank(Insert.class, query, "Insert query is not defined");
-        dataSource = dataSourceService.getDataSource(this, connectionConfiguration);
+        dataSource = dataSourceService.getDataSource(this, connection);
         queryStatement = new QueryStatementTemplate(query);
     }
 
@@ -110,7 +111,7 @@ public class Insert implements ProcessorSync {
 
     @Override
     public void dispose() {
-        this.dataSourceService.dispose(this, connectionConfiguration);
+        this.dataSourceService.dispose(this, connection);
         this.dataSource = null;
         this.queryStatement = null;
     }
@@ -119,8 +120,8 @@ public class Insert implements ProcessorSync {
         this.parametersMapping = parametersMapping;
     }
 
-    public void setConnectionConfiguration(ConnectionConfiguration connectionConfiguration) {
-        this.connectionConfiguration = connectionConfiguration;
+    public void setConnection(ConnectionConfiguration connection) {
+        this.connection = connection;
     }
 
     public void setQuery(String query) {
