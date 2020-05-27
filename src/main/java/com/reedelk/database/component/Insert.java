@@ -30,6 +30,13 @@ import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuratio
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 @ModuleComponent("SQL Insert")
+@ComponentOutput(
+        attributes = DatabaseAttributes.class,
+        payload = int.class,
+        description = "The number of rows inserted into the database.")
+@ComponentInput(
+        payload = Object.class,
+        description = "The input payload is used to evaluate the expressions bound to the query parameters mappings.")
 @Description("Executes an INSERT SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Insert.class, scope = ServiceScope.PROTOTYPE)
 public class Insert implements ProcessorSync {

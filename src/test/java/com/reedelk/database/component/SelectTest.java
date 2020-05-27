@@ -2,15 +2,15 @@ package com.reedelk.database.component;
 
 import com.reedelk.database.internal.commons.DataSourceService;
 import com.reedelk.database.internal.commons.DatabaseDriver;
-import com.reedelk.database.internal.commons.JDBCDataRow;
+import com.reedelk.database.internal.type.DatabaseRow;
 import com.reedelk.runtime.api.commons.ModuleContext;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
-import com.reedelk.runtime.api.message.content.DataRow;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
+import com.reedelk.runtime.api.type.MapOfStringSerializable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,9 +88,9 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow<Serializable>> result = actual.payload();
-        assertFound(result, of("id", 1, "name", "John Doe"));
-        assertFound(result, of("id", 2, "name", "Mark Anton"));
+        List<DatabaseRow> result = actual.payload();
+        assertFound(result, of("ID", 1, "NAME", "John Doe"));
+        assertFound(result, of("ID", 2, "NAME", "Mark Anton"));
     }
 
     @Test
@@ -103,7 +103,7 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<JDBCDataRow> result = actual.payload();
+        List<MapOfStringSerializable> result = actual.payload();
         assertThat(result).isEmpty();
     }
 
@@ -117,9 +117,9 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow<Serializable>> result = actual.payload();
+        List<DatabaseRow> result = actual.payload();
         assertThat(result).hasSize(1);
-        assertFound(result, of("id", 2, "name", "Mark Anton"));
+        assertFound(result, of("ID", 2, "NAME", "Mark Anton"));
     }
 
     @Test
@@ -141,9 +141,9 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow<Serializable>> result = actual.payload();
+        List<DatabaseRow> result = actual.payload();
         assertThat(result).hasSize(1);
-        assertFound(result, of("id", 2, "name", "Mark Anton"));
+        assertFound(result, of("ID", 2, "NAME", "Mark Anton"));
     }
 
     @Test
@@ -165,9 +165,9 @@ class SelectTest {
         Message actual = component.apply(mockFlowContext, testMessage);
 
         // Then
-        List<DataRow<Serializable>> result = actual.payload();
+        List<DatabaseRow> result = actual.payload();
         assertThat(result).hasSize(1);
-        assertFound(result, of("id", 1, "name", "John Doe"));
+        assertFound(result, of("ID", 1, "NAME", "John Doe"));
     }
 
     @Test
@@ -185,32 +185,27 @@ class SelectTest {
                 "SELECT WHERE customer WHERE id = 2 [42000-200]");
     }
 
-    private void assertFound(Collection<DataRow<Serializable>> rows, Map<String, Object> columnNameAndValueMap) {
+    private void assertFound(Collection<DatabaseRow> rows, Map<String, Serializable> columnNameAndValueMap) {
         boolean found = findRowInCollection(rows, columnNameAndValueMap);
         assertThat(found).isTrue();
     }
 
-    private boolean findRowInCollection(Collection<DataRow<Serializable>> rows, Map<String, Object> columnNameAndValueMap) {
-        for (DataRow<Serializable> current : rows) {
-            if (sameRow(current, columnNameAndValueMap)) {
-                return true;
-            }
+    private boolean findRowInCollection(Collection<DatabaseRow> rows, Map<String, Serializable> columnNameAndValueMap) {
+        for (DatabaseRow current : rows) {
+            boolean sameRow = equals(current, columnNameAndValueMap);
+            if (sameRow) return true;
         }
         return false;
     }
 
-    private boolean sameRow(DataRow<Serializable> given, Map<String, Object> columnNameAndValueMap) {
-        boolean[] matches = new boolean[]{true};
-        columnNameAndValueMap.forEach((columnName, columnValue) -> {
-            int columnCount = given.columnCount();
-            for (int i = 0; i < columnCount; i++) {
-                String currentColName = given.columnName(i);
-                if (currentColName.equals(columnName)) {
-                    matches[0] = Objects.equals(given.get(i), columnValue);
-                    matches[0] = Objects.equals(given.getByColumnName(columnName), columnValue);
-                }
-            }
-        });
-        return matches[0];
+    private boolean equals(DatabaseRow current, Map<String, Serializable> columnNameAndValueMap) {
+        for (Map.Entry<String, Serializable> entry : columnNameAndValueMap.entrySet()) {
+            String expectedKey = entry.getKey();
+            Serializable expectedValue = entry.getValue();
+            if (!current.containsKey(expectedKey)) return false;
+            Serializable actualValue = current.get(expectedKey);
+            if (!Objects.equals(actualValue, expectedValue)) return false;
+        }
+        return true;
     }
 }

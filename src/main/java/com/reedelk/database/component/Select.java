@@ -2,15 +2,16 @@ package com.reedelk.database.component;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.internal.attribute.DatabaseAttributes;
+import com.reedelk.database.internal.attribute.SelectAttributes;
 import com.reedelk.database.internal.commons.*;
+import com.reedelk.database.internal.type.DatabaseRow;
+import com.reedelk.database.internal.type.ListOfDatabaseRow;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.ProcessorSync;
 import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
-import com.reedelk.runtime.api.message.MessageAttributes;
 import com.reedelk.runtime.api.message.MessageBuilder;
-import com.reedelk.runtime.api.message.content.DataRow;
 import com.reedelk.runtime.api.message.content.TypedPublisher;
 import com.reedelk.runtime.api.script.ScriptEngineService;
 import com.reedelk.runtime.api.script.dynamicmap.DynamicObjectMap;
@@ -19,11 +20,8 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import reactor.core.publisher.Flux;
 
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,6 +31,13 @@ import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuratio
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 @ModuleComponent("SQL Select")
+@ComponentOutput(
+        attributes = DatabaseAttributes.class,
+        payload = ListOfDatabaseRow.class,
+        description = "A list of database rows.")
+@ComponentInput(
+        payload = Object.class,
+        description = "The input payload is used to evaluate the expressions bound to the query parameters mappings.")
 @Description("Executes a SELECT SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Select.class, scope = ServiceScope.PROTOTYPE)
 public class Select implements ProcessorSync {
@@ -77,7 +82,6 @@ public class Select implements ProcessorSync {
         queryStatement = new QueryStatementTemplate(query);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public Message apply(FlowContext flowContext, Message message) {
         Connection connection = null;
@@ -86,9 +90,11 @@ public class Select implements ProcessorSync {
         String realQuery = null;
         try {
             connection = dataSource.getConnection();
+
             statement = connection.createStatement();
 
             Map<String, Object> evaluatedMap = scriptEngine.evaluate(parametersMapping, flowContext, message);
+
             realQuery = queryStatement.replace(evaluatedMap);
 
             resultSet = statement.executeQuery(realQuery);
@@ -107,19 +113,27 @@ public class Select implements ProcessorSync {
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
         flowContext.register(disposableResultSet);
 
-        // TODO: This is wrong the result set should not contain all the attributes, the attributes
-        //   are the same for all the rows it does not make sense to have the attributes for each row.
-        //  the DataRow object should just not contain attributes. Also from the data Row I want to be able
-        //  to get the value from the ID and from the Column Name. Eg item['MY_COLUMN'] also the output
-        //  from the DB should be possible to write to CSV.
-        TypedPublisher<DataRow> result = createResultStream(disposableResultSet);
+        try {
+            ResultSetMetaData metaData = disposableResultSet.getMetaData();
 
-        MessageAttributes attributes = new DatabaseAttributes(realQuery);
+            List<Integer> columnTypes = MetadataUtils.getColumnType(metaData);
+            Map<String, Integer> columnNameIndexMap = MetadataUtils.getColumnNameIndexMap(metaData);
+            Map<Integer, String> columnIndexNameMap = MetadataUtils.getColumnIndexNameMap(metaData);
 
-        return MessageBuilder.get(Select.class)
-                .withTypedPublisher(result)
-                .attributes(attributes)
-                .build();
+            TypedPublisher<DatabaseRow> result =
+                    createResultStream(metaData, disposableResultSet, columnNameIndexMap, columnIndexNameMap);
+
+            SelectAttributes selectAttributes = new SelectAttributes(query, columnTypes);
+
+            return MessageBuilder.get(Select.class)
+                    .withTypedPublisher(result)
+                    .attributes(selectAttributes)
+                    .build();
+
+        } catch (SQLException exception) {
+            // TODO: Adjust me here proper message ...
+            throw new PlatformException(exception);
+        }
     }
 
     @Override
@@ -141,20 +155,22 @@ public class Select implements ProcessorSync {
         this.query = query;
     }
 
-    @SuppressWarnings({"rawtypes"})
-    private TypedPublisher<DataRow> createResultStream(DisposableResultSet disposableResultSet) {
+    private TypedPublisher<DatabaseRow> createResultStream(
+            ResultSetMetaData metaData,
+            DisposableResultSet disposableResultSet,
+            Map<String, Integer> columnNameIndexMap,
+            Map<Integer, String> columnIndexNameMap) {
         return TypedPublisher.from(Flux.create(sink -> {
             try {
-                ResultSetMetaData metaData = disposableResultSet.getMetaData();
-                JDBCMetadata jdbcMetadata = JDBCMetadata.from(metaData);
                 while (disposableResultSet.next()) {
-                    DataRow<Serializable> row = ResultSetConverter.convertRow(jdbcMetadata, disposableResultSet);
+                    DatabaseRow row =
+                            RowConverter.convert(metaData, disposableResultSet, columnNameIndexMap, columnIndexNameMap);
                     sink.next(row);
                 }
                 sink.complete();
             } catch (Throwable exception) {
                 sink.error(exception);
             }
-        }), DataRow.class);
+        }), DatabaseRow.class);
     }
 }

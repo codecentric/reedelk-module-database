@@ -30,6 +30,13 @@ import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuratio
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 @ModuleComponent("SQL Update")
+@ComponentOutput(
+        attributes = DatabaseAttributes.class,
+        payload = int.class,
+        description = "The number of rows updated in the database.")
+@ComponentInput(
+        payload = Object.class,
+        description = "The input payload is used to evaluate the expressions bound to the query parameters mappings.")
 @Description("Executes an UPDATE SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Update.class, scope = ServiceScope.PROTOTYPE)
 public class Update implements ProcessorSync {

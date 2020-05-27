@@ -30,6 +30,13 @@ import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuratio
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
 @ModuleComponent("SQL Delete")
+@ComponentOutput(
+        attributes = DatabaseAttributes.class,
+        payload = int.class,
+        description = "The number of rows deleted from the database.")
+@ComponentInput(
+        payload = Object.class,
+        description = "The input payload is used to evaluate the expressions bound to the query parameters mappings.")
 @Description("Executes a DELETE SQL statement on the configured data source connection. Supported databases and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver).")
 @Component(service = Delete.class, scope = ServiceScope.PROTOTYPE)
 public class Delete implements ProcessorSync {
@@ -44,6 +51,7 @@ public class Delete implements ProcessorSync {
     @Example("<ul>" +
             "<li>DELETE FROM orders WHERE id = 1</li>" +
             "<li>DELETE FROM orders WHERE name LIKE 'item%'</li>" +
+            "<li>DELETE * FROM employees WHERE employee_country = :country</li>" +
             "</ul>")
     @Hint("DELETE FROM orders WHERE id = 1")
     @Description("The <b>delete</b> query to be executed on the database with the given Data Source connection. " +

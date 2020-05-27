@@ -1,5 +1,6 @@
 package com.reedelk.database.component;
 
+import com.reedelk.database.internal.attribute.DDLExecuteAttributes;
 import com.reedelk.database.internal.commons.DataSourceService;
 import com.reedelk.database.internal.ddlexecute.DDLDefinitionStrategy;
 import com.reedelk.database.internal.ddlexecute.ExecutionStrategy;
@@ -20,6 +21,15 @@ import javax.sql.DataSource;
 import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotNull;
 
 @ModuleComponent("DDL Execute")
+@ComponentOutput(
+        attributes = DDLExecuteAttributes.class,
+        payload = int.class,
+        description = "Either the row count for SQL Data Manipulation Language (DML) statements " +
+                "or 0 for SQL statements that return nothing")
+@ComponentInput(
+        payload = Object.class,
+        description = "The input payload is not used by this component. " +
+                "The DDL statements are executed from the given inline definition or resource file.")
 @Description("Executes the given DDL statement/s on the configured data source connection. " +
                 "This component can be used to create/drop/alter/rename database tables. Supported databases " +
                 "and drivers: H2 (org.h2.Driver), MySQL (com.mysql.cj.jdbc.Driver), Oracle (oracle.jdbc.Driver), PostgreSQL (org.postgresql.Driver). " +
