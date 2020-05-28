@@ -6,9 +6,7 @@ import com.reedelk.runtime.api.annotation.TypeFunction;
 import java.io.Serializable;
 import java.util.*;
 
-@Type(displayName = "DatabaseRow",
-        mapKeyType = String.class,
-        mapValueType = Serializable.class)
+@Type(mapKeyType = String.class, mapValueType = Serializable.class)
 public class DatabaseRow extends HashMap<String, Serializable> {
 
     private final List<Serializable> values;
