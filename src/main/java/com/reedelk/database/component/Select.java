@@ -4,11 +4,11 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.reedelk.database.internal.attribute.DatabaseAttributes;
 import com.reedelk.database.internal.attribute.SelectAttributes;
 import com.reedelk.database.internal.commons.*;
+import com.reedelk.database.internal.exception.SelectException;
 import com.reedelk.database.internal.type.DatabaseRow;
 import com.reedelk.database.internal.type.ListOfDatabaseRow;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.ProcessorSync;
-import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageBuilder;
@@ -25,8 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.reedelk.database.internal.commons.Messages.Select.QUERY_EXECUTE_ERROR;
-import static com.reedelk.database.internal.commons.Messages.Select.QUERY_EXECUTE_ERROR_WITH_QUERY;
+import static com.reedelk.database.internal.commons.Messages.Select.*;
 import static com.reedelk.runtime.api.commons.ComponentPrecondition.Configuration.requireNotBlank;
 import static com.reedelk.runtime.api.commons.StackTraceUtils.rootCauseMessageOf;
 
@@ -88,6 +87,7 @@ public class Select implements ProcessorSync {
         Statement statement = null;
         ResultSet resultSet = null;
         String realQuery = null;
+
         try {
             connection = dataSource.getConnection();
 
@@ -104,36 +104,39 @@ public class Select implements ProcessorSync {
             DatabaseUtils.closeSilently(statement);
             DatabaseUtils.closeSilently(connection);
 
-            String errorMessage = Optional.ofNullable(realQuery)
+            String error = Optional.ofNullable(realQuery)
                     .map(query -> QUERY_EXECUTE_ERROR_WITH_QUERY.format(query, rootCauseMessageOf(exception)))
                     .orElse(QUERY_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
-            throw new PlatformException(errorMessage, exception);
+            throw new SelectException(error, exception);
         }
 
         DisposableResultSet disposableResultSet = new DisposableResultSet(connection, statement, resultSet);
         flowContext.register(disposableResultSet);
 
+        ResultSetMetaData metaData;
         try {
-            ResultSetMetaData metaData = disposableResultSet.getMetaData();
-
-            List<Integer> columnTypes = MetadataUtils.getColumnType(metaData);
-            Map<String, Integer> columnNameIndexMap = MetadataUtils.getColumnNameIndexMap(metaData);
-            Map<Integer, String> columnIndexNameMap = MetadataUtils.getColumnIndexNameMap(metaData);
-
-            TypedPublisher<DatabaseRow> result =
-                    createResultStream(metaData, disposableResultSet, columnNameIndexMap, columnIndexNameMap);
-
-            SelectAttributes selectAttributes = new SelectAttributes(query, columnTypes);
-
-            return MessageBuilder.get(Select.class)
-                    .withTypedPublisher(result)
-                    .attributes(selectAttributes)
-                    .build();
-
+            metaData = disposableResultSet.getMetaData();
         } catch (SQLException exception) {
-            // TODO: Adjust me here proper message ...
-            throw new PlatformException(exception);
+            String error = METADATA_FETCH_ERROR.format(
+                    exception.getErrorCode(),
+                    exception.getSQLState(),
+                    exception.getMessage());
+            throw new SelectException(error, exception);
         }
+
+        List<Integer> columnTypes = MetadataUtils.getColumnType(metaData);
+        Map<String, Integer> columnNameIndexMap = MetadataUtils.getColumnNameIndexMap(metaData);
+        Map<Integer, String> columnIndexNameMap = MetadataUtils.getColumnIndexNameMap(metaData);
+
+        TypedPublisher<DatabaseRow> result =
+                createResultStream(metaData, disposableResultSet, columnNameIndexMap, columnIndexNameMap);
+
+        SelectAttributes selectAttributes = new SelectAttributes(query, columnTypes);
+
+        return MessageBuilder.get(Select.class)
+                .withTypedPublisher(result)
+                .attributes(selectAttributes)
+                .build();
     }
 
     @Override
@@ -160,17 +163,25 @@ public class Select implements ProcessorSync {
             DisposableResultSet disposableResultSet,
             Map<String, Integer> columnNameIndexMap,
             Map<Integer, String> columnIndexNameMap) {
+
         return TypedPublisher.from(Flux.create(sink -> {
             try {
+
                 while (disposableResultSet.next()) {
-                    DatabaseRow row =
-                            RowConverter.convert(metaData, disposableResultSet, columnNameIndexMap, columnIndexNameMap);
+                    DatabaseRow row = RowConverter.convert(
+                            metaData,
+                            disposableResultSet,
+                            columnNameIndexMap,
+                            columnIndexNameMap);
                     sink.next(row);
                 }
+
                 sink.complete();
+
             } catch (Throwable exception) {
                 sink.error(exception);
             }
+
         }), DatabaseRow.class);
     }
 }

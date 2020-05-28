@@ -30,7 +30,8 @@ public class Messages {
         QUERY_EXECUTE_ERROR("Could not execute select query: %s"),
         QUERY_EXECUTE_ERROR_WITH_QUERY("Could not execute select query=[%s]: %s"),
         COLUMN_TYPE_NOT_SUPPORTED("Column type id=[%d] not supported for column name=[%s]"),
-        BLOB_TO_BYTES_ERROR("Could not convert bytes from blob, column name=[%s]");
+        BLOB_TO_BYTES_ERROR("Could not convert bytes from blob, column name=[%s]"),
+        METADATA_FETCH_ERROR("Could not fetch query metadata, SQL error code=[%d], SQL state=[%s], cause=[%s]");
 
         private String message;
 
