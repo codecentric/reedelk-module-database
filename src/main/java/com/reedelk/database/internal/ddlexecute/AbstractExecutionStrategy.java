@@ -3,7 +3,7 @@ package com.reedelk.database.internal.ddlexecute;
 import com.reedelk.database.component.DDLExecute;
 import com.reedelk.database.internal.attribute.DDLExecuteAttributes;
 import com.reedelk.database.internal.commons.DatabaseUtils;
-import com.reedelk.runtime.api.exception.PlatformException;
+import com.reedelk.database.internal.exception.DDLExecuteException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageAttributes;
@@ -49,10 +49,10 @@ abstract class AbstractExecutionStrategy implements ExecutionStrategy {
                     .build();
 
         } catch (Throwable exception) {
-            String errorMessage = Optional.ofNullable(ddlToExecute)
+            String error = Optional.ofNullable(ddlToExecute)
                     .map(ddl -> DDL_EXECUTE_ERROR_WITH_DDL.format(ddl, rootCauseMessageOf(exception)))
                     .orElse(DDL_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
-            throw new PlatformException(errorMessage, exception);
+            throw new DDLExecuteException(error, exception);
 
         } finally {
             DatabaseUtils.closeSilently(resultSet);

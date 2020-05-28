@@ -5,9 +5,9 @@ import com.reedelk.database.internal.attribute.DatabaseAttributes;
 import com.reedelk.database.internal.commons.DataSourceService;
 import com.reedelk.database.internal.commons.DatabaseUtils;
 import com.reedelk.database.internal.commons.QueryStatementTemplate;
+import com.reedelk.database.internal.exception.InsertException;
 import com.reedelk.runtime.api.annotation.*;
 import com.reedelk.runtime.api.component.ProcessorSync;
-import com.reedelk.runtime.api.exception.PlatformException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.message.MessageAttributes;
@@ -104,10 +104,10 @@ public class Insert implements ProcessorSync {
                     .build();
 
         } catch (Throwable exception) {
-            String errorMessage = Optional.ofNullable(realQuery)
+            String error = Optional.ofNullable(realQuery)
                     .map(query -> QUERY_EXECUTE_ERROR_WITH_QUERY.format(query, rootCauseMessageOf(exception)))
                     .orElse(QUERY_EXECUTE_ERROR.format(rootCauseMessageOf(exception)));
-            throw new PlatformException(errorMessage, exception);
+            throw new InsertException(error, exception);
 
         } finally {
             DatabaseUtils.closeSilently(resultSet);

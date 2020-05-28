@@ -1,7 +1,7 @@
 package com.reedelk.database.internal.ddlexecute;
 
 import com.reedelk.database.component.DDLExecute;
-import com.reedelk.runtime.api.exception.PlatformException;
+import com.reedelk.database.internal.exception.DDLExecuteException;
 import com.reedelk.runtime.api.flow.FlowContext;
 import com.reedelk.runtime.api.message.Message;
 import com.reedelk.runtime.api.script.ScriptEngineService;
@@ -29,6 +29,6 @@ class ExecutionStrategyInline extends AbstractExecutionStrategy {
     @Override
     String ddl(FlowContext flowContext, Message message) {
         return scriptEngine.evaluate(ddlDefinition, flowContext, message)
-                .orElseThrow(() -> new PlatformException(DDL_SCRIPT_EVALUATE_ERROR.format(ddlDefinition.value())));
+                .orElseThrow(() -> new DDLExecuteException(DDL_SCRIPT_EVALUATE_ERROR.format(ddlDefinition.value())));
     }
 }
