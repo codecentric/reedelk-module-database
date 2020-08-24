@@ -49,6 +49,8 @@ public class RowConverter {
             return resultSetRow.getNString(columnId);
         } else if (columnType == java.sql.Types.VARCHAR) {
             return resultSetRow.getString(columnId);
+        } else if (columnType == java.sql.Types.CHAR) {
+            return resultSetRow.getString(columnId);
         } else if (columnType == java.sql.Types.TINYINT) {
             return resultSetRow.getInt(columnId);
         } else if (columnType == java.sql.Types.SMALLINT) {
