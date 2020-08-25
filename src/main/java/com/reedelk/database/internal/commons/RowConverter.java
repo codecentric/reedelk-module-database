@@ -7,10 +7,7 @@ import com.reedelk.runtime.api.commons.ByteArrayUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Blob;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +48,8 @@ public class RowConverter {
             return resultSetRow.getString(columnId);
         } else if (columnType == java.sql.Types.CHAR) {
             return resultSetRow.getString(columnId);
+        } else if (columnType == Types.NUMERIC) {
+            return resultSetRow.getBigDecimal(columnId);
         } else if (columnType == java.sql.Types.TINYINT) {
             return resultSetRow.getInt(columnId);
         } else if (columnType == java.sql.Types.SMALLINT) {
