@@ -1,7 +1,7 @@
 [
   {
     "version": "1.0.2",
-    "date": "// TODO: Add date",
+    "date": "26/8/2020",
     "release-notes": "<ul><li>bugfix: added converter support for java.sql.Types.CHAR.</li><li>bugfix: added converter support for java.sql.Types.CHAR.</li><ul>"
   },
   {
