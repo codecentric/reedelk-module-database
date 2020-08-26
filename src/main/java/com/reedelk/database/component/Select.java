@@ -168,7 +168,7 @@ public class Select implements ProcessorSync {
             try {
 
                 while (disposableResultSet.next()) {
-                    DatabaseRow row = RowConverter.convert(
+                    DatabaseRow row = DatabaseRowConverter.convert(
                             metaData,
                             disposableResultSet,
                             columnNameIndexMap,
