@@ -16,7 +16,7 @@
 
     <properties>
         <assertj.version>3.11.1</assertj.version>
-        <c3p0.version>0.9.5.5</c3p0.version>
+        <c3p0.version>0.12.0</c3p0.version>
         <maven.compiler.release>8</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.5.2</junit.version>
